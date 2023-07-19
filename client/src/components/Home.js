@@ -62,6 +62,16 @@ function Home() {
       </div>
       <div className="h-screen flex-1 p-7">
         <h1 className="text-2xl font-semibold ">Home Page</h1>
+        <table className="table-auto">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Mail</th>
+                  <th>Mobno</th>
+                  <th>address</th>
+                </tr>
+              </thead>
+        </table>
       </div>
     </div>
   );
