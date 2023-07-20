@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react';
 function Home() {
     const [open, setOpen] = useState(true);
     const Menus = [
-      { title: "Dashboard", src: "Chart_fill" },
+      { title: "Dashboard", src: "Chart_fill"  },
       { title: "Inbox", src: "Chat" },
-      { title: "Accounts", src: "User", gap: true },
+      { title: "Accounts", src: "User" },
       { title: "Schedule ", src: "Calendar" },
       { title: "Search", src: "Search" },
       { title: "Analytics", src: "Chart" },
-      { title: "Files ", src: "Folder", gap: true },
+      { title: "Files ", src: "Folder"},
       { title: "Setting", src: "Setting" },
     ];
   
@@ -46,6 +46,7 @@ function Home() {
         <ul className="pt-6">
           {Menus.map((Menu, index) => (
             <li
+              
               key={index}
               className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
               ${Menu.gap ? "mt-9" : "mt-2"} ${
