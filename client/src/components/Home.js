@@ -12,7 +12,7 @@ function Home() {
         } bg-dark-purple h-screen left-0 top-0  p-5 pt-8 relative duration-300 fixed`}
       >
         <img
-          src="/images/control.png"
+          src="/images/control.png" alt=""
           className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
            border-2 rounded-full  ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
@@ -20,7 +20,7 @@ function Home() {
         />
         <div className="flex gap-x-4 items-center">
           <img
-            src="/images/logo.png"
+            src="/images/logo.png" alt=""
             className={`cursor-pointer duration-500 ${
               open && "rotate-[360deg]"
             }`}
@@ -38,7 +38,7 @@ function Home() {
           {Menus.map((Menu, index) => (
             <li
               key={index}
-              className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
+              className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 hover:bg-sky-700 
               ${Menu.gap ? "mt-9" : "mt-2"} ${
                 index === 0 && "bg-light-white"
               } `}
