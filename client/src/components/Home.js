@@ -14,7 +14,7 @@ function Home() {
   ];
 
   return (
-    <div className="flex">
+    <div className="flex bg-sky-700">
       <div
         style={{ backgroundColor: "darkblue" }}
         className={` ${
