@@ -5,12 +5,22 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'tablet': '1080px',
+      },
+      scrollbar: {
+        width: '12px',
+        track: 'rgba(0,0,0,0.1)',
+        thumb: 'rgba(0,0,0,0.3)',
+      },
       fontFamily :{
         Poppins: ["Poppins","sans-serif"],
-        
+        Saira: ["Saira","sans-serif"],
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
 }
 
