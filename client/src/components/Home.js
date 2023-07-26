@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 
-
-function Home() {
-	const [open, setOpen] = useState(false);
-
-	return (
-		<div className=" overflow-x-hidden">
-			{/* <div
+  return (
+    <div className=" overflow-x-hidden font-Poppins">
+      {/* <div
         style={{ backgroundColor: "#080F34" }}
         className={`${
           open ? "w-72" : "w-20"
