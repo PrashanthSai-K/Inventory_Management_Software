@@ -3,7 +3,11 @@ import React, { useEffect, useState } from "react";
 function Home() {
 const[open,setOpen] = useState(false);
 
-const navItems = [{"name":"stores","text-size":"2xl",}];
+const cards = [
+  {color:"bg-yellow-300",src:"count"},
+  {color:"bg-fuchsia-300",src:"stock"},
+  {color:"bg-teal-400",src:"total"}
+];
 
   return (
     <div className=" overflow-x-hidden font-Poppins">
@@ -96,7 +100,8 @@ const navItems = [{"name":"stores","text-size":"2xl",}];
         <h1 className="text-2xl font-semibold ">Master Page</h1>
         <div className="flex flex-col justify-center items-center ">
           <div className="items-center flex w-11/12 justify-between mt-8 scale-90 tablet:scale-100">
-            <div className="w-80 h-36 bg-yellow-300 rounded-3xl flex tablet:h-40">
+            {cards.map((items)=>(
+            <div className={`w-80 h-36 ${items.color} rounded-3xl flex tablet:h-40`}>
               <div className="flex flex-col h-full rounded-l-3xl w-1/2 ml-8 items-center justify-around">
                 <div className="font-bold font-Saira text-xl tablet:text-2xl">Total price</div>
                 <div className="font-bold font-Saira text-2xl tablet:text-4xl">80rs</div>
@@ -106,46 +111,14 @@ const navItems = [{"name":"stores","text-size":"2xl",}];
               </div>
               <div className="flex w-1/2 items-center justify-around">
                 <img
-                  src="/images/count.png"
+                  src={`/images/${items.src}.png`}
                   alt=""
                   className="h-3/4 w-3/4"
                 ></img>
               </div>
             </div>
-
-            <div className="w-80 mx-7 h-36 bg-fuchsia-300 rounded-3xl flex tablet:h-40">
-            <div className="flex flex-col h-full rounded-l-3xl w-1/2 ml-8 items-center justify-around">
-                <div className="font-bold font-Saira text-xl tablet:text-2xl">Total price</div>
-                <div className="font-bold font-Saira text-2xl tablet:text-4xl">80rs</div>
-                <div className="text-xs font-Saira underline cursor-pointer tablet:text-sm">
-                  View entire list
-                </div>
-              </div>
-              <div className="flex w-1/2 items-center justify-around">
-                <img
-                  src="/images/stock.png"
-                  alt=""
-                  className="h-3/4 w-3/4"
-                ></img>
-              </div>
-            </div>
-
-            <div className="w-80 h-36 bg-teal-400 rounded-3xl flex tablet:h-40">
-            <div className="flex flex-col h-full rounded-l-3xl w-1/2 ml-8 items-center justify-around">
-                <div className="font-bold font-Saira text-xl tablet:text-2xl">Total price</div>
-                <div className="font-bold font-Saira text-2xl tablet:text-4xl">80rs</div>
-                <div className="text-xs font-Saira underline cursor-pointer tablet:text-sm">
-                  View entire list
-                </div>
-              </div>
-              <div className="flex  w-1/2 items-center justify-around">
-                <img
-                  src="/images/total.png"
-                  alt=""
-                  className="h-3/4 w-3/4"
-                ></img>
-              </div>
-            </div>
+            ))}
+           
           </div>
           <div class={`flex flex-col mt-16 w-11/12 scale-90 tablet:scale-100 ${open && "scale-90 tablet:scale-100"}`}>
             <div class="-my-2  sm:-mx-6 lg:-mx-8 overflow-y-auto overflow-x-auto border-gray-700 rounded-lg ">
