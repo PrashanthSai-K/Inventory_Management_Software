@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 function Home() {
-  const [open, setOpen] = useState(false);
+const[open,setOpen] = useState(false);
+
+const navItems = [{"name":"stores","text-size":"2xl",}];
 
   return (
     <div className=" overflow-x-hidden font-Poppins">
@@ -37,6 +39,7 @@ function Home() {
         <ul className="pt-6">
           {Menus.map((Menu, index) => (
             <li
+              
               key={index}
               className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 hover:bg-sky-700 
               ${Menu.gap ? "mt-9" : "mt-2"} ${
@@ -52,42 +55,40 @@ function Home() {
         </ul>
       </div> */}
 
-      <div
-        className={`${
-          open ? "w-64" : "w-20"
-        } h-screen bg-blue-800 w-1/6 fixed left-0 right-0 navbar duration-300`}
-      >
-        <img
-          src="/images/control.png"
-          alt=""
-          className={`absolute -right-3 top-9 w-7 border-2 rounded-full ${
-            !open && "rotate-180"
-          } `}
-          onClick={() => setOpen(!open)}
-        />
+			<div className={`${open ? "w-64" : "w-20"} h-screen bg-blue-800 w-1/6 fixed left-0 right-0 navbar duration-300`} >
+				<img src="/images/control.png" alt=""
+					className={`absolute -right-3 top-20  w-8 border-blue-800 border-2  rounded-full ${!open && "rotate-180"} `}
+					onClick={() => setOpen(!open)}
+				/>
 
-        <div className="flex gap-x-4 items-center ml-3 mt-10 font">
-          <img
-            src="/images/bit1.png"
-            alt=""
-            className={`duration-300  ${open && "h-12 w-12 rotate-[360deg]"}`}
-          />
-          <h1 className={`ml-5 text-3xl pt-1 ${!open && "hidden"}`}>Stores</h1>
-        </div>
-        <div className="mt-10 ml-4 ">
-          <ul>
-            <li className="flex gap-x-4">
-              <img src="images/chart_fill.png" className="" alt="" />
-              <span className={` duration-300 ${!open && "hidden"}`}>
-                {" "}
-                Master Page
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
+				<div className="flex gap-x-4  items-center ml-2 mt-10 font">
+					<img src="/images/bit1.png" alt="" className={`duration-300 w-12  ${open && "rotate-[360deg]"}`} />
+					<h1 className={`ml-2 mb-2.5 text-3xl pt-1 ${!open && "hidden"}`}>Stores</h1>
+				</div>
+				<div className="mt-10 mr-2 h-screen" style={{ fontSize: "21px" }}>
+					<ul>
+						<li className="flex gap-x-4 mb-4 cursor-pointer hover:bg-gray-700 rounded-full  pl-5 pt-1 pr-2 pb-2">
+							<i className={`bi bi-speedometer ${!open && "text-2xl text-center"} duration-300 `}></i>
+							<span className={` duration-300 ${!open && "hidden"}`}> Dashboard</span>
+						</li>
+						<li className="flex gap-x-4 mb-4 cursor-pointer hover:bg-gray-700 rounded-full  pl-5 pt-1 pr-2 pb-2">
+							<i className={`bi bi-file-person-fill  ${!open && "text-2xl text-center"} duration-300`}></i>
+							<span className={` duration-300 ${!open && "hidden"}`}> Master</span>
+						</li>
+						<li className="flex gap-x-4 mb-4 cursor-pointer hover:bg-gray-700 rounded-full  pl-5 pt-1 pr-2 pb-2">
+							<i class={`bi bi-archive-fill ${!open && "text-2xl text-center"} duration-300`}></i>
+							<span className={` duration-300 ${!open && "hidden"}`}> Supplier</span>
+						</li>
+						<li className="flex gap-x-4 mb-4 cursor-pointer hover:bg-gray-700 rounded-full  pl-5 text pt-1 pr-2 pb-2">
+							<i className= {`bi bi-building ${!open && "text-2xl text-center"} duration-300`}></i>
+							<span className={` duration-300 ${!open && "hidden"}`}> Manufacturer</span>
+						</li>
 
-      <div
+					</ul>
+				</div>
+			</div>
+
+			<div
         className={`h-screen flex-1 p-7 ${
           open ? "ml-64" : "ml-20"
         } duration-300`}
@@ -716,7 +717,7 @@ function Home() {
         </div>
       </div>
     </div>
-  );
+	);
 }
 
 export default Home;

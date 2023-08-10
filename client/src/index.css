@@ -34,3 +34,6 @@ tr th:nth-child(1) {
     background-color: #080F34;
     color: white;
 }
+*{
+    font-family: "Iceland";
+}
