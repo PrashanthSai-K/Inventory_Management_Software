@@ -23,7 +23,6 @@ const ItemEntry = () => {
     useEffect(()=>{
       fetchManufacturer();
       fetchSupplier();
-
     },[])
     
   
@@ -45,7 +44,8 @@ const ItemEntry = () => {
 
   return (
     <>
-        <form onChange={handleChange}>
+        { manufacturer && supplier && 
+          <form onChange={handleChange}>
         <div class="py-1">
           <span class="px-1 text-sm text-gray-600">Item Entry</span>
           <input
@@ -183,7 +183,7 @@ const ItemEntry = () => {
           />
         </div>
         <button onClick={HandleSubmit}>Submit</button>
-      </form>
+      </form>}
     </>
   )
 }
