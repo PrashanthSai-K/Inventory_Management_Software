@@ -46,5 +46,17 @@ app.post("/supplieradd", (req,res)=>{
     })
 })
 
+app.get("/getManufacturer", (req, res)=>{
+    conn.query("SELECT * FROM manufacturer", (error, result)=>{
+        res.send(result);
+    })
+})
+
+app.get("/getSupplier", (req, res)=>{
+    conn.query("SELECT * FROM supplier", (error, result)=>{
+        res.send(result);
+    })
+})
+
 
 app.listen(4000, ()=>console.log("App listening on port 4000"));
