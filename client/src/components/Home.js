@@ -1,29 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+
+
 
 function Home() {
   const [open, setOpen] = useState(false);
 
 
-const cards = [
-  {color:"bg-yellow-300",src:"count"},
-  {color:"bg-fuchsia-300",src:"stock"},
-  {color:"bg-teal-400",src:"total"}
-];
+  const cards = [
+    { color: "bg-yellow-300", src: "count" },
+    { color: "bg-fuchsia-300", src: "stock" },
+    { color: "bg-teal-400", src: "total" }
+  ];
 
   const navItems = [
-    { Name: "Dashboard" , iconName : "bi-speedometer" },
-    { Name: "Master" ,iconName : "bi-file-person-fill"},
-    { Name: "Supplier" , iconName : "bi-archive-fill" },
-    { Name: "Manufacturer" , iconName : "bi-building" }];
+    { Name: "Dashboard", iconName: "bi-speedometer", },
+    { Name: "Master", iconName: "bi-file-person-fill" },
+    { Name: "Supplier", iconName: "bi-archive-fill" },
+    { Name: "Manufacturer", iconName: "bi-building" }];
 
 
   return (
     <div className=" overflow-x-hidden font-Poppins">
 
-      <div className={`${open ? "w-64" : "w-20"} h-screen bg-blue-800 w-1/6 fixed left-0 right-0 navbar duration-300`} >
+
+      {/* <div className={`${open ? "w-64" : "w-20"} h-screen bg-blue-800 w-1/6 fixed left-0 right-0 navbar duration-300`} >
         <img src="/images/control.png" alt=""
           className={`absolute -right-3   w-8 border-blue-800 border-2  rounded-full ${!open && "rotate-180"} `}
-          style={{top:"88px"}}
+          style={{ top: "88px" }}
           onClick={() => setOpen(!open)}
         />
 
@@ -32,18 +35,18 @@ const cards = [
           <h1 className={`ml-2 mb-2.5 text-3xl pt-1 ${!open && "hidden"}`}>Stores</h1>
         </div>
         <div className="mt-10 mr-2 h-screen" style={{ fontSize: "21px" }}>
+          <ul>
+            {navItems.map((nav) => (
 
-          {navItems.map((nav) => (
-            <ul>
-              <li className="flex gap-x-4 mb-4 cursor-pointer hover:bg-gray-700 rounded-full  pl-5 pt-1 pr-2 pb-2">
+              <a href={nav.src}><li className="flex gap-x-4 mb-4 cursor-pointer hover:bg-gray-700 rounded-full  pl-5 pt-1 pr-2 pb-2">
                 <i className={`bi ${nav.iconName} ${!open && "text-2xl text-center"} duration-300 `}></i>
-                <span className={` duration-300 ${!open && "hidden"}`}> {nav.Name}</span>
-              </li>
-            </ul>
-          ))}
+                <span className={` duration-300 ${!open && "hidden"}`}>{nav.Name}</span>
+              </li></a>
 
+            ))}
+          </ul>
         </div>
-      </div>
+      </div> */}
 
       <div
         className={`h-screen flex-1 p-7 ${open ? "ml-64" : "ml-20"
@@ -52,26 +55,33 @@ const cards = [
         <h1 className="text-2xl font-semibold ">Master Page</h1>
         <div className="flex flex-col justify-center items-center ">
           <div className="items-center flex w-11/12 justify-between mt-8 scale-90 tablet:scale-100">
-            {cards.map((items)=>(
-            <div className={`w-80 h-36 ${items.color} rounded-3xl flex tablet:h-40`}>
-              <div className="flex flex-col h-full rounded-l-3xl w-1/2 ml-8 items-center justify-around">
-                <div className="font-bold font-Saira text-xl tablet:text-2xl">Total price</div>
-                <div className="font-bold font-Saira text-2xl tablet:text-4xl">80rs</div>
-                <div className="text-xs font-Saira underline cursor-pointer tablet:text-sm">
-                  View entire list
+            {cards.map((items) => (
+              <div className={`w-80 h-36 ${items.color} rounded-3xl flex tablet:h-40`}>
+                <div className="flex flex-col h-full rounded-l-3xl w-1/2 ml-8 items-center justify-around">
+                  <div className="font-bold font-Saira text-xl tablet:text-2xl">Total price</div>
+                  <div className="font-bold font-Saira text-2xl tablet:text-4xl">80rs</div>
+                  <div className="text-xs font-Saira underline cursor-pointer tablet:text-sm">
+                    View entire list
+                  </div>
+                </div>
+                <div className="flex w-1/2 items-center justify-around">
+                  <img
+                    src={`/images/${items.src}.png`}
+                    alt=""
+                    className="h-3/4 w-3/4"
+                  ></img>
                 </div>
               </div>
-              <div className="flex w-1/2 items-center justify-around">
-                <img
-                  src={`/images/${items.src}.png`}
-                  alt=""
-                  className="h-3/4 w-3/4"
-                ></img>
-              </div>
-            </div>
             ))}
-           
+
+
+
+
+
           </div>
+
+
+
           <div class={`flex flex-col mt-16 w-11/12 scale-90 tablet:scale-100 ${open && "scale-90 tablet:scale-100"}`}>
             <div class="-my-2  sm:-mx-6 lg:-mx-8 overflow-y-auto overflow-x-auto border-gray-700 rounded-lg ">
               <div class="py-2 align-middle inline-block min-w-full  sm:px-6 lg:px-8">
