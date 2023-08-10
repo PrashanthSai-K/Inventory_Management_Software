@@ -42,6 +42,7 @@ const ItemEntry = () => {
     };
 
 
+
   return (
     <>
         { manufacturer && supplier && 
@@ -76,17 +77,23 @@ const ItemEntry = () => {
             value={data.contact}
             list='manufacturers'
             className="text-md block px-3 py-2 rounded-lg w-full
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none " autoComplete='off'
           />
-          <datalist id='manufacturers' className='data-te-select-init'>
+          <div>
             {manufacturer.map((manu)=>{
               return(
-                <option value={manu.id}>{manu.name}</option>
+                <ul>
+                  <li>
+                <option value={manu.id}>{manu.name}</option>  
+                </li>
+                </ul>
               )
             })}
+            </div>
             <option><a href="">Click to add</a></option>
-          </datalist>
         </div>
+
+
         <div class="py-1">
           <span class="px-1 text-sm text-gray-600">Supplier Name</span>
           <input
@@ -100,7 +107,7 @@ const ItemEntry = () => {
           <datalist id='supplier'>
             {supplier.map((supp)=>{
               return(
-                <option value={supp.id}>{supp.name}</option>
+                <option  value={supp.id}>{supp.name}</option>
               )
             })}
           </datalist>
@@ -173,14 +180,15 @@ const ItemEntry = () => {
         </div>
         <div class="py-1">
           <span class="px-1 text-sm text-gray-600">Quantity Units</span>
+          
           <input
             type="text"
             name="contact"
             value={data.contact}
-            
             className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
           />
+       
         </div>
         <button onClick={HandleSubmit}>Submit</button>
       </form>}

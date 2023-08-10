@@ -6,6 +6,7 @@ import ManufacturerEntry from "./components/ManufacturerEntry";
 import SupplierEntry from "./components/SupplierEntry";
 import ItemEntry from "./components/ItemEntry";
 
+
 function App() {
   return (
     <>
