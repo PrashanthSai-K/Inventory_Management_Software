@@ -18,7 +18,6 @@ const conn = mysql.createConnection({
     port:process.env.DB_PORT_PUBLIC
 })
 
-
 conn.connect(()=>{
     console.log("Connected to DB sucessfully")
 })
@@ -74,8 +73,10 @@ app.post("/stockadd", (req,res)=>{
     const stockQty = req.body.stock_qty;
     const inventoryValue = req.body.inventoryValue;
     const userId = req.body.userId;
-    conn.query(`INSERT INTO stocktable (item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id) 
-                VALUES (?, ?, ?, ?, ?, ?)`, [item_code, manufacturerId,supplierId, stockQty, inventoryValue, userId],
+    const currDate = new Date();
+
+    conn.query(`INSERT INTO stocktable (item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id, created_at) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)`, [item_code, manufacturerId,supplierId, stockQty, inventoryValue, userId, currDate.toISOString().split("T")[0]],
                 (error, result)=>{
                     if(error)console.log(error);
                     else console.log(result);
@@ -109,6 +110,13 @@ app.get("/getQuantityUnits", (req, res)=>{
         else{
             res.send(result);
         }
+    })
+})
+
+app.get("/getAdminStockData", (req,res)=>{
+    conn.query("SELECT * FROM admin_stock_view", (error, result)=>{
+        if(error)console.log(error);
+        res.send(result)
     })
 })
 
