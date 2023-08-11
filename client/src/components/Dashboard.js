@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Cards from "./Cards";
 import Table from "./Table";
 
-function Home() {
+function Dashboard() {
   const [open, setOpen] = useState(false);
 
   return (
@@ -24,4 +24,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Dashboard;

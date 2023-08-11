@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
-import Home from "./components/Home";
+import Dashboard from "./components/Dashboard";
 import { Routes, Route } from "react-router-dom";
 import ManufacturerEntry from "./components/ManufacturerEntry";
 import Manufacturer from "./components/Manufacturer";
@@ -58,7 +57,7 @@ const setNavState = ()=>{
           } duration-300`}
       >
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/master" element={<Master />} />
         <Route path="/supplier" element={<Supplier />} />
         <Route path="/manufacturer" element={<Manufacturer />} />
