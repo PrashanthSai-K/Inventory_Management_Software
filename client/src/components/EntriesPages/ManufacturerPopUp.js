@@ -1,21 +1,32 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 const ManufacturerPopUp = ({ isVisible, onClose }) => {
 
     const [name, setName] = useState(null);
+    const [message, setMessage] = useState(null);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         setName(e.target.value)
     }
 
+    const clearMessage =()=>{
+        setMessage(null);
+    }
+
+    useEffect(()=>{
+        setTimeout(clearMessage, 3000);
+    },[message])
+
+
     const HandleSubmit = async (e) => {
         e.preventDefault();
         const response = await axios.post("http://localhost:4000/manufactureradd", { name: name })
             .catch((error) => console.log(error))
-            .then(() => navigate('/'));
+            .then((response)=>setMessage(response.data))
+            // .then(() => navigate('/'));        
     }
     if (!isVisible) return null;
     return (
@@ -26,9 +37,14 @@ const ManufacturerPopUp = ({ isVisible, onClose }) => {
                 <button className='text-white text-3xl place-self-end' onClick={() => onClose()}>X</button>
                 <div style={{ width: "1000px", height: "600px" }} className='bg-white  overflow-x-auto overflow-y-auto border-gray-700 rounded-lg'>
                     <div className="flex flex-col justify-center items-center">
+                    <div class="py-1 flex  pb-8 mt-8">
+                  <span class="px-1 text-2xl text-gray-600">Manufacturer Entry</span>
+                </div>
                         <form>
+                        {message ? <div>{message}</div>: null}
                             <div class="py-1 flex mb-8 mt-8 gap-14">
-                                <span class="px-1 text-sm text-gray-600">Manufacturer Name</span>
+                               
+                                <span class="px-1 text-lg text-gray-600">Manufacturer Name</span>
                                 <input
                                     type="text"
                                     value={name}

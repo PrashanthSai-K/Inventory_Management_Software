@@ -1,11 +1,13 @@
-import React, { Fragment, useEffect, useState } from "react";
-import Cards from "./Cards";
-import Table from "./Table";
+import React from 'react'
+import Cards from '../CommonPages/Cards'
+import Table from '../CommonPages/Table'
+import { useState } from 'react';
 
-function Dashboard() {
+function Master() {
   const [open, setOpen] = useState(false);
 
   return (
+    <>
       <div
         className={` flex-1 ${open ? "ml-64" : "ml-20"} duration-300`}
       >
@@ -21,7 +23,9 @@ function Dashboard() {
         </div>
         <Table />
       </div>
-  );
+    </>
+
+  )
 }
 
-export default Dashboard;
+export default Master
