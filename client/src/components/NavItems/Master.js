@@ -1,6 +1,6 @@
 import React from 'react'
-import Cards from './Cards'
-import Table from './Table'
+import Cards from '../CommonPages/Cards'
+import Table from '../CommonPages/Table'
 import { useState } from 'react';
 
 function Master() {

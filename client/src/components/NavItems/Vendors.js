@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Cards from "./Cards";
-import Table from "./Table";
+import Cards from "../CommonPages/Cards";
+
 
 
 function Vendors() {

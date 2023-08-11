@@ -1,9 +1,9 @@
 import React from 'react'
-import ManufacturerPopUp from './ManufacturerPopUp';
+import ManufacturerPopUp from '../EntriesPages/ManufacturerPopUp';
 import { useState } from 'react';
-import SupplierPopUp from './SupplierPopUp';
-import StockPopUp from './StockPopUp';
-import ItemPopUp from './ItemPopUp';
+import SupplierPopUp from '../EntriesPages/SupplierPopUp';
+import StockPopUp from '../EntriesPages/StockPopUp';
+import ItemPopUp from '../EntriesPages/ItemPopUp';
 
 function Entries() {
 

@@ -1,16 +1,16 @@
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
-import ManufacturerEntry from "./components/ManufacturerEntry";
-import Vendors from "./components/Vendors";
-import SupplierEntry from "./components/SupplierEntry";
-import ItemEntry from "./components/ItemEntry";
-import StockEntry from "./components/StockEntry";
-import Entries from "./components/Entries";
-import Master from "./components/Master";
-import Supplier from "./components/Supplier";
+// import ManufacturerEntry from "./CommonPages/ManufacturerEntry";
+import Vendors from "./components/NavItems/Vendors";
+// import SupplierEntry from "./CommonPages/SupplierEntry";
+// import ItemEntry from "./CommonPages/ItemEntry";
+// import StockEntry from "./CommonPages/StockEntry";
+import Entries from "./components/NavItems/Entries";
+import Master from "./components/NavItems/Master";
+import Supplier from "./components/NavItems/Supplier";
 import { React, useState } from "react";
-import Dashboard from "./components/Dashboard";
-import Error404 from "./ErrorPages/Error404";
+import Dashboard from "./components/NavItems/Dashboard"; 
+import Error404 from "./components/ErrorPages/Error404";
 
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
             <ul>
               {navItems.map((nav) => (
 
-                <a onClick={setNavState} href={nav.src}><li className="flex gap-x-4 mb-4 cursor-pointer hover:bg-gray-700 rounded-full  pl-5 pt-1 pr-2 pb-2">
+                <a onClick={setNavState} href={nav.src}><li className={`flex gap-x-4 mb-4 cursor-pointer  rounded-full  pl-5 pt-1 pr-2 pb-2`}>
                   <i className={`bi ${nav.iconName} ${!open && "text-2xl text-center"} duration-300 `}></i>
                   <span className={` duration-300 ${!open && "hidden"}`}>{nav.Name}</span>
                 </li></a>
@@ -73,10 +73,10 @@ function App() {
           <Route path="/supplier" element={<Supplier />} />
           <Route path="/vendors" element={<Vendors />} />
           <Route path="/entries" element={<Entries />} />
-          <Route path="/manufactureradd" element={<ManufacturerEntry />} />
-          <Route path="/supplieradd" element={<SupplierEntry />} />
-          <Route path="/itemadd" element={<ItemEntry />} />
-          <Route path="/stockadd" element={<StockEntry />} />
+          {/* <Route path="/manufactureradd" element={<ManufacturerEntry />} /> */}
+          {/* <Route path="/supplieradd" element={<SupplierEntry />} /> */}
+          {/* <Route path="/itemadd" element={<ItemEntry />} /> */}
+          {/* <Route path="/stockadd" element={<StockEntry />} /> */}
           <Route path="/page" element={<Error404 />} />
         </Routes>
       </div>
