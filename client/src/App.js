@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import ManufacturerEntry from "./components/ManufacturerEntry";
@@ -11,15 +10,9 @@ import Supplier from "./components/Supplier";
 import {React,useState , useEffect }from "react";
 import Dashboard from "./components/Dashboard";
 
+
 function App() {
   const [open, setOpen] = useState(false);
-
-
-  const cards = [
-    { color: "bg-yellow-300", src: "count" },
-    { color: "bg-fuchsia-300", src: "stock" },
-    { color: "bg-teal-400", src: "total" }
-  ];
 
   const navItems = [
     { Name: "Dashboard", iconName: "bi-speedometer", src:"/" },
