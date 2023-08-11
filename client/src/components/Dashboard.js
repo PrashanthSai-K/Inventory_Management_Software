@@ -9,7 +9,7 @@ function Dashboard() {
       <div
         className={` flex-1 ${open ? "ml-64" : "ml-20"} duration-300`}
       >
-        <h1 className="text-2xl font-semibold ">Master Page</h1>
+        <h1 className="text-2xl font-semibold ">Dashboard</h1>
         <div className="flex flex-col justify-center items-center ">
           <Cards />
           <div
