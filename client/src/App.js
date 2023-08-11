@@ -9,13 +9,15 @@ import Master from "./components/Master";
 import Supplier from "./components/Supplier";
 import {React,useState , useEffect }from "react";
 import Dashboard from "./components/Dashboard";
+import LoginPage from "./components/LoginPage";
+import RegisterPage from "./components/RegisterPage";
 
 
 function App() {
   const [open, setOpen] = useState(false);
 
   const navItems = [
-    { Name: "Dashboard", iconName: "bi-speedometer", src:"/" },
+    { Name: "Dashboard", iconName: "bi-speedometer", src:"/dashboard" },
     { Name: "Master", iconName: "bi-file-person-fill", src:"/master"},
     { Name: "Supplier", iconName: "bi-archive-fill",src:"/supplier" },
     { Name: "Manufacturer", iconName: "bi-building" , src:"/manufacturer" },
@@ -55,8 +57,11 @@ const setNavState = ()=>{
         className={`h-screen flex-1 p-7 ${open ? "ml-64" : "ml-20"
           } duration-300`}
       >
+        
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<LoginPage/>} />
+        <Route path="/register" element={<RegisterPage/>} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/master" element={<Master />} />
         <Route path="/supplier" element={<Supplier />} />
         <Route path="/manufacturer" element={<Manufacturer />} />

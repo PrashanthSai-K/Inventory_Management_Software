@@ -2,7 +2,7 @@ import React from "react";
 
 function Table() {
   return (
-    <div className="w-11/12 ">
+    <div className="w-11/12">
       <div class="sm:-mx-6 lg:-mx-8 overflow-y-auto overflow-x-auto border-gray-700 rounded-lg ">
         <div class="py-2 align-middle inline-block min-w-full  sm:px-6 lg:px-8">
           <div class="shadow overflow-hidden sm:rounded-lg">
