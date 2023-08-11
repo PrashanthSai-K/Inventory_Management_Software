@@ -4,6 +4,7 @@ import ManufacturerEntry from "./components/ManufacturerEntry";
 import Vendors from "./components/Vendors";
 import SupplierEntry from "./components/SupplierEntry";
 import ItemEntry from "./components/ItemEntry";
+import StockEntry from "./components/StockEntry";
 import Entries from "./components/Entries";
 import Master from "./components/Master";
 import Supplier from "./components/Supplier";
@@ -72,6 +73,7 @@ const setNavState = ()=>{
         <Route path="/supplieradd" element={<SupplierEntry />} />
         <Route path="/itemadd" element={<ItemEntry />} />
         <Route path="/page" element={<Error404/>} />
+        <Route path="/stockadd" element={<StockEntry   />} />
       </Routes>
       </div>
     </>

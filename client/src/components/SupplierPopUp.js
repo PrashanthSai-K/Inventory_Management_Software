@@ -1,25 +1,35 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SupplierPopUp = ({ isVisible, onClose }) => {
 
     const [data, setData] = useState({ name: "", address: "", contact: "" });
+    const [message, setMessage] = useState(null);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         e.preventDefault();
         setData({ ...data, [e.target.name]: e.target.value })
     };
+    const clearMessage =()=>{
+        setMessage(null);
+    }
+
+    useEffect(()=>{
+        setTimeout(clearMessage, 3000);
+    },[message])
+
+
 
     const HandleSubmit = async (e) => {
         e.preventDefault();
         const response = await axios
             .post("http://localhost:4000/supplieradd", data)
             .catch((error) => console.log(error))
-            .then(() => navigate("/"));
-        console.log(data);
+            .then((response)=>setMessage(response.data));
+            // .then(() => navigate("/"));
         setData({ name: "", address: "", contact: "" })
     };
     if (!isVisible) return null;
@@ -32,6 +42,7 @@ const SupplierPopUp = ({ isVisible, onClose }) => {
                 <div style={{ width: "1000px", height: "600px" }} className='bg-white overflow-x-auto overflow-y-auto border-gray-700 rounded-lg'>
                     <div className="flex flex-col justify-center items-center">
                         <form onChange={handleChange}>
+                        {message ? <div>{message}</div>: null}
                             <div class="py-1 flex pb-8 gap-14 mt-8">
                                 <span class="px-1 text-sm text-gray-600">Supplier Name</span>
                                 <input
