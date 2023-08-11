@@ -46,6 +46,41 @@ app.post("/supplieradd", (req,res)=>{
     })
 })
 
+app.post("/itemadd", (req,res)=>{
+    const itemType = req.body.itemType;
+    const manufacturerId = req.body.manufacturerName;
+    const supplierId = req.body.supplierName;
+    const itemName = req.body.itemName;
+    const subName = req.body.subName;
+    const Spec1 = req.body.Spec1;
+    const Spec2 = req.body.Spec2;
+    const Spec3 = req.body.Spec3;
+    const cost = req.body.cost;
+    const unit = req.body.unit;
+    conn.query(`INSERT INTO itemtable 
+                (item_type, item_name, item_subname, item_spec1,item_spec2, item_spec3, cost_per_item, quantity_units, manufacturer_id, supplier_id) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [itemType,itemName,subName, Spec1,Spec2, Spec3, cost, unit, manufacturerId, supplierId],
+                (error, result)=>{
+                    if(error)console.log(error);
+                    else console.log(result);
+                })
+})
+
+app.post("/stockadd", (req,res)=>{
+    const item_code = req.body.itemcode;
+    const manufacturerId = req.body.manufacturerId;
+    const supplierId = req.body.supplierId;
+    const stockQty = req.body.stock_qty;
+    const inventoryValue = req.body.inventoryValue;
+    const userId = req.body.userId;
+    conn.query(`INSERT INTO stocktable (item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id) 
+                VALUES (?, ?, ?, ?, ?, ?)`, [item_code, manufacturerId,supplierId, stockQty, inventoryValue, userId],
+                (error, result)=>{
+                    if(error)console.log(error);
+                    else console.log(result);
+                })
+})
+
 app.get("/getManufacturer", (req, res)=>{
     conn.query("SELECT * FROM manufacturer", (error, result)=>{
         res.send(result);
@@ -55,6 +90,24 @@ app.get("/getManufacturer", (req, res)=>{
 app.get("/getSupplier", (req, res)=>{
     conn.query("SELECT * FROM supplier", (error, result)=>{
         res.send(result);
+    })
+})
+
+app.get("/getItems", (req, res)=>{
+    conn.query("SELECT * FROM itemtable",(error,result)=>{
+        if(error)console.log(error);
+        else{
+            res.send(result);
+        }
+    })
+})
+
+app.get("/getQuantityUnits", (req, res)=>{
+    conn.query("SELECT * FROM quantity_units", (error, result)=>{
+        if(error)console.log(error);
+        else{
+            res.send(result);
+        }
     })
 })
 

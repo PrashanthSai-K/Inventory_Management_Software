@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import ManufacturerEntry from "./components/ManufacturerEntry";
 import SupplierEntry from "./components/SupplierEntry";
 import ItemEntry from "./components/ItemEntry";
+import StockEntry from "./components/StockEntry";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/manufactureradd" element={<ManufacturerEntry />} />
         <Route path="/supplieradd" element={<SupplierEntry />} />
         <Route path="/itemadd" element={<ItemEntry />} />
+        <Route path="/stockadd" element={<StockEntry   />} />
       </Routes>
     </>
   );
