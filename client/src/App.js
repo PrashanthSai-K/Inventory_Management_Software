@@ -1,16 +1,15 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Home from "./components/Home";
 import { Routes, Route } from "react-router-dom";
 import ManufacturerEntry from "./components/ManufacturerEntry";
 import Manufacturer from "./components/Manufacturer";
 import SupplierEntry from "./components/SupplierEntry";
 import ItemEntry from "./components/ItemEntry";
-import Example from "./components/Example";
 import Entries from "./components/Entries";
 import Master from "./components/Master";
 import Supplier from "./components/Supplier";
 import {React,useState , useEffect }from "react";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -64,7 +63,7 @@ const setNavState = ()=>{
           } duration-300`}
       >
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/master" element={<Master />} />
         <Route path="/supplier" element={<Supplier />} />
         <Route path="/manufacturer" element={<Manufacturer />} />
@@ -72,7 +71,6 @@ const setNavState = ()=>{
         <Route path="/manufactureradd" element={<ManufacturerEntry />} />
         <Route path="/supplieradd" element={<SupplierEntry />} />
         <Route path="/itemadd" element={<ItemEntry />} />
-        <Route path="/example" element={<Example />} />
       </Routes>
       </div>
     </>
