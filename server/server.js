@@ -31,6 +31,7 @@ app.post("/manufactureradd", (req,res)=>{
     const name = req.body.name
     conn.query("INSERT INTO manufacturer (name) VALUES (?)",[name],(error,result)=>{
         if(error) console.log(error)
+        res.send("Manufactured Created Successfully");
     })
 })
 
@@ -41,8 +42,7 @@ app.post("/supplieradd", (req,res)=>{
     const contact = req.body.contact;
     conn.query("INSERT INTO supplier (name,address,contact) VALUES (?,?,?)",[name,address,contact],(error,result)=>{
         if(error) console.log(error)
-        else console.log(result);
-        
+        res.send("Supplier Created Successfully");
     })
 })
 
@@ -56,13 +56,14 @@ app.post("/itemadd", (req,res)=>{
     const Spec2 = req.body.Spec2;
     const Spec3 = req.body.Spec3;
     const cost = req.body.cost;
-    const unit = req.body.unit;
+    const unit = req.body.units;
+    console.log(unit)
     conn.query(`INSERT INTO itemtable 
                 (item_type, item_name, item_subname, item_spec1,item_spec2, item_spec3, cost_per_item, quantity_units, manufacturer_id, supplier_id) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [itemType,itemName,subName, Spec1,Spec2, Spec3, cost, unit, manufacturerId, supplierId],
                 (error, result)=>{
                     if(error)console.log(error);
-                    else console.log(result);
+                    res.send("Item added successfully");
                 })
 })
 
