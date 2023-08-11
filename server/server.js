@@ -63,7 +63,7 @@ app.post("/itemadd", (req,res)=>{
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [itemType,itemName,subName, Spec1,Spec2, Spec3, cost, unit, manufacturerId, supplierId],
                 (error, result)=>{
                     if(error)console.log(error);
-                    res.send("Item added successfully");
+                    else res.send("Item added successfully");
                 })
 })
 

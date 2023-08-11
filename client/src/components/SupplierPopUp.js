@@ -41,10 +41,13 @@ const SupplierPopUp = ({ isVisible, onClose }) => {
                 <button className='text-white text-3xl place-self-end' onClick={() => onClose()}>X</button>
                 <div style={{ width: "1000px", height: "600px" }} className='bg-white overflow-x-auto overflow-y-auto border-gray-700 rounded-lg'>
                     <div className="flex flex-col justify-center items-center">
+                    <div class="py-1 flex  pb-8 mt-8">
+                  <span class="px-1 text-2xl text-gray-600">Supplier Entry</span>
+                </div>
                         <form onChange={handleChange}>
                         {message ? <div>{message}</div>: null}
                             <div class="py-1 flex pb-8 gap-14 mt-8">
-                                <span class="px-1 text-sm text-gray-600">Supplier Name</span>
+                                <span class="px-1 text-lg text-gray-600">Supplier Name</span>
                                 <input
                                     type="text"
                                     name="name"
@@ -54,8 +57,8 @@ const SupplierPopUp = ({ isVisible, onClose }) => {
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                                 />
                             </div>
-                            <div style={{gap:"91px"}}  class="py-1 flex pb-8 ">
-                                <span class="px-1 text-sm text-gray-600">Address</span>
+                            <div style={{gap:"100px"}}  class="py-1 flex pb-8 ">
+                                <span class="px-1 text-lg text-gray-600">Address</span>
                                 <input
                                     type="text"
                                     name="address"
@@ -65,8 +68,8 @@ const SupplierPopUp = ({ isVisible, onClose }) => {
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                                 />
                             </div>
-                            <div style={{gap:"94px"}}  class="py-1 flex pb-8">
-                                <span class="px-1 text-sm text-gray-600">Contact</span>
+                            <div style={{gap:"103px"}}  class="py-1 flex pb-8">
+                                <span class="px-1 text-lg text-gray-600">Contact</span>
                                 <input
                                     type="text"
                                     name="contact"

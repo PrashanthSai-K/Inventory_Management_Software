@@ -82,12 +82,15 @@ const StockPopUp = ({ isVisible, onClose }) => {
         </button>
         <div
           style={{ width: "1000px", height: "600px" }}
-          className="bg-white overflow-x-auto overflow-y-auto border-gray-700 rounded-lg"
+          className="bg-white overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
         >
+          <div class="py-1 flex  pb-8 mt-8">
+                  <span class="px-1 text-2xl text-gray-600">Stock Entry</span>
+                </div>
           <form onSubmit={HandleSubmit}>
-            <h1>Stock Entry</h1>
-            <div className="py-1">
-              <span className="px-1 text-sm text-gray-600">
+            
+            <div className="py-1 flex gap-14">
+              <span className="px-1 text-lg text-gray-600">
                 Manufacturer Name
               </span>
               <input
@@ -96,14 +99,14 @@ const StockPopUp = ({ isVisible, onClose }) => {
                 list="itemcode"
                 value={data.itemcode}
                 onChange={handleItemChange}
-                className="text-md block px-3 py-2 rounded-lg w-full border-b-0
+                className="text-md block px-3 py-2 rounded-lg w-80 border-b-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                 required
                 autoComplete="off"
               />
               {isTyping && suggestion && (
                 <div
-                  className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
+                  className="text-md block px-3 py-2 rounded-b-lg w-80 border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                 >
                   {itemResult &&
@@ -122,8 +125,8 @@ const StockPopUp = ({ isVisible, onClose }) => {
                 </div>
               )}
             </div>
-            <div class="py-1">
-              <span class="px-1 text-sm text-gray-600">Stock Quantity</span>
+            <div style={{gap:"92px"}} class="py-1 flex mt-8">
+              <span  class="px-1 text-lg text-gray-600">Stock Quantity</span>
               <input
                 type="text"
                 name="stock_qty"
@@ -131,12 +134,13 @@ const StockPopUp = ({ isVisible, onClose }) => {
                   setData({ ...data, [e.target.name]: e.target.value })
                 }
                 value={data.stock_qty}
-                className="text-md block px-3 py-2 rounded-lg w-full
+                className="text-md block px-3 py-2 rounded-lg w-80
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
               />
             </div>
-
-            <button type="submit">Submit</button>
+<center>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded mb-10 mt-10" type="submit">Submit</button>
+            </center>
           </form>
         </div>
       </div>
@@ -145,3 +149,4 @@ const StockPopUp = ({ isVisible, onClose }) => {
 };
 
 export default StockPopUp;
+  
