@@ -18,8 +18,9 @@ import RegisterPage from "./components/RegisterPage";
 
 function App() {
   const [open, setOpen] = useState(false);
-
+  // const [navUsed, setNavUsed] =useState(false)
   const location = useLocation();
+
 
 
   const navItems = [
@@ -30,10 +31,12 @@ function App() {
     { Name: "Entries", iconName: "bi-list-check", src: "/entries" ,color:"bg-transparent"}
   ];
 
-
-
   const setNavState = () => {
       setOpen(open); 
+  }
+  
+  function navUsed(){
+    return navItems.some(item => item.src === location.pathname)
   }
 
   return (
@@ -49,9 +52,10 @@ function App() {
 
           <div className="flex gap-x-4  items-center ml-2 mt-10 font">
             <img src="/images/bit1.png" alt="" className={`duration-300 w-12  ${open && "rotate-[360deg]"}`} />
-            <h1 className={`ml-2 mb-2.5 text-3xl pt-1 ${!open && "hidden"}`}>Stores </h1>
+            <h1 className={`ml-2 mb-2.5 text-3xl pt-1 ${!open && "hidden"}`}>Stores {navUsed()}</h1>
           </div>
           <div className="mt-10 mr-2 h-screen" style={{ fontSize: "21px" }}>
+
             <ul>
               {navItems.map((nav) => (
 
@@ -66,10 +70,9 @@ function App() {
           </div>
         </div>))
       }
-
-      <div
-        className={`h-screen flex-1 p-7 ${open ? "ml-64" : "ml-20"
-          } duration-300`}
+        <div
+        className={`h-screen flex-1 p-7 ${ navUsed() ? open ? "ml-64" : "ml-20" : ""} 
+          duration-300`}
       >
         <Routes>
           <Route path="/*" element={<Error404 />} />
@@ -88,6 +91,7 @@ function App() {
 
         </Routes>
       </div>
+      
     </>
   );
 }
