@@ -9,7 +9,7 @@ function Master() {
   return (
     <>
       <div
-        className={` flex-1 ${open ? "ml-64" : "ml-20"} duration-300`}
+        className={`flex-1 ${open ? "ml-64" : "ml-20"} duration-300`}
       >
         <h1 className="text-2xl font-semibold ">Master Page</h1>
         <div className="flex flex-col justify-center items-center ">
