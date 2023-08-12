@@ -12,6 +12,8 @@ import { React, useState } from "react";
 import Dashboard from "./components/NavItems/Dashboard";
 import Error404 from "./components/ErrorPages/Error404";
 import Hover from "./components/Hover";
+import LoginPage from "./components/LoginPage";
+import RegisterPage from "./components/RegisterPage";
 
 
 function App() {
@@ -72,6 +74,8 @@ function App() {
         <Routes>
           <Route path="/*" element={<Error404 />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/registerpage" element={<RegisterPage />} />
           <Route path="/master" element={<Master />} />
           <Route path="/supplier" element={<Supplier />} />
           <Route path="/vendors" element={<Vendors />} />

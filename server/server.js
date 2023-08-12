@@ -85,6 +85,7 @@ app.post("/stockadd", (req,res)=>{
 
 app.get("/getManufacturer", (req, res)=>{
     conn.query("SELECT * FROM manufacturer", (error, result)=>{
+        if(error)console.log(error);
         res.send(result);
     })
 })

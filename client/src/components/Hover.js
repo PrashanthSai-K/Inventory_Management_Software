@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 
 
 const Hover = ({ icon, text }) => {
-  const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
 
   return (
-    <div className="icon-container" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <span className="bi bi-file-person-fill"></span>
-      {isHovered && <span className="text">nass</span>}
-    </div>
+    <>
+      <a data-tooltip-id="my-tooltip" data-tooltip-content="Hello world!">
+        mass
+      </a>
+      <Tooltip place="right" id="my-tooltip" />
+    </>
   );
 };
 
