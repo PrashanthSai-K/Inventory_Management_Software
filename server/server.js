@@ -3,12 +3,15 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mysql = require("mysql"); 
 const dotenv = require('dotenv').config();
+const {verifyToken, createSession, getUser} = require("./auth/loginMiddleware.js");
+const cookieParser = require("cookie-parser");
 
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(cookieParser());
 
 const conn = mysql.createConnection({
     host:process.env.DB_HOST_PUBLIC,
@@ -22,9 +25,19 @@ conn.connect(()=>{
     console.log("Connected to DB sucessfully")
 })
 
+module.exports = conn
+
 app.get("/",(req,res)=>{
+    res.cookie("heelo", "hai");
     res.send("Hello from backend")
 })
+
+app.post("/loginUser", verifyToken, createSession, (req,res)=>{
+    const token = res.locals.token;
+    res.send(token)
+});
+
+app.post("/getUser", getUser)
 
 app.post("/manufactureradd", (req,res)=>{
     const name = req.body.name
