@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 
 const Navbar = ({ location, logout, open, setOpen, user }) => {
-
   const setNavState = () => {
     setOpen(open);
   };
@@ -18,12 +17,12 @@ const Navbar = ({ location, logout, open, setOpen, user }) => {
   function navUsed() {
     return navItems.some((item) => item.src === location);
   }
-  
+
   return (
     <>
       {navItems.map(
         (navItem) =>
-          navItem.src == location && (
+          navItem.src === location && (
             <div
               className={`${
                 open ? "w-64" : "w-20"
@@ -58,7 +57,14 @@ const Navbar = ({ location, logout, open, setOpen, user }) => {
                       return (
                         <>
                           <div
-                            className={`flex gap-x-4 mb-4 cursor-pointer  rounded-full  pl-5 pt-1 pr-2 pb-2`}
+                            className={`flex gap-x-4 mb-4 cursor-pointer ${
+                                location.split("/")[1] ===
+                                nav.Name.toLocaleLowerCase()
+                                ? (nav.color = "bg-gray-700")
+                                : ""
+                            }  rounded-full  ${
+                              nav.color
+                            } hover:bg-gray-700 pl-5 pt-1 pr-2 pb-2`}
                             onClick={logout}
                           >
                             <i
@@ -69,7 +75,7 @@ const Navbar = ({ location, logout, open, setOpen, user }) => {
                             <button
                               className={` duration-300 ${!open && "hidden"}`}
                             >
-                              Logout
+                              {nav.Name}
                             </button>
                           </div>
                         </>
@@ -78,7 +84,14 @@ const Navbar = ({ location, logout, open, setOpen, user }) => {
                       return (
                         <a onClick={setNavState} href={nav.src}>
                           <li
-                            className={`flex gap-x-4 mb-4 cursor-pointer  rounded-full  pl-5 pt-1 pr-2 pb-2`}
+                            className={`flex gap-x-4 mb-4 cursor-pointer ${
+                                location.split("/")[1] ===
+                                nav.Name.toLocaleLowerCase()
+                                ? (nav.color = "bg-gray-700")
+                                : ""
+                            }  rounded-full  ${
+                              nav.color
+                            } hover:bg-gray-700 pl-5 pt-1 pr-2 pb-2`}
                           >
                             <i
                               className={`bi ${nav.iconName} ${

@@ -7,6 +7,7 @@ import Supplier from "./components/NavItems/Supplier";
 import { React, useEffect, useState, createContext } from "react";
 import Dashboard from "./components/NavItems/Dashboard";
 import Error404 from "./components/ErrorPages/Error404";
+import Hover from "./components/Hover";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
