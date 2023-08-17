@@ -60,6 +60,9 @@ function Table() {
                   <th scope="col" class="px-6 py-3 text-left tracking-wider">
                     Purchased By
                   </th>
+                  <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                     Dept Purchased
+                  </th>
                 </tr>
               </thead>
               <tbody class="bg-gray-800">
@@ -102,6 +105,9 @@ function Table() {
                       </td>
                       <td class=" px-6 py-4 whitespace-nowrap">
                         {data.user_id}
+                      </td>
+                      <td class=" px-6 py-4 whitespace-nowrap">
+                        {data.dept_id}
                       </td>
                       </tr>
                   );

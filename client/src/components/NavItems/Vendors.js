@@ -4,13 +4,19 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
 import Cookies from "js-cookie";
-function Vendors({isloggedin}) {
 
-  const navigate = useNavigate();
+
+function Vendors() {
+
+  //<--------Creating required state variables---------->
 
   const [open, setOpen] = useState(false);
   const [manufacturer, setManufacturer] = useState([]);
   const [supplier, setSupplier] = useState([]);
+
+//<-----End of creation of required state variables------>
+
+//<------Fetching data from api to render the page------->
 
   async function fetchManufacturer() {
     const response = await axios
@@ -28,13 +34,15 @@ function Vendors({isloggedin}) {
   useEffect(() => {
     fetchManufacturer();
     fetchSupplier();
-    // console.log(manufacturer);
   },[]);
 
+  //<------End of fetching data from api for the page ------->
+
+  //<---------Authentication of user for the page----------->
 
   const {user, getUser} =useAuth();
 
-
+  const navigate = useNavigate();
   useEffect(()=>{
     if(!Cookies.get("token")){
       navigate("/");
@@ -43,6 +51,7 @@ function Vendors({isloggedin}) {
     }
   },[Cookies.get("token")])
   
+  //<--------End of authentication of user for the page--------->
 
   return (
     <>

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 import Cookies from 'js-cookie';
 
-function Master({isloggedin}) {
+function Master() {
 
   const navigate = useNavigate();
 

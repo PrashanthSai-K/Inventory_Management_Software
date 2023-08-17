@@ -1,16 +1,17 @@
-import {React, useState, useEffect} from "react";
-import axios from 'axios';
+import { React, useState, useEffect } from "react";
+import axios from "axios";
 
 const StockPopUp = ({ isVisible, onClose }) => {
-    
   const [data, setData] = useState({
     itemcode: "",
     stock_qty: "",
-    manufacturerId:"",
-    supplierId:"",
-    inventoryValue:"",
-    userId:"12345"
+    manufacturerId: "",
+    supplierId: "",
+    inventoryValue: "",
+    userId: "12345",
+    labCode:""
   });
+  const [autoForm, setAutoForm] = useState({});
 
   const [item, setItem] = useState([]);
 
@@ -19,16 +20,18 @@ const StockPopUp = ({ isVisible, onClose }) => {
     setItem(response.data);
   }
 
+  // console.log(item)
+
   const handleChange = (e) => {
     setData(e.target.value);
   };
 
   const HandleSubmit = async (e) => {
     e.preventDefault();
-    const result = item.filter((items)=>{
-      if(items.item_code == data.itemcode)
-        return items
-    })
+    const result = item.filter((items) => {
+      if (items.item_code == data.itemcode) return items;
+    });
+  // console.log(result);
     data.manufacturerId = result[0].manufacturer_id;
     data.supplierId = result[0].supplier_id;
     data.inventoryValue = result[0].cost_per_item * data.stock_qty;
@@ -49,10 +52,10 @@ const StockPopUp = ({ isVisible, onClose }) => {
   const [isTyping, setIsTyping] = useState(false);
 
   const handleItemChange = (e) => {
-    if(e.target.value.trim().length >0){
+    if (e.target.value.trim().length > 0) {
       setSuggestion(true);
       setIsTyping(true);
-    }else{
+    } else {
       setIsTyping(false);
       setSuggestion(false);
     }
@@ -62,12 +65,20 @@ const StockPopUp = ({ isVisible, onClose }) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  function resultClick(code){
-    setData({...data, itemcode:code});
+  function resultClick(code) {
+    setData({ ...data, itemcode: code });
+    const result = item.filter((items) => {
+      if (items.item_code == code) {
+        return items;
+      }
+    });
+
+    setAutoForm(result[0]);
     setSuggestion(false);
     setIsTyping(false);
-    
   }
+
+  // console.log(autoForm);
 
   if (!isVisible) return null;
 
@@ -85,13 +96,13 @@ const StockPopUp = ({ isVisible, onClose }) => {
           className="bg-white overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
         >
           <div class="py-1 flex  pb-8 mt-8">
-                  <span class="px-1 text-2xl text-gray-600">Stock Entry</span>
-                </div>
+            <span class="px-1 text-2xl text-gray-600">Stock Entry</span>
+          </div>
           <form onSubmit={HandleSubmit}>
-            
-            <div className="py-1 flex gap-14">
+            <div className="py-1  " >
+              <div className="flex" style={{ gap: "165px" }}>
               <span className="px-1 text-lg text-gray-600">
-                Manufacturer Name
+                Item
               </span>
               <input
                 type="text"
@@ -104,6 +115,8 @@ const StockPopUp = ({ isVisible, onClose }) => {
                 required
                 autoComplete="off"
               />
+              </div>
+              <div style={{paddingLeft:"205px"}}>
               {isTyping && suggestion && (
                 <div
                   className="text-md block px-3 py-2 rounded-b-lg w-80 border-t-0
@@ -124,22 +137,104 @@ const StockPopUp = ({ isVisible, onClose }) => {
                     })}
                 </div>
               )}
+              </div>
             </div>
-            <div style={{gap:"92px"}} class="py-1 flex mt-8">
-              <span  class="px-1 text-lg text-gray-600">Stock Quantity</span>
+
+            <div style={{ gap: "120px" }} class="py-1 flex pb-8 mt-5">
+              <span class="px-1 text-lg text-gray-600">Item Name</span>
               <input
                 type="text"
+                name="subName"
+                value={autoForm.item_name}
+                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                required
+                disabled
+              />
+            </div>
+            <div style={{ gap: "90px" }} class="py-1 flex pb-8">
+              <span class="px-1 text-lg text-gray-600">Item Sub-Name</span>
+              <input
+                type="text"
+                name="subName"
+                value={autoForm.item_subname}
+                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                required
+                disabled
+              />
+            </div>
+            <div style={{ gap: "85px" }} class="py-1 flex pb-8">
+              <span class="px-1 text-lg text-gray-600">Item Description</span>
+              <input
+                type="text"
+                name="subName"
+                value={autoForm.item_spec1}
+                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                required
+                disabled
+              />
+            </div>
+            <div style={{ gap: "120px" }} class="py-1 flex pb-8">
+              <span class="px-1 text-lg text-gray-600">Item Type</span>
+              <input
+                type="text"
+                name="subName"
+                value={autoForm.item_type}
+                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                required
+                disabled
+              />
+            </div>
+            <div style={{ gap: "90px" }} class="py-1 flex pb-8">
+              <span class="px-1 text-lg text-gray-600">Cost Per Item</span>
+              <input
+                type="text"
+                name="subName"
+                value={autoForm.cost_per_item}
+                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                required
+                disabled
+              />
+            </div>
+            <div style={{ gap: "90px" }} class="py-1 flex pb-8">
+              <span class="px-1 text-lg text-gray-600">Lab Code</span>
+              <input
+                type="text"
+                name="labCode"
+                value={data.labCode}
+                onChange={(e) =>
+                  setData({ ...data, [e.target.name]: e.target.value })
+                }
+                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                required
+              />
+            </div>
+            <div style={{ gap: "92px" }} class=" flex mt-2">
+              <span class="px-1 text-lg text-gray-600">Stock Quantity</span>
+              <input
+                type="number"
                 name="stock_qty"
                 onChange={(e) =>
                   setData({ ...data, [e.target.name]: e.target.value })
                 }
                 value={data.stock_qty}
-                className="text-md block px-3 py-2 rounded-lg w-80
+                required
+                className="text-md block px-3 py-2 rounded-lg w-80 
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
               />
             </div>
-<center>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded mb-10 mt-10" type="submit">Submit</button>
+            <center>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded mb-10 mt-10"
+                type="submit"
+              >
+                Submit
+              </button>
             </center>
           </form>
         </div>
@@ -149,4 +244,3 @@ const StockPopUp = ({ isVisible, onClose }) => {
 };
 
 export default StockPopUp;
-  

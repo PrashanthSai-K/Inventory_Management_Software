@@ -5,6 +5,7 @@ const mysql = require("mysql");
 const dotenv = require('dotenv').config();
 const {verifyToken, createSession, getUser} = require("./auth/loginMiddleware.js");
 const cookieParser = require("cookie-parser");
+const db = require("./database/db.js");
 
 
 const app = express();
@@ -13,19 +14,20 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 
-const conn = mysql.createConnection({
-    host:process.env.DB_HOST_PUBLIC,
-    user:process.env.DB_USERNAME,
-    password:process.env.DB_PASSWORD,
-    database:process.env.DB_NAME,
-    port:process.env.DB_PORT_PUBLIC
-})
+// const conn = mysql.createConnection({
+    // host:process.env.DB_HOST_PUBLIC,
+    // user:process.env.DB_USERNAME,
+    // password:process.env.DB_PASSWORD,
+    // database:process.env.DB_NAME,
+    // port:process.env.DB_PORT_PUBLIC
+// })
 
-conn.connect(()=>{
-    console.log("Connected to DB sucessfully")
-})
+// conn.connect(()=>{
+//     console.log("Connected to DB sucessfully")
+// })
+// conn.end();
 
-module.exports = conn
+// module.exports = conn
 
 app.get("/",(req,res)=>{
     res.cookie("heelo", "hai");
@@ -41,7 +43,7 @@ app.post("/getUser", getUser)
 
 app.post("/manufactureradd", (req,res)=>{
     const name = req.body.name
-    conn.query("INSERT INTO manufacturer (name) VALUES (?)",[name],(error,result)=>{
+    db.query("INSERT INTO manufacturer (name) VALUES (?)",[name],(error,result)=>{
         if(error) console.log(error)
         res.send("Manufactured Created Successfully");
     })
@@ -52,7 +54,7 @@ app.post("/supplieradd", (req,res)=>{
     const name = req.body.name;
     const address = req.body.address;
     const contact = req.body.contact;
-    conn.query("INSERT INTO supplier (name,address,contact) VALUES (?,?,?)",[name,address,contact],(error,result)=>{
+    db.query("INSERT INTO supplier (name,address,contact) VALUES (?,?,?)",[name,address,contact],(error,result)=>{
         if(error) console.log(error)
         res.send("Supplier Created Successfully");
     })
@@ -70,7 +72,7 @@ app.post("/itemadd", (req,res)=>{
     const cost = req.body.cost;
     const unit = req.body.units;
     console.log(unit)
-    conn.query(`INSERT INTO itemtable 
+    db.query(`INSERT INTO itemtable 
                 (item_type, item_name, item_subname, item_spec1,item_spec2, item_spec3, cost_per_item, quantity_units, manufacturer_id, supplier_id) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [itemType,itemName,subName, Spec1,Spec2, Spec3, cost, unit, manufacturerId, supplierId],
                 (error, result)=>{
@@ -80,16 +82,18 @@ app.post("/itemadd", (req,res)=>{
 })
 
 app.post("/stockadd", (req,res)=>{
+
     const item_code = req.body.itemcode;
     const manufacturerId = req.body.manufacturerId;
     const supplierId = req.body.supplierId;
     const stockQty = req.body.stock_qty;
     const inventoryValue = req.body.inventoryValue;
     const userId = req.body.userId;
+    const labCode = req.body.labCode;
     const currDate = new Date();
 
-    conn.query(`INSERT INTO stocktable (item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id, created_at) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)`, [item_code, manufacturerId,supplierId, stockQty, inventoryValue, userId, currDate.toISOString().split("T")[0]],
+    db.query(`INSERT INTO stocktable (item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id, created_at, dept_id) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, [item_code, manufacturerId,supplierId, stockQty, inventoryValue, userId, currDate.toISOString().split("T")[0], labCode],
                 (error, result)=>{
                     if(error)console.log(error);
                     else console.log(result);
@@ -97,20 +101,20 @@ app.post("/stockadd", (req,res)=>{
 })
 
 app.get("/getManufacturer", (req, res)=>{
-    conn.query("SELECT * FROM manufacturer", (error, result)=>{
+    db.query("SELECT * FROM manufacturer", (error, result)=>{
         if(error)console.log(error);
         res.send(result);
     })
 })
 
 app.get("/getSupplier", (req, res)=>{
-    conn.query("SELECT * FROM supplier", (error, result)=>{
+    db.query("SELECT * FROM supplier", (error, result)=>{
         res.send(result);
     })
 })
 
 app.get("/getItems", (req, res)=>{
-    conn.query("SELECT * FROM itemtable",(error,result)=>{
+    db.query("SELECT * FROM itemtable",(error,result)=>{
         if(error)console.log(error);
         else{
             res.send(result);
@@ -118,8 +122,18 @@ app.get("/getItems", (req, res)=>{
     })
 })
 
+app.get("/getStock", (req, res)=>{
+    db.query("SELECT * FROM stocktable",(error,result)=>{
+        if(error)console.log(error);
+        else{
+            res.send(result);
+        }
+    })
+})
+
+
 app.get("/getQuantityUnits", (req, res)=>{
-    conn.query("SELECT * FROM quantity_units", (error, result)=>{
+    db.query("SELECT * FROM quantity_units", (error, result)=>{
         if(error)console.log(error);
         else{
             res.send(result);
@@ -128,7 +142,7 @@ app.get("/getQuantityUnits", (req, res)=>{
 })
 
 app.get("/getAdminStockData", (req,res)=>{
-    conn.query("SELECT * FROM admin_stock_view", (error, result)=>{
+    db.query("SELECT * FROM admin_stock_view", (error, result)=>{
         if(error)console.log(error);
         res.send(result)
     })
