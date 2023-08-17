@@ -1,7 +1,9 @@
 import React from "react";
 
 function RegisterPage() {
+
   return (
+    
     <div className="h-full w-full flex justify-center items-center bg-sky-200">
       <div className="w-96 h-3/4 bg-white rounded-3xl pt-5">
         <div className="h-1/4 flex flex-col justify-center items-center ">
@@ -52,9 +54,10 @@ function RegisterPage() {
             />
           </div>
           <div className="justify-start w-3/4 pt-5">
-            <button className="border-2 border-black text-xl rounded-xl pt-1 pb-1 pl-5 pr-5">Register</button>
+            <button className="border-2 border-black text-xl rounded-xl pt-1 pb-1 pl-5 pr-5">
+              Register
+            </button>
           </div>
-
         </form>
       </div>
     </div>

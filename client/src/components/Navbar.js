@@ -1,17 +1,23 @@
 import { React, useEffect, useState } from "react";
+import { useAuth } from "../AuthContext";
 
-const Navbar = ({ location, logout, open, setOpen, user }) => {
+const Navbar = ({ location, open, setOpen, user }) => {
+
   const setNavState = () => {
     setOpen(open);
   };
 
+  const {logout} = useAuth();
+
   const navItems = [
+
     { Name: "Dashboard", iconName: "bi-speedometer", src: "/dashboard" },
     { Name: "Master", iconName: "bi-file-person-fill", src: "/master" },
     { Name: "Supplier", iconName: "bi-archive-fill", src: "/supplier" },
     { Name: "Vendors", iconName: "bi-building", src: "/vendors" },
     { Name: "Entries", iconName: "bi-list-check", src: "/entries" },
     { Name: "Logout", iconName: "bi-box-arrow-right" },
+    
   ];
 
   function navUsed() {

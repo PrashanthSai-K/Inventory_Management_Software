@@ -6,23 +6,28 @@ import { useGoogleLogin } from "@react-oauth/google";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom"; 
 import { Input, Ripple, initTE } from "tw-elements";
+import { useAuth } from "../AuthContext";
+
 initTE({ Input, Ripple });
+
 
 function LoginPage({getUser}) {
 
   const navigate = useNavigate();
 
-  async function loginUser(response) {
-    const result = await axios
-      .post("http://localhost:4000/loginUser", { res: response })
-      .catch((error) => console.log(error))
-      .then((response)=>Cookies.set("token", response.data))
-      .then(()=>getUser())
-      .then(()=>navigate("/dashboard"));
-  }
+  // async function loginUser(response) {
+  //   const result = await axios
+  //     .post("http://localhost:4000/loginUser", { res: response })
+  //     .catch((error) => console.log(error))
+  //     .then((response)=>Cookies.set("token", response.data))
+  //     .then(()=>getUser())
+  //     .then(()=>navigate("/dashboard"));
+  // }
 
-  const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => loginUser(tokenResponse),
+  const {login} = useAuth();
+
+  const loginCall = useGoogleLogin({
+    onSuccess: (tokenResponse) => login(tokenResponse),
   });
 
   return (
@@ -73,7 +78,7 @@ function LoginPage({getUser}) {
               Log in!!!
             </button>
             <div id="my-signin2">
-              <button onClick={() => login()}>Sign in with Google 🚀 </button>;
+              <button onClick={() => loginCall()}>Sign in with Google 🚀 </button>;
               ; ;
             </div>
           </div>
