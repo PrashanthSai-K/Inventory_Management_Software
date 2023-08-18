@@ -1,10 +1,25 @@
 import React from 'react'
 import Cards from '../CommonPages/Cards'
 import Table from '../CommonPages/Table'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../AuthContext';
+import Cookies from 'js-cookie';
 
 function Master() {
+
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
+  const {user, getUser} =useAuth();
+  
+  useEffect(()=>{
+    getUser();
+  })
+  if(!Cookies.get("token")){
+    navigate("/");
+  }
+
 
   return (
     <>
