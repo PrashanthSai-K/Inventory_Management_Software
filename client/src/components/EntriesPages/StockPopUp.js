@@ -91,7 +91,7 @@ const StockPopUp = ({ isVisible, onClose }) => {
             
             <div className="py-1 flex gap-14">
               <span className="px-1 text-lg text-gray-600">
-                Manufacturer Name
+                Item Name
               </span>
               <input
                 type="text"

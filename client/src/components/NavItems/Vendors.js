@@ -46,7 +46,7 @@ function Vendors() {
       >
         <div className="flex flex-col gap-10 ">
           <div className="text-2xl font-semibold ">Manufacturer</div>
-          <div class="relative rounded-2xl overflow-x-auto h-2/6">
+          <div class="relative overflow-x-auto overflow-y-auto  rounded-2xl h-96">
             <table class="w-96 text-sm text-left text-gray-500 dark:text-gray-400 ">
               <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -76,7 +76,7 @@ function Vendors() {
         </div>
         <div className="flex flex-col gap-10">
           <div className="text-2xl font-semibold ">Supplier</div>
-          <div class="relative overflow-x-auto rounded-2xl h-2/6">
+          <div class="relative overflow-x-auto overflow-y-auto rounded-2xl h-96">
             <table
               style={{ width: "500px" }}
               class=" text-sm text-left text-gray-500 dark:text-gray-400"

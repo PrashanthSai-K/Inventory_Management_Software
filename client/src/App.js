@@ -11,9 +11,11 @@ import Supplier from "./components/NavItems/Supplier";
 import { React, useState } from "react";
 import Dashboard from "./components/NavItems/Dashboard";
 import Error404 from "./components/ErrorPages/Error404";
-import Hover from "./components/Hover";
-import LoginPage from "./components/LoginPage";
-import RegisterPage from "./components/RegisterPage";
+import LoginPage from "./components/CommonPages/LoginPage";
+import RegisterPage from "./components/CommonPages/RegisterPage";
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
+import Graph from "./components/Graph";
 
 
 function App() {
@@ -24,12 +26,14 @@ function App() {
 
 
   const navItems = [
-    { Name: "Dashboard", iconName: "bi-speedometer", src: "/dashboard" , color:"bg-transparent" },
-    { Name: "Master", iconName: "bi-file-person-fill", src: "/master" ,color:"bg-transparent"},
-    { Name: "Supplier", iconName: "bi-archive-fill", src: "/supplier",color:"bg-transparent" },
-    { Name: "Vendors", iconName: "bi-building", src: "/vendors" ,color:"bg-transparent"},
-    { Name: "Entries", iconName: "bi-list-check", src: "/entries" ,color:"bg-transparent"}
+    { Name: "Dashboard", iconName: "bi-speedometer", src: "/dashboard" , color:"bg-transparent" ,role:"super"},
+    { Name: "Master", iconName: "bi-file-person-fill", src: "/master" ,color:"bg-transparent" , role:"student"},
+    { Name: "Supplier", iconName: "bi-archive-fill", src: "/supplier",color:"bg-transparent", role:"admin" },
+    { Name: "Vendors", iconName: "bi-building", src: "/vendors" ,color:"bg-transparent" ,role:"admin" },
+    { Name: "Entries", iconName: "bi-list-check", src: "/entries" ,color:"bg-transparent", role:"super" }
   ];
+   
+
 
   const setNavState = () => {
       setOpen(open); 
@@ -57,12 +61,14 @@ function App() {
           <div className="mt-10 mr-2 h-screen" style={{ fontSize: "21px" }}>
 
             <ul>
+              
               {navItems.map((nav) => (
-
-                <a onClick={setNavState} href={nav.src}>
+                <a onClick={setNavState} data-Tooltip-id="my-tooltip" data-tooltip-content={nav.Name} href={nav.src}>
                   <li className={`flex gap-x-4 mb-4 cursor-pointer ${(location.pathname.split("/")[1] === nav.Name.toLocaleLowerCase()) ?  nav.color="bg-gray-700": ""}  rounded-full  ${nav.color} hover:bg-gray-700 pl-5 pt-1 pr-2 pb-2`}>
                     <i className={`bi ${nav.iconName} ${!open && "text-2xl text-center"} duration-300 `}></i>
                     <span className={` duration-300 ${!open && "hidden"}`}>{nav.Name}</span>
+                    { !open &&
+                      <Tooltip place="bottom"  id="my-tooltip" />}
                   </li>
                 </a>
               ))}
@@ -71,7 +77,7 @@ function App() {
         </div>))
       }
         <div
-        className={`h-screen flex-1 p-7 ${ navUsed() ? open ? "ml-64" : "ml-20" : ""} 
+        className={`h-screen flex-1 ${ navUsed() ? open ? "ml-64" : "ml-20" : ""} 
           duration-300`}
       >
         <Routes>
@@ -83,12 +89,11 @@ function App() {
           <Route path="/supplier" element={<Supplier />} />
           <Route path="/vendors" element={<Vendors />} />
           <Route path="/entries" element={<Entries />} />
-          <Route path="/hover" element={<Hover/>} />
+          <Route path="/g" element={<Graph />} />
           {/* <Route path="/manufactureradd" element={<ManufacturerEntry />} /> */}
           {/* <Route path="/supplieradd" element={<SupplierEntry />} /> */}
           {/* <Route path="/itemadd" element={<ItemEntry />} /> */}
           {/* <Route path="/stockadd" element={<StockEntry />} /> */}
-
         </Routes>
       </div>
       
