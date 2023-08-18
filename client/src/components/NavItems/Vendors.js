@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Cards from "../CommonPages/Cards";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthContext";
+import Cookies from "js-cookie";
+function Vendors({isloggedin}) {
 
-function Vendors() {
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
   const [manufacturer, setManufacturer] = useState([]);
   const [supplier, setSupplier] = useState([]);
@@ -25,6 +30,19 @@ function Vendors() {
     fetchSupplier();
     // console.log(manufacturer);
   },[]);
+
+
+  const {user, getUser} =useAuth();
+
+
+  useEffect(()=>{
+    if(!Cookies.get("token")){
+      navigate("/");
+    }else{
+      getUser();
+    }
+  },[Cookies.get("token")])
+  
 
   return (
     <>

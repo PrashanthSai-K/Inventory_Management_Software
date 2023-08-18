@@ -4,16 +4,17 @@ import React, { useState, useEffect } from "react";
 function Table() {
   const [stockData, setStockData] = useState([]);
 
-  async function fetchStockData() {
-    const response = await axios.get("http://localhost:4000/getAdminStockData");
-    setStockData(response.data);
-    // console.log(stockData);
-  }
-  useEffect(() => {
-    fetchStockData();
-  });
-
-  console.log(stockData);
+    async function fetchStockData() {
+      const response = await axios.get("http://localhost:4000/getAdminStockData");
+      setStockData(response.data);
+      // console.log(stockData);
+    }
+    useEffect(() => {
+      fetchStockData();
+    });
+  
+    console.log(stockData);
+  
 
   return (
     <div className="w-11/12 max-h-10">
@@ -60,6 +61,15 @@ function Table() {
                   <th scope="col" class="px-6 py-3 text-left tracking-wider">
                     Purchased By
                   </th>
+                  <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                    
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                   
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                    
+                  </th>
                 </tr>
               </thead>
               <tbody class="bg-gray-800">
@@ -102,6 +112,15 @@ function Table() {
                       </td>
                       <td class=" px-6 py-4 whitespace-nowrap">
                         {data.user_id}
+                      </td>
+                      <td class=" px-6 py-2 whitespace-nowrap">
+                        <i className="bi bi-eye cursor-pointer"></i>
+                      </td>
+                      <td class=" px-6 py-2 whitespace-nowrap">
+                      <i className="bi bi-pen cursor-pointer"></i>
+                      </td>
+                      <td  class=" px-6 py-2  whitespace-nowrap">
+                      <i className="bi bi-trash cursor-pointer"></i>
                       </td>
                       </tr>
                   );
