@@ -7,7 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Vendors from "./components/NavItems/Vendors";
-import Entries from "./components/NavItems/Entries";
+import Entries from "./components/NavItems/Entries/Entries";
 import Master from "./components/NavItems/Master";
 import Supplier from "./components/NavItems/Supplier";
 import { React, useEffect, useState } from "react";
@@ -21,10 +21,10 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import Navbar from "./components/Navbar";
 import { AuthProvider } from "./AuthContext";
-import Transfer from "./components/CommonPages/Transfer";
+import Transfer from "./components/NavItems/Transfer/Transfer";
+import Unauthorized from "./components/ErrorPages/Unauthorized";
 
 function App() {
-
   const [open, setOpen] = useState(false);
 
   const location = useLocation();
@@ -35,7 +35,7 @@ function App() {
     { Name: "Supplier", iconName: "bi-archive-fill", src: "/supplier" },
     { Name: "Vendors", iconName: "bi-building", src: "/vendors" },
     { Name: "Entries", iconName: "bi-list-check", src: "/entries" },
-    { Name: "Transfer", iconName:"bi-arrow-left-right", src:"/transfer"},
+    { Name: "Transfer", iconName: "bi-arrow-left-right", src: "/transfer" },
     { Name: "Logout", iconName: "bi-box-arrow-right" },
   ];
 
@@ -49,14 +49,12 @@ function App() {
 
   return (
     <>
-   
       <Navbar
         location={location.pathname}
-        navItems = {navItems}
+        navItems={navItems}
         open={open}
         setOpen={setOpen}
         user={user}
-        
       />
 
       <div
@@ -66,46 +64,20 @@ function App() {
         duration-300`}
       >
         <GoogleOAuthProvider clientId="494572126295-g8ok8a5g0kvr3ceodj12h5orod5oe38v.apps.googleusercontent.com">
-          
-            <Routes>
-              <Route 
-                path="/*" 
-                element={<Error404 />} 
-              />
-              <Route
-                path="/"
-                element={<LoginPage />}
-              />
-              <Route
-                path="/dashboard"
-                element={<Dashboard  />}
-              />
-              <Route path="/registerpage" element={<RegisterPage />} />
-              <Route
-                path="/master"
-                element={<Master />}
-              />
-              <Route
-                path="/supplier"
-                element={<Supplier />}
-              />
-              <Route
-                path="/vendors"
-                element={<Vendors  />}
-              />
-              <Route
-                path="/transfer"
-                element={<Transfer  />}
-              />
-              <Route
-                path="/entries"
-                element={<Entries/>}
-              />
-
-            </Routes>
+          <Routes>
+            <Route path="/*" element={<Error404 />} />
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/registerpage" element={<RegisterPage />} />
+            <Route path="/master" element={<Master />} />
+            <Route path="/supplier" element={<Supplier />} />
+            <Route path="/vendors" element={<Vendors open={open}/>} />
+            <Route path="/transfer" element={<Transfer />} />
+            <Route path="/entries" element={<Entries />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+          </Routes>
         </GoogleOAuthProvider>
       </div>
-
     </>
   );
 }

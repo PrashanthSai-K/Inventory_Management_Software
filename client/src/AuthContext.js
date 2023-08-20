@@ -29,13 +29,19 @@ export function AuthProvider({ children }) {
   }
 
   async function login(response) {
-    const result = await axios
-      .post("http://localhost:4000/loginUser", { res: response })
-      .catch((error) => console.log(error))
-      .then((response) => Cookies.set("token", response.data))
-      .then(()=>setIsLoggedIn(true))
-      .then(() => getUser())
-      .then(() => navigate("/dashboard"));
+    try{
+      const result = await axios.post("http://localhost:4000/loginUser", { res: response });
+      Cookies.set("token", result.data)
+      setIsLoggedIn(true)
+      await getUser();
+      navigate("/dashboard");
+    }catch(error){
+      if(error.response.status==401){
+        navigate("/unauthorized")
+      }
+      return;
+    }
+    
   }
 
   function logout(){

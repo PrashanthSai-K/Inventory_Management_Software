@@ -16,6 +16,9 @@ module.exports = {
       fontFamily :{
         Poppins: ["Poppins","sans-serif"],
         Saira: ["Saira","sans-serif"],
+      },
+      spacing:{
+        "h-100":"500px"
       }
     },
   },

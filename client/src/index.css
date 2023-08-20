@@ -33,7 +33,7 @@ tr th:nth-child(1) {
     color: white;
 }
 *{
-    font-family: "Iceland";
+    font-family: "Poppins";
 }
 
 ::-webkit-scrollbar {
@@ -59,3 +59,23 @@ tr th:nth-child(1) {
   border-radius: 4px;
 }
 
+
+.card {
+  backdrop-filter: blur(6px) saturate(0%);
+  -webkit-backdrop-filter: blur(6px) saturate(0%);
+  background-color: rgba(219, 219, 219, 0.76);
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.125);
+  width: 90%;
+  height: 250px;
+  margin-left: 5%;
+}
+
+@media (max-width:768px) {
+  .card{
+    height: auto;
+  }
+  .card-sub{
+    gap:0%;
+  }
+}

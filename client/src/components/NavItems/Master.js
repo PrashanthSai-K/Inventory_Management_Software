@@ -16,9 +16,13 @@ function Master() {
   useEffect(()=>{
     getUser();
   })
-  if(!Cookies.get("token")){
-    navigate("/");
-  }
+  useEffect(()=>{
+    if(!Cookies.get("token")){
+      navigate("/");
+    }else{
+      getUser();
+    }
+  },[Cookies.get("token")])
 
 
   return (
