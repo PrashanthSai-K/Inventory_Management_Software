@@ -4,13 +4,19 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
 import Cookies from "js-cookie";
-function Vendors({isloggedin}) {
 
-  const navigate = useNavigate();
+
+function Vendors() {
+
+  //<--------Creating required state variables---------->
 
   const [open, setOpen] = useState(false);
   const [manufacturer, setManufacturer] = useState([]);
   const [supplier, setSupplier] = useState([]);
+
+//<-----End of creation of required state variables------>
+
+//<------Fetching data from api to render the page------->
 
   async function fetchManufacturer() {
     const response = await axios
@@ -28,13 +34,15 @@ function Vendors({isloggedin}) {
   useEffect(() => {
     fetchManufacturer();
     fetchSupplier();
-    // console.log(manufacturer);
   },[]);
 
+  //<------End of fetching data from api for the page ------->
+
+  //<---------Authentication of user for the page----------->
 
   const {user, getUser} =useAuth();
 
-
+  const navigate = useNavigate();
   useEffect(()=>{
     if(!Cookies.get("token")){
       navigate("/");
@@ -43,28 +51,29 @@ function Vendors({isloggedin}) {
     }
   },[Cookies.get("token")])
   
+  //<--------End of authentication of user for the page--------->
 
   return (
     <>
-      <div className={` flex-1 ${open ? "ml-64" : "ml-20"} duration-300`}>
+      <div className={` flex-1 duration-300`}>
         <h1 className="text-2xl font-semibold ">Vendors</h1>
-        <div className="flex flex-col justify-center items-center ">
-          <Cards />
-          <div
+        <div className="flex flex-col justify-center items-center w-full phone:ml-10 lg:ml-0">
+          <center><Cards /></center>
+          {/* <div
             class={`flex flex-col mt-16 w-11/12 scale-90 tablet:scale-100 ${
               open && "scale-90 tablet:scale-100"
             }`}
-          ></div>
+          ></div> */}
         </div>
       </div>
       <div
         className={` flex gap-6 justify-center ${
           open ? "ml-64" : "mr-8"
-        } duration-300`}
+        } duration-300 flex-wrap`}
       >
         <div className="flex flex-col gap-10 ">
           <div className="text-2xl font-semibold ">Manufacturer</div>
-          <div class="relative rounded-2xl overflow-x-auto h-2/6">
+          <div class="relative rounded-2xl overflow-y-scroll h-2/6">
             <table class="w-96 text-sm text-left text-gray-500 dark:text-gray-400 ">
               <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>

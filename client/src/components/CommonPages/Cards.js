@@ -7,8 +7,8 @@ function Cards() {
         { color: "bg-teal-400", src: "total" }
       ];
   return (
-    <div className='w-full'>
-         <div className="items-center flex w-11/12 justify-between gap-10 mt-8 scale-90 flex-wrap tablet:scale-100">
+    <div className=' w-full'>
+         <div className="items-center flex w-full gap-10   mt-8 scale-90 flex-wrap tablet:scale-100">
             {cards.map((items) => (
               <div
                 className={`w-96 h-36 ${items.color} rounded-3xl  flex tablet:h-40`}

@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       screens: {
         'tablet': '1080px',
+        'phone':'300px'
       },
       scrollbar: {
         width: '12px',

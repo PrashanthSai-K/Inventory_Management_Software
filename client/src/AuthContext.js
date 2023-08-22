@@ -20,9 +20,8 @@ export function AuthProvider({ children }) {
       const token = Cookies.get("token");
       const result = await axios.post("http://localhost:4000/getUser", {
         token: token,
-      });
+      }).catch((error)=>console.log(error));
       setUser(result.data);
-      setUser((data) => ({ ...data, loggedin: true }));
       return(user);
     } catch (error) {
       setIsLoggedIn(false);

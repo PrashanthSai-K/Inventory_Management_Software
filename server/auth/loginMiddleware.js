@@ -1,20 +1,16 @@
 const { OAuth2Client } = require("google-auth-library");
 const axios = require("axios");
-const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv").config();
 const key = process.env.JWT_KEY;
+const mysql = require("mysql");
+const dotenv = require("dotenv").config();
 
-const conn = mysql.createConnection({
+const db = mysql.createPool({
   host: process.env.DB_HOST_PUBLIC,
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   port: process.env.DB_PORT_PUBLIC,
-});
-
-conn.connect(() => {
-  console.log("Connected to DB sucessfully");
 });
 
 const clientId =
@@ -34,47 +30,52 @@ const verifyToken = async function (req, res, next) {
   } catch (error) {
     console.error("Error verifying token:", error);
   }
-  
 };
 
 const createSession = function (req, res, next) {
   // console.log(res.locals.payload);
   const email = res.locals.payload.email;
   console.log(email);
-  conn.query(
-    "SELECt * FROM faculty WHERE email_id = ?",
+  db.query(
+    "SELECT * FROM faculty WHERE email_id = ? ",
     [email],
     (error, result) => {
       if (error) {
-        console.log(error);
-        return;
-      };
-      JSON.parse(JSON.stringify(result));
-      console.log(result[0].role);
-      const token = jwt.sign(
-        {
-          user_id: result[0].faculty_id,
-          email_id: result[0].email_id,
-          dept_code: result[0].department_code,
-          role: result[0].role,
-        },
-        key
-      );
-      // console.log(token);
-      res.locals.token = token;
-      next()
+        res.status(404).json({error:"Unknown Error"});
+      } else {
+        JSON.parse(JSON.stringify(result));
+        // console.log(result[0]);
+        const token = jwt.sign(
+          {
+            user_id: result[0].faculty_id,
+            user_name: result[0].name,
+            email_id: result[0].email_id,
+            dept_code: result[0].department_code,
+            role: result[0].role,
+          },
+          key
+        );
+        console.log(token);
+        res.locals.token = token;
+        next();
+      }
     }
   );
+  
 };
 
-const getUser = function(req, res, next){
-    const token = req.body.token;
-    try{
-      const data = jwt.verify(token, key);
-      res.send(data)
-    }catch(error){
-     res.send("invalid token");
-    }
-}
+const getUser = function (req, res, next) {
+  const token = req.body.token;
+  try {
+    const data = jwt.verify(token, key);
+    res.send(data);
+  } catch (error) {
+    res.status(404).json({error:"Invalid Token"});
+  }
+};
 
-module.exports = { verifyToken: verifyToken, createSession: createSession, getUser: getUser };
+module.exports = {
+  verifyToken: verifyToken,
+  createSession: createSession,
+  getUser: getUser,
+};

@@ -48,6 +48,7 @@ const StockEntry = () => {
   const [isTyping, setIsTyping] = useState(false);
 
   const handleItemChange = (e) => {
+
     if(e.target.value.trim().length >0){
       setSuggestion(true);
       setIsTyping(true);
@@ -72,7 +73,7 @@ const StockEntry = () => {
     <form onSubmit={HandleSubmit}>
       <h1>Stock Entry</h1>
       <div className="py-1">
-        <span className="px-1 text-sm text-gray-600">Manufacturer Name</span>
+        <span className="px-1 text-sm text-gray-600">Item Name</span>
         <input
           type="text"
           name="itemcode"
@@ -105,6 +106,7 @@ const StockEntry = () => {
           </div>
         )}
       </div>
+
       <div class="py-1">
         <span class="px-1 text-sm text-gray-600">Stock Quantity</span>
         <input

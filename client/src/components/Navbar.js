@@ -1,25 +1,13 @@
-import { React, useEffect, useState } from "react";
+import { React} from "react";
 import { useAuth } from "../AuthContext";
 
-const Navbar = ({ location, open, setOpen, user }) => {
+const Navbar = ({ location, open, setOpen, navItems }) => {
 
   const setNavState = () => {
     setOpen(open);
   };
 
   const {logout} = useAuth();
-
-  const navItems = [
-
-    { Name: "Dashboard", iconName: "bi-speedometer", src: "/dashboard" },
-    { Name: "Master", iconName: "bi-file-person-fill", src: "/master" },
-    { Name: "Supplier", iconName: "bi-archive-fill", src: "/supplier" },
-    { Name: "Vendors", iconName: "bi-building", src: "/vendors" },
-    { Name: "Entries", iconName: "bi-list-check", src: "/entries" },
-    { Name: "Stores", iconName: "bi bi-shop", src: "/stores" },
-    { Name: "Logout", iconName: "bi-box-arrow-right" },
-    
-  ];
 
   function navUsed() {
     return navItems.some((item) => item.src === location);
@@ -38,7 +26,7 @@ const Navbar = ({ location, open, setOpen, user }) => {
               <img
                 src="/images/control.png"
                 alt=""
-                className={`absolute -right-3   w-8 border-blue-800 border-2  rounded-full ${
+                className={`absolute -right-3 phone:hidden lg:block  w-8 border-blue-800 border-2  rounded-full ${
                   !open && "rotate-180"
                 } `}
                 style={{ top: "88px" }}

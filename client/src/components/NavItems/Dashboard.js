@@ -22,7 +22,7 @@ function Dashboard() {
 
   return (
     <>
-      {user.dept_code}
+      {user.user_name}
       <h1 className="text-2xl font-semibold ">Dashboard</h1>
       {user.length ? (
         <div className="text-2xl">

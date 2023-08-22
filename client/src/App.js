@@ -26,22 +26,24 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import Navbar from "./components/Navbar";
 import { AuthProvider } from "./AuthContext";
-import Stores from "./components/Stores/Stores";
+import Stores from "./components/NavItems/Stores/Stores";
+import Transfer from "./components/CommonPages/Transfer";
 
 function App() {
-  const [open, setOpen] = useState(false);
 
-  const [isloggedin, setIsLoggedin] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const location = useLocation();
 
   const navItems = [
+
     { Name: "Dashboard", iconName: "bi-speedometer", src: "/dashboard" },
     { Name: "Master", iconName: "bi-file-person-fill", src: "/master" },
-    { Name: "Supplier", iconName: "bi-archive-fill", src: "/supplier" },
+    // { Name: "Supplier", iconName: "bi-archive-fill", src: "/supplier" },
     { Name: "Vendors", iconName: "bi-building", src: "/vendors" },
     { Name: "Entries", iconName: "bi-list-check", src: "/entries" },
-    { Name: "Stores", iconName: "bi-list-check", src: "/stores" },
+    { Name: "Stores", iconName: "bi-shop", src: "/stores" },
+    { Name: "Transfer", iconName:"bi-arrow-left-right", src:"/transfer"},
     { Name: "Logout", iconName: "bi-box-arrow-right" },
   ];
 
@@ -53,50 +55,16 @@ function App() {
     return navItems.some((item) => item.src === location.pathname);
   }
 
-  // async function getUser() {
-  //   try{
-  //   const token = Cookies.get("token");
-  //   const result = await axios.post("http://localhost:4000/getUser", { token: token });
-  //   setUser(result.data);
-  //   setUser((data)=>({...data, loggedin:true}))
-  //   }catch(error){
-  //     setIsLoggedin(false);
-  //   }
-  // }
-
-  // console.log(user)
-
-  const logout = async () => {
-    setIsLoggedin(false);
-    setUser([]);
-    try {
-      Cookies.remove("token");
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-
-
-  useEffect(() => {
-    if (Cookies.get("token")) {
-      // getUser();
-    }
-  }, []);
-
-
-
   return (
     <>
    
       <Navbar
         location={location.pathname}
-        logout={logout}
+        navItems = {navItems}
         open={open}
         setOpen={setOpen}
         user={user}
-        isloggedin={isloggedin}
+        
       />
 
       <div
@@ -108,41 +76,44 @@ function App() {
         <GoogleOAuthProvider clientId="494572126295-g8ok8a5g0kvr3ceodj12h5orod5oe38v.apps.googleusercontent.com">
           
             <Routes>
-              <Route path="/*" element={<Error404 />} />
+              <Route 
+                path="/*" 
+                element={<Error404 />} 
+              />
               <Route
                 path="/"
-                element={
-                  
-                    <LoginPage />
-                  
-                }
+                element={<LoginPage />}
               />
               <Route
                 path="/dashboard"
-                element={<Dashboard isloggedin={isloggedin} />}
+                element={<Dashboard  />}
               />
               <Route path="/registerpage" element={<RegisterPage />} />
               <Route
                 path="/master"
-                element={<Master isloggedin={isloggedin}/>}
+                element={<Master />}
               />
               <Route
                 path="/supplier"
-                element={<Supplier isloggedin={isloggedin} />}
+                element={<Supplier />}
               />
               <Route
                 path="/vendors"
-                element={<Vendors isloggedin={isloggedin} />}
+                element={<Vendors  />}
+              />
+              <Route
+                path="/transfer"
+                element={<Transfer  />}
               />
               <Route
                 path="/stores"
-                element={<Stores isloggedin={isloggedin} />}
+                element={<Stores/>}
               />
               <Route
                 path="/entries"
-                element={<Entries isloggedin={isloggedin} />}
+                element={<Entries/>}
               />
-              {/* <Route path="/page" element={<Error404 />} /> */}
+
             </Routes>
         </GoogleOAuthProvider>
       </div>

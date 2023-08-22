@@ -28,7 +28,7 @@ const SupplierPopUp = ({ isVisible, onClose }) => {
         const response = await axios
             .post("http://localhost:4000/supplieradd", data)
             .catch((error) => console.log(error))
-            .then((response)=>setMessage(response.data));
+            .then((response)=>setMessage(response.data));   
             // .then(() => navigate("/"));
         setData({ name: "", address: "", contact: "" })
     };

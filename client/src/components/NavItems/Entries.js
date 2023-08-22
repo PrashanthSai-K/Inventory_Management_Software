@@ -26,8 +26,6 @@ function Entries() {
     }
   });
 
-  console.log(user)
-
   return (
     <>
       {user.role}
@@ -69,14 +67,21 @@ function Entries() {
             isVisible={showStock}
             onClose={() => setShowStock(false)}
           />
-          <div
-            onClick={() => setShowItem(true)}
-            style={{ backgroundColor: "#080F34" }}
-            className="w-96 h-52 rounded-3xl flex text-3xl  hover:cursor-pointer text-white justify-center items-center "
-          >
-            <div>Item Entry</div>
-          </div>
-          <ItemPopUp isVisible={showItem} onClose={() => setShowItem(false)} />
+          {user.role === "slbncharge" && (
+            <>
+              <div
+                onClick={() => setShowItem(true)}
+                style={{ backgroundColor: "#080F34" }}
+                className="w-96 h-52 rounded-3xl flex text-3xl  hover:cursor-pointer text-white justify-center items-center "
+              >
+                <div>Item Entry</div>
+              </div>
+              <ItemPopUp
+                isVisible={showItem}
+                onClose={() => setShowItem(false)}
+              />
+            </>
+          )}
         </div>
       </div>
     </>

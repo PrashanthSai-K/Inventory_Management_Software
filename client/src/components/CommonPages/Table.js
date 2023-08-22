@@ -62,13 +62,7 @@ function Table() {
                     Purchased By
                   </th>
                   <th scope="col" class="px-6 py-3 text-left tracking-wider">
-                    
-                  </th>
-                  <th scope="col" class="px-6 py-3 text-left tracking-wider">
-                   
-                  </th>
-                  <th scope="col" class="px-6 py-3 text-left tracking-wider">
-                    
+                     Dept Purchased
                   </th>
                 </tr>
               </thead>
@@ -113,14 +107,8 @@ function Table() {
                       <td class=" px-6 py-4 whitespace-nowrap">
                         {data.user_id}
                       </td>
-                      <td class=" px-6 py-2 whitespace-nowrap">
-                        <i className="bi bi-eye cursor-pointer"></i>
-                      </td>
-                      <td class=" px-6 py-2 whitespace-nowrap">
-                      <i className="bi bi-pen cursor-pointer"></i>
-                      </td>
-                      <td  class=" px-6 py-2  whitespace-nowrap">
-                      <i className="bi bi-trash cursor-pointer"></i>
+                      <td class=" px-6 py-4 whitespace-nowrap">
+                        {data.dept_id}
                       </td>
                       </tr>
                   );
