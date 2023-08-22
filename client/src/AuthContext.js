@@ -10,41 +10,46 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-    
+
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Default to not logged in
   const [user, setUser] = useState([]);
   const navigate = useNavigate();
 
   async function getUser() {
-    try {
-      const token = Cookies.get("token");
-      const result = await axios.post("http://localhost:4000/getUser", {
-        token: token,
-      }).catch((error)=>console.log(error));
-      setUser(result.data);
-      return(user);
-    } catch (error) {
-      setIsLoggedIn(false);
-    }
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        const token = Cookies.get("token");
+        const result = await axios.post("http://localhost:4000/getUser", {
+          token: token,
+        }).catch((error) => console.log(error));
+        setUser(result.data);
+        resolve (result.data);
+      } catch (error) {
+        setIsLoggedIn(false);
+        reject(error);
+      }
+    })
+
   }
 
   async function login(response) {
-    try{
+    try {
       const result = await axios.post("http://localhost:4000/loginUser", { res: response });
       Cookies.set("token", result.data)
       setIsLoggedIn(true)
       await getUser();
       navigate("/dashboard");
-    }catch(error){
-      if(error.response.status==401){
+    } catch (error) {
+      if (error.response.status == 401) {
         navigate("/unauthorized")
       }
       return;
     }
-    
+
   }
 
-  function logout(){
+  function logout() {
     setIsLoggedIn(false);
     setUser([]);
     try {
@@ -55,7 +60,7 @@ export function AuthProvider({ children }) {
     }
   };
 
-//   console.log(user)
+  //   console.log(user)
 
   const value = {
     isLoggedIn,

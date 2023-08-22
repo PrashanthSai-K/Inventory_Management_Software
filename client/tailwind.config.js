@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'tablet': '1080px',
+        'tablet': '1080px'
       },
       scrollbar: {
         width: '12px',
@@ -17,9 +17,7 @@ module.exports = {
         Poppins: ["Poppins","sans-serif"],
         Saira: ["Saira","sans-serif"],
       },
-      spacing:{
-        "h-100":"500px"
-      }
+     
     },
   },
   plugins: [

@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SomeComponent } from "tw-elements";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useGoogleLogin } from "@react-oauth/google";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { Input, Ripple, initTE } from "tw-elements";
 import { useAuth } from "../AuthContext";
 
 initTE({ Input, Ripple });
 
-function LoginPage({ getUser }) {
+function LoginPage() {
+
   const navigate = useNavigate();
 
   // async function loginUser(response) {
@@ -22,7 +23,13 @@ function LoginPage({ getUser }) {
   //     .then(()=>navigate("/dashboard"));
   // }
 
-  const { login } = useAuth();
+  const { login, getUser } = useAuth();
+
+  useEffect(()=>{
+    if(Cookies.get('token')){
+      getUser().then(()=>navigate('/dashboard'))
+    }
+  })
 
   const loginCall = useGoogleLogin({
     onSuccess: (tokenResponse) => login(tokenResponse),

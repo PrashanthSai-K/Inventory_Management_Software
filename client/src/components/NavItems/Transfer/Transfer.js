@@ -28,22 +28,29 @@ const Transfer = () => {
     if (!Cookies.get("token")) {
       navigate("/");
     } else {
-      getUser();
+      getUser()
+      .then((result)=>{
+        fetchTransferData(result);
+        fetchTrackTransferData(result)
+      })
+      .catch((error)=>console.log(error));
     }
   });
 
   const [transferData, setTransferData] = useState([]);
 
-  async function fetchTransferData(){
-    const result = await axios.get("http://localhost:4000/getTransferData")
-                         .catch((error)=>console.log(error))
-                         .then((response)=>setTransferData(response.data));
-  }
-  useEffect(()=>{
-    fetchTransferData();
-  },[])
+  async function fetchTransferData(data){
+    try{
 
-  // console.log(transferData);
+      const result = await axios.post("http://localhost:4000/getTransferData", data)
+      if(result.status == 200){
+        setTransferData(result.data.data);
+      }
+    }catch(error){
+      console.log(error);
+    }
+  }
+
 
   const [message, setMessage] = useState(null);
 
@@ -55,9 +62,28 @@ const Transfer = () => {
     setTimeout(clearMessage, 3000);
   }, [message]);
 
-  // const onSubmit =()=>{
-  //   onClose()
-  // }
+
+  const [trackTransferData, setTrackTransferData] = useState();
+
+  async function fetchTrackTransferData(data) {
+
+    try {
+      // console.log(data)
+      const response = await axios.post(
+        "http://localhost:4000/getTrackTransfer", data
+      );
+      if (response.status == 200) {
+        // console.log(response.data)
+        setTrackTransferData(response.data.data)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    
+  }, [])
 
   return (
     <>
@@ -99,6 +125,7 @@ const Transfer = () => {
 
         <TrackTransfer 
           user={user}
+          trackTransferData ={trackTransferData}
           isVisible={showTrackTransfer}
           onClose={onClose}
         />

@@ -71,11 +71,18 @@ tr th:nth-child(1) {
   margin-left: 5%;
 }
 
+.track-card{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
 @media (max-width:768px) {
   .card{
     height: auto;
   }
   .card-sub{
     gap:0%;
+  }
+  .track-card{
+    height: auto !important;
   }
 }

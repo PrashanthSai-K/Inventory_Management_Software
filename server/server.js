@@ -148,12 +148,13 @@ app.get("/getAdminStockData", (req,res)=>{
     })
 })
 
-app.get("/getTransferData", (req,res)=>{
-    db.query("SELECT * FROM transfer_request_merged_view", (error, result)=>{
-        if(error)console.log(error);
-        res.send(result)
-    })
+app.post("/getTransferData", (req,res)=>{
+    const user_dept = req.body.dept_code
+    db.query("SELECT * FROM transfer_request_merged_view WHERE transfer_to = ?", [user_dept])
+    .catch((error)=>res.status(500).json({error:"There was some Error"}))
+    .then((response)=>res.status(200).json({data:response}))
 })
+
 
 app.post("/transferRequest", (req,res)=>{
 
@@ -168,16 +169,20 @@ app.post("/transferRequest", (req,res)=>{
 
         db.query("INSERT INTO transfertable (item_code, manufacturer_id, supplier_id, transfer_qty, transfer_to, transfered_from, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)",[item_code, manufacturer_id, supplier_id, transfer_qty, transfer_to, transfer_from, user_id] )
         .then(()=>res.status(200).json({message: "Inserted Sucessfully"})).catch((error)=>res.status(400).json({error:"There was some Error"}));
-    
+
 })
 
 app.post("/getTrackTransfer", (req, res)=>{
-    // console.log(req.body.dept_code)
     const user_dept = req.body.dept_code
+    // console.log(user_dept);
     db.query("Select * FROM transfer_request_merged_view WHERE transfer_to = ?" ,[user_dept])
     .catch((error)=>res.status(500).json({error:"There was some Error"}))
-    .then((response)=>res.status(200).json({data:response}));
+    .then((response)=>{
+        console.log(response)
+        res.status(200).json({data:response})
+    });
 })
+
 
 
 app.listen(4000, ()=>console.log("App listening on port 4000"));

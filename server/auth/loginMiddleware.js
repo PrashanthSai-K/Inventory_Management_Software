@@ -26,7 +26,7 @@ const verifyToken = async function (req, res, next) {
 
 const createToken = (result) => {
 
-    JSON.parse(JSON.stringify(result));
+    // JSON.parse(JSON.stringify(result));
     const token = jwt.sign(
       {
         user_id: result[0].faculty_id,
