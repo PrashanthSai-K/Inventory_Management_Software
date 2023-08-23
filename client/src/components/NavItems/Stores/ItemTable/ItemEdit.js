@@ -65,10 +65,10 @@ const HandleSubmit = async (e) => {
           X
         </button>
         <form onSubmit={HandleSubmit} className="flex flex-col gap-3">
-          <span className="px-1 text-lg text-gray-600 text-center">Item Table</span>
+          <span className="px-1 text-lg text-gray-600 ">Item Table</span>
           <div className="flex justify-center items-center ">
             <div className="w-40 flex justify-end">
-          <label for="itemCode" className="text-lg pr-5 font-bold">Item Code</label>
+          <label for="itemCode" className="text-md pr-5 font-bold">Item Code</label>
           </div>
           <div>
           <input
@@ -85,7 +85,7 @@ const HandleSubmit = async (e) => {
           </div> 
           <div className="flex justify-center items-center">
           <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-lg pr-5 font-bold">Item Type</label>
+          <label for="itemCode" className="text-md pr-5 font-bold">Item Type</label>
           </div>
           <input
             type="text"
@@ -98,7 +98,7 @@ const HandleSubmit = async (e) => {
           </div>
           <div className="flex justify-center items-center">
           <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-lg pr-4 font-bold">Item Name</label>
+          <label for="itemCode" className="text-md pr-4 font-bold">Item Name</label>
           </div>
           <input
             type="text"
@@ -111,7 +111,7 @@ const HandleSubmit = async (e) => {
           </div>
           <div className="flex justify-center items-center">
           <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-lg mr-4 font-bold">Item Subname</label>
+          <label for="itemCode" className="text-md mr-4 font-bold">Item Subname</label>
           </div>
           <input
             type="text"
@@ -124,7 +124,7 @@ const HandleSubmit = async (e) => {
           </div>
           <div className="flex justify-center items-center">
           <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-lg pr-5 font-bold">Item Spec1</label>
+          <label for="itemCode" className="text-md pr-5 font-bold">Item Spec1</label>
           </div>
           <input
             type="text"
@@ -137,7 +137,7 @@ const HandleSubmit = async (e) => {
           </div>
           <div className="flex justify-center items-center">
           <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-lg pr-5 font-bold">Item Spec2</label>
+          <label for="itemCode" className="text-md pr-5 font-bold">Item Spec2</label>
           </div>
           <input
             type="text"
@@ -150,7 +150,7 @@ const HandleSubmit = async (e) => {
           </div>
           <div className="flex justify-center items-center">
           <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-lg pr-5 font-bold">Item Spec3</label>
+          <label for="itemCode" className="text-md pr-5 font-bold">Item Spec3</label>
           </div>
           <input
             type="text"
@@ -163,7 +163,7 @@ const HandleSubmit = async (e) => {
           </div>
           <div className="flex justify-center items-center ">
           <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-lg pr-5 font-bold">Manufacturer Id</label>
+          <label for="itemCode" className="text-md pr-5 font-bold">Manufacturer Id</label>
           </div>
           <input
             type="text"
@@ -176,7 +176,7 @@ const HandleSubmit = async (e) => {
           </div>
           <div className="flex justify-center items-center">
           <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-lg pr-5 font-bold">Quantity Units</label>
+          <label for="itemCode" className="text-md pr-5 font-bold">Quantity Units</label>
           </div>
           <input
             type="text"
@@ -189,7 +189,7 @@ const HandleSubmit = async (e) => {
           </div>
           <div className="flex justify-center items-center">
           <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-lg pr-5 font-bold">Supplier Id</label>
+          <label for="itemCode" className="text-md pr-5 font-bold">Supplier Id</label>
           </div>
           <input
             type="text"
@@ -202,7 +202,7 @@ const HandleSubmit = async (e) => {
           </div>
           <div className="flex justify-center items-center">
           <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-lg pr-5 font-bold">Cost Per Item</label>
+          <label for="itemCode" className="text-md pr-5 font-bold">Cost Per Item</label>
           </div>
           <input
             type="text"

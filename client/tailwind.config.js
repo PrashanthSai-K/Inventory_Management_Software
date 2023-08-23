@@ -17,7 +17,8 @@ module.exports = {
       fontFamily :{
         Poppins: ["Poppins","sans-serif"],
         Saira: ["Saira","sans-serif"],
-      }
+      },
+     
     },
   },
   plugins: [

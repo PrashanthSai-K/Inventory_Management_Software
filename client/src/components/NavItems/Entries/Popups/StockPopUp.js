@@ -123,7 +123,7 @@ const StockPopUp = ({ isVisible, onClose }) => {
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                 >
                   {itemResult &&
-                    itemResult.slice(0, 2).map((result) => {
+                    itemResult.slice(0, 4).map((result) => {
                       return (
                         <div
                           key={result.item_code}

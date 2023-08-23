@@ -76,6 +76,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
       setIsMTyping(false);
       setMSuggestion(false);
     }
+
     setManufacturerResult(
       manufacturer.filter((f) => f.name.toLowerCase().includes(e.target.value))
     );
@@ -158,7 +159,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
       //   units: "",
       // });
   };
-
+// console.log(supplier)
   //<----------End of form handling----------->
 
   if (!isVisible) return null;
@@ -178,14 +179,14 @@ const ItemPopUp = ({ isVisible, onClose }) => {
           className="bg-white overflow-x-auto overflow-y-auto border-gray-700 rounded-lg"
         >
           <div className="flex flex-col justify-center items-center">
-            <div class="py-1 flex  pb-8 mt-8">
-              <span class="px-1 text-2xl text-gray-600">Item Entry</span>
+            <div className="py-1 flex  pb-8 mt-8">
+              <span className="px-1 text-2xl text-gray-600">Item Entry</span>
             </div>
             {manufacturer && supplier && (
               <form onChange={handleChange}>
                 {message ? <div className="absolute">{message}</div> : null}
-                <div style={{ gap: "100px" }} class="py-1 flex  pb-8">
-                  <span class="px-1 text-lg text-gray-600">Item Type</span>
+                <div style={{ gap: "100px" }} className="py-1 flex  pb-8">
+                  <span className="px-1 text-lg text-gray-600">Item Type</span>
                   <select
                     id="itemType"
                     name="itemType"
@@ -218,9 +219,9 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     <option value="Acrylic">Acrylic</option>
                   </select>
                 </div>
-                <div class="py-1  pb-8">
+                <div className="py-1  pb-8">
                   <div className="flex " style={{ gap: "27px" }}>
-                    <span class="px-1 text-lg text-gray-600">
+                    <span className="px-1 text-lg text-gray-600">
                       Manufacturer Name
                     </span>
                     <input
@@ -242,7 +243,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       >
                         {manufacturerResult &&
-                          manufacturerResult.slice(0, 2).map((result) => {
+                          manufacturerResult.slice(0, 4).map((result) => {
                             return (
                               <div
                                 key={result.id}
@@ -258,9 +259,9 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     )}
                   </div>
                 </div>
-                <div  class="py-1 pb-8">
+                <div  className="py-1 pb-8">
                   <div style={{ gap: "65px" }} className="flex">
-                  <span class="px-1 text-lg text-gray-600">Supplier Name</span>
+                  <span className="px-1 text-lg text-gray-600">Supplier Name</span>
                   <input
                     type="text"
                     name="supplierName"
@@ -280,7 +281,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       >
                         {supplierResult &&
-                          supplierResult.slice(0, 2).map((result) => {
+                          supplierResult.slice(0, 4).map((result) => {
                             return (
                               <div
                                 key={result.id}
@@ -297,7 +298,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                   </div>
                 </div>
                 <div style={{ gap: "92px" }} class="py-1 flex pb-8">
-                  <span class="px-1 text-lg text-gray-600">Item Name</span>
+                  <span className="px-1 text-lg text-gray-600">Item Name</span>
                   <input
                     type="text"
                     name="itemName"
@@ -307,8 +308,8 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     required
                   />
                 </div>
-                <div style={{ gap: "60px" }} class="py-1 flex pb-8">
-                  <span class="px-1 text-lg text-gray-600">Item Sub-Name</span>
+                <div style={{ gap: "60px" }} className="py-1 flex pb-8">
+                  <span className="px-1 text-lg text-gray-600">Item Sub-Name</span>
                   <input
                     type="text"
                     name="subName"
@@ -318,8 +319,8 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     required
                   />
                 </div>
-                <div style={{ gap: "86px" }} class="py-1 flex pb-8">
-                  <span class="px-1 text-lg text-gray-600">Item Spec-1</span>
+                <div style={{ gap: "86px" }} className="py-1 flex pb-8">
+                  <span className="px-1 text-lg text-gray-600">Item Spec-1</span>
                   <input
                     type="text"
                     name="Spec1"
@@ -329,8 +330,8 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     required
                   />
                 </div>
-                <div style={{ gap: "86px" }} class="py-1 flex pb-8">
-                  <span class="px-1 text-lg text-gray-600">Item Spec-2</span>
+                <div style={{ gap: "86px" }} className="py-1 flex pb-8">
+                  <span className="px-1 text-lg text-gray-600">Item Spec-2</span>
                   <input
                     type="text"
                     name="Spec2"
@@ -340,8 +341,8 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     required
                   />
                 </div>
-                <div style={{ gap: "85px" }} class="py-1 flex pb-8">
-                  <span class="px-1 text-lg text-gray-600">Item Spec-3</span>
+                <div style={{ gap: "85px" }} className="py-1 flex pb-8">
+                  <span className="px-1 text-lg text-gray-600">Item Spec-3</span>
                   <input
                     type="text"
                     name="Spec3"
@@ -351,8 +352,8 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     required
                   />
                 </div>
-                <div style={{ gap: "70px" }} class="py-1 flex pb-8">
-                  <span class="px-1 text-lg text-gray-600">Cost Per Item</span>
+                <div style={{ gap: "70px" }} className="py-1 flex pb-8">
+                  <span className="px-1 text-lg text-gray-600">Cost Per Item</span>
                   <input
                     type="text"
                     name="cost"
@@ -362,8 +363,8 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     required
                   />
                 </div>
-                <div style={{ gap: "65px" }} class="py-1 flex  pb-8">
-                  <span class="px-1 text-lg text-gray-600">Quantity Units</span>
+                <div style={{ gap: "65px" }} className="py-1 flex  pb-8">
+                  <span className="px-1 text-lg text-gray-600">Quantity Units</span>
                   <select
                     name="units"
                     value={data.units}

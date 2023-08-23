@@ -5,7 +5,7 @@ import StockPopup from "./StockPopup";
 import StockEdit from "./StockEdit";
 
 function StockTable() {
-    //For open popup
+  //For open popup
   const [stockOpenPopup, setStockOpenPopup] = useState(false);
   const [stockSelectedData, setStockSelectedData] = useState(null);
 
@@ -33,10 +33,10 @@ function StockTable() {
     // setEditData(null);
     fetchGetStock();
   };
-  const onSubmit = () =>{
+  const onSubmit = () => {
     fetchGetStock();
     handleCloseEdit();
-  }
+  };
 
   const [getStock, setGetStock] = useState([]);
   async function fetchGetStock() {
@@ -55,23 +55,23 @@ function StockTable() {
   //   try {
   //     const response = await axios.post("http://localhost:4000/stockdelete", {stock_id:stock_id});
   //     // console.log();
-      
+
   //   } catch (error) {
   //     console.log(error);
-  //     console.log("Error deleting item."); 
+  //     console.log("Error deleting item.");
   //   }
   //   // window.location.reload();
   // };
 
   return (
     <div>
-      <div className="flex justify-center items-center  flex-col gap-10">
-        <div className="text-2xl mt-10 font-semibold ">Stock Table</div>
+      <div className="text-2xl font-semibold py-6 pl-10">Stock Edit</div>
+      <div className="flex justify-center items-center  flex-col gap-10 ">
         <div
-          style={{ width: "1000px", height: "400px" }}
-          class="relative rounded-2xl overflow-x-auto overflow-y-auto "
+          style={{ width: "90%", height: "400px" }}
+          class="relative rounded-2xl overflow-x-auto overflow-y-auto scrollbar-none"
         >
-          <table class="w-96 text-sm text-left text-gray-500 dark:text-gray-400 ">
+          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
             <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="px-6 py-3 text-left tracking-wider"></th>
@@ -108,7 +108,10 @@ function StockTable() {
               {getStock &&
                 getStock.map((data, index) => {
                   return (
-                    <tr key={data.id} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr
+                      key={data.id}
+                      class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                    >
                       <td scope="row" class="px-6 py-4 ">
                         {index + 1}
                       </td>
@@ -168,7 +171,11 @@ function StockTable() {
       )}
       {openEdit && editData && (
         <div className="blur-background">
-          <StockEdit data={editData} onClose={handleCloseEdit } onSubmit={onSubmit}/>
+          <StockEdit
+            data={editData}
+            onClose={handleCloseEdit}
+            onSubmit={onSubmit}
+          />
         </div>
       )}
     </div>

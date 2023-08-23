@@ -9,7 +9,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Vendors from "./components/NavItems/Vendors";
-import Entries from "./components/NavItems/Entries";
+import Entries from "./components/NavItems/Entries/Entries";
 import Master from "./components/NavItems/Master";
 import Supplier from "./components/NavItems/Supplier";
 import { React, useState,useEffect } from "react";
@@ -27,10 +27,11 @@ import axios from "axios";
 import Navbar from "./components/Navbar";
 import { AuthProvider } from "./AuthContext";
 import Stores from "./components/NavItems/Stores/Stores";
-import Transfer from "./components/CommonPages/Transfer";
+// import Transfer from "./components/CommonPages/Transfer";
+import Unauthorized from "./components/ErrorPages/Unauthorized";
+import Transfer from "./components/NavItems/Transfer/Transfer.js"
 
 function App() {
-
   const [open, setOpen] = useState(false);
 
   const location = useLocation();
@@ -43,7 +44,7 @@ function App() {
     { Name: "Vendors", iconName: "bi-building", src: "/vendors" },
     { Name: "Entries", iconName: "bi-list-check", src: "/entries" },
     { Name: "Stores", iconName: "bi-shop", src: "/stores" },
-    { Name: "Transfer", iconName:"bi-arrow-left-right", src:"/transfer"},
+    { Name: "Transfer", iconName: "bi-arrow-left-right", src: "/transfer" },
     { Name: "Logout", iconName: "bi-box-arrow-right" },
   ];
 
@@ -57,14 +58,12 @@ function App() {
 
   return (
     <>
-   
       <Navbar
         location={location.pathname}
-        navItems = {navItems}
+        navItems={navItems}
         open={open}
         setOpen={setOpen}
         user={user}
-        
       />
 
       <div
@@ -115,9 +114,9 @@ function App() {
               />
 
             </Routes>
+       
         </GoogleOAuthProvider>
       </div>
-
     </>
   );
 }
