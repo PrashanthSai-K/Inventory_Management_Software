@@ -65,21 +65,21 @@ const Transfer = () => {
 
   const [trackTransferData, setTrackTransferData] = useState();
 
-  async function fetchTrackTransferData(data) {
+    async function fetchTrackTransferData(data) {
 
-    try {
-      // console.log(data)
-      const response = await axios.post(
-        "http://localhost:4000/getTrackTransfer", data
-      );
-      if (response.status == 200) {
-        // console.log(response.data)
-        setTrackTransferData(response.data.data)
+      try {
+        // console.log(data)
+        const response = await axios.post(
+          "http://localhost:4000/getTrackTransfer", data
+        );
+        if (response.status == 200) {
+          // console.log(response.data)
+          setTrackTransferData(response.data.data)
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
-  }
 
   useEffect(() => {
     

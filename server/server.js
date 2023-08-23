@@ -173,12 +173,14 @@ app.post("/transferRequest", (req,res)=>{
 })
 
 app.post("/getTrackTransfer", (req, res)=>{
+    try{
+
+    }
     const user_dept = req.body.dept_code
     // console.log(user_dept);
     db.query("Select * FROM transfer_request_merged_view WHERE transfer_to = ?" ,[user_dept])
     .catch((error)=>res.status(500).json({error:"There was some Error"}))
     .then((response)=>{
-        console.log(response)
         res.status(200).json({data:response})
     });
 })
