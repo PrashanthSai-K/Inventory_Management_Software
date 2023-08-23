@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React} from "react";
 import { useAuth } from "../AuthContext";
 
 const Navbar = ({ location, open, setOpen, navItems }) => {
@@ -26,7 +26,7 @@ const Navbar = ({ location, open, setOpen, navItems }) => {
               <img
                 src="/images/control.png"
                 alt=""
-                className={`absolute -right-3   w-8 border-blue-800 border-2  rounded-full ${
+                className={`absolute -right-3 phone:hidden lg:block  w-8 border-blue-800 border-2  rounded-full ${
                   !open && "rotate-180"
                 } `}
                 style={{ top: "88px" }}

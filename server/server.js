@@ -1,136 +1,262 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const mysql = require("mysql"); 
-const dotenv = require('dotenv').config();
-const {verifyToken, createSession, getUser} = require("./auth/loginMiddleware.js");
+const mysql = require("mysql");
+const dotenv = require("dotenv").config();
+const {
+  verifyToken,
+  createSession,
+  getUser,
+} = require("./auth/loginMiddleware.js");
 const cookieParser = require("cookie-parser");
 const db = require("./database/db.js");
 
-
 const app = express();
 app.use(cors());
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// const conn = mysql.createConnection({
-    // host:process.env.DB_HOST_PUBLIC,
-    // user:process.env.DB_USERNAME,
-    // password:process.env.DB_PASSWORD,
-    // database:process.env.DB_NAME,
-    // port:process.env.DB_PORT_PUBLIC
-// })
-
-// conn.connect(()=>{
-//     console.log("Connected to DB sucessfully")
-// })
-// conn.end();
-
-// module.exports = conn
-
-app.get("/",(req,res)=>{
-    res.cookie("heelo", "hai");
-    res.send("Hello from backend")
-})
-
-app.post("/loginUser", verifyToken, createSession, (req,res)=>{
-    const token = res.locals.token;
-    res.send(token)
+app.get("/", (req, res) => {
+  res.cookie("heelo", "hai");
+  res.send("Hello from backend");
 });
 
-app.post("/getUser", getUser)
+app.post("/loginUser", verifyToken, createSession, (req, res) => {
+  const token = res.locals.token;
+  res.send(token);
+});
 
-app.post("/manufactureradd", (req,res)=>{
-    const name = req.body.name
-    db.query("INSERT INTO manufacturer (name) VALUES (?)",[name],(error,result)=>{
-        if(error) console.log(error)
-        res.send("Manufactured Created Successfully");
-    })
-})
+app.post("/getUser", getUser);
 
-app.post("/supplieradd", (req,res)=>{
+app.post("/manufactureradd", (req, res) => {
+  const name = req.body.name;
+  db.query(
+    "INSERT INTO manufacturer (name) VALUES (?)",
+    [name],
+    (error, result) => {
+      if (error) console.log(error);
+      res.send("Manufactured Created Successfully");
+    }
+  );
+});
 
-    const name = req.body.name;
-    const address = req.body.address;
-    const contact = req.body.contact;
-    db.query("INSERT INTO supplier (name,address,contact) VALUES (?,?,?)",[name,address,contact],(error,result)=>{
-        if(error) console.log(error)
-        res.send("Supplier Created Successfully");
-    })
-})
+app.post("/supplieradd", (req, res) => {
+  const name = req.body.name;
+  const address = req.body.address;
+  const contact = req.body.contact;
+  db.query(
+    "INSERT INTO supplier (name,address,contact) VALUES (?,?,?)",
+    [name, address, contact],
+    (error, result) => {
+      if (error) console.log(error);
+      res.send("Supplier Created Successfully");
+    }
+  );
+});
 
-app.post("/itemadd", (req,res)=>{
-    const itemType = req.body.itemType;
-    const manufacturerId = req.body.manufacturerName;
-    const supplierId = req.body.supplierName;
-    const itemName = req.body.itemName;
-    const subName = req.body.subName;
-    const Spec1 = req.body.Spec1;
-    const Spec2 = req.body.Spec2;
-    const Spec3 = req.body.Spec3;
-    const cost = req.body.cost;
-    const unit = req.body.units;
-    console.log(unit)
-    db.query(`INSERT INTO itemtable 
+app.post("/itemEdit", (req, res) => {
+  const item_type = req.body.item_type;
+  const item_name = req.body.item_name;
+  const item_subname = req.body.item_subname;
+  const item_spec1 = req.body.item_spec1;
+  const item_spec2 = req.body.item_spec2;
+  const item_spec3 = req.body.item_spec3;
+  const manufacturer_id = req.body.manufacturer_id;
+  const quantity_units = req.body.quantity_units;
+  const supplier_id = req.body.supplier_id;
+  const cost_per_item = req.body.cost_per_item;
+  const item_code = req.body.item_code;
+
+  db.query(
+    `UPDATE itemtable 
+      SET item_type = ?, 
+          item_name = ?, 
+          item_subname = ?, 
+          item_spec1 = ?, 
+          item_spec2 = ?, 
+          item_spec3 = ?, 
+          cost_per_item = ?, 
+          quantity_units = ?, 
+          manufacturer_id = ?, 
+          supplier_id = ?
+      WHERE item_code = ?`,
+    [
+      item_type,
+      item_name,
+      item_subname,
+      item_spec1,
+      item_spec2,
+      item_spec3,
+      cost_per_item,
+      quantity_units,
+      manufacturer_id,
+      supplier_id,
+      item_code,
+    ]
+  )
+    .then(() => res.status(200).json({ message: "Error updating item." }))
+    .catch((error) => console.log(error));
+  // (error, result) => {
+  //   if (error) {
+  //     console.log(error);
+  //     res.status(500).send("Error updating item.");
+  //   } else {
+  //     res.send("Edited Successfully");
+  //   }
+  // }
+});
+
+app.post("/stockEdit", (req, res) => {
+  const manufacturer_id = req.body.manufacturer_id;
+  const supplier_id = req.body.supplier_id;
+  const stock_qty = req.body.stock_qty;
+  const created_at = req.body.created_at;
+  const dept_id = req.body.dept_id;
+  const inventory_value = req.body.inventory_value;
+  const user_id = req.body.user_id;
+  const item_code = req.body.item_code;
+  const stock_id = req.body.stock_id;
+
+  db.query(
+    "UPDATE stocktable SET manufacturer_id = ?, item_code =?,supplier_id = ?, stock_qty = ?, created_at = ?, dept_id = ?, inventory_value = ?, user_id = ? WHERE stock_id = ?",
+    [
+      manufacturer_id,
+      item_code,
+      supplier_id,
+      stock_qty,
+      created_at,
+      dept_id,
+      inventory_value,
+      user_id,
+      stock_id,
+    ]
+  )
+    .then(() => res.status(200).json({ message: "Error updating item." }))
+    .catch((error) => console.log(error));
+  //   (error, result) => {
+  //     if (error) {
+  //       console.log(error);
+  //       res.status(500).send("Error updating item.");
+  //     } else {
+  //       res.send("Edited Successfully");
+  //     }
+  //   }
+  // );
+});
+
+
+app.post("/itemadd", (req, res) => {
+  const itemType = req.body.itemType;
+  const manufacturerId = req.body.manufacturerName;
+  const supplierId = req.body.supplierName;
+  const itemName = req.body.itemName;
+  const subName = req.body.subName;
+  const Spec1 = req.body.Spec1;
+  const Spec2 = req.body.Spec2;
+  const Spec3 = req.body.Spec3;
+  const cost = req.body.cost;
+  const unit = req.body.units;
+  console.log(unit);
+  db.query(
+    `INSERT INTO itemtable 
                 (item_type, item_name, item_subname, item_spec1,item_spec2, item_spec3, cost_per_item, quantity_units, manufacturer_id, supplier_id) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [itemType,itemName,subName, Spec1,Spec2, Spec3, cost, unit, manufacturerId, supplierId],
-                (error, result)=>{
-                    if(error)console.log(error);
-                    else res.send("Item added successfully");
-                })
-})
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      itemType,
+      itemName,
+      subName,
+      Spec1,
+      Spec2,
+      Spec3,
+      cost,
+      unit,
+      manufacturerId,
+      supplierId,
+    ],
+    (error, result) => {
+      if (error) console.log(error);
+      else res.send("Item added successfully");
+    }
+  );
+});
 
-app.post("/stockadd", (req,res)=>{
+app.post("/stockadd", (req, res) => {
+  const item_code = req.body.itemcode;
+  const manufacturerId = req.body.manufacturerId;
+  const supplierId = req.body.supplierId;
+  const stockQty = req.body.stock_qty;
+  const inventoryValue = req.body.inventoryValue;
+  const userId = req.body.userId;
+  const labCode = req.body.labCode;
+  const currDate = new Date();
 
-    const item_code = req.body.itemcode;
-    const manufacturerId = req.body.manufacturerId;
-    const supplierId = req.body.supplierId;
-    const stockQty = req.body.stock_qty;
-    const inventoryValue = req.body.inventoryValue;
-    const userId = req.body.userId;
-    const labCode = req.body.labCode;
-    const currDate = new Date();
+  db.query(
+    `INSERT INTO stocktable (item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id, created_at, dept_id) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      item_code,
+      manufacturerId,
+      supplierId,
+      stockQty,
+      inventoryValue,
+      userId,
+      currDate.toISOString().split("T")[0],
+      labCode,
+    ],
+    (error, result) => {
+      if (error) console.log(error);
+      else console.log(result);
+    }
+  );
+});
 
-    db.query(`INSERT INTO stocktable (item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id, created_at, dept_id) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, [item_code, manufacturerId,supplierId, stockQty, inventoryValue, userId, currDate.toISOString().split("T")[0], labCode],
-                (error, result)=>{
-                    if(error)console.log(error);
-                    else console.log(result);
-                })
-})
+app.get("/getManufacturer", (req, res) => {
+  db.query("SELECT * FROM manufacturer", (error, result) => {
+    if (error) console.log(error);
+    res.send(result);
+  });
+});
 
-app.get("/getManufacturer", (req, res)=>{
-    db.query("SELECT * FROM manufacturer", (error, result)=>{
-        if(error)console.log(error);
-        res.send(result);
-    })
-})
+app.get("/getSupplier", (req, res) => {
+  db.query("SELECT * FROM supplier", (error, result) => {
+    res.send(result);
+  });
+});
 
-app.get("/getSupplier", (req, res)=>{
-    db.query("SELECT * FROM supplier", (error, result)=>{
-        res.send(result);
-    })
-})
+app.get("/getItems", (req, res) => {
+  db.query("SELECT * FROM itemtable", (error, result) => {
+    if (error) console.log(error);
+    else {
+      res.send(result);
+    }
+  });
+});
 
-app.get("/getItems", (req, res)=>{
-    db.query("SELECT * FROM itemtable",(error,result)=>{
-        if(error)console.log(error);
-        else{
-            res.send(result);
-        }
-    })
-})
+app.get("/getStock", (req, res) => {
+  db.query("SELECT * FROM stocktable", (error, result) => {
+    if (error) console.log(error);
+    else {
+      res.send(result);
+    }
+  });
+});
 
-app.get("/getStock", (req, res)=>{
-    db.query("SELECT * FROM stocktable",(error,result)=>{
-        if(error)console.log(error);
-        else{
-            res.send(result);
-        }
-    })
-})
+app.get("/getQuantityUnits", (req, res) => {
+  db.query("SELECT * FROM quantity_units", (error, result) => {
+    if (error) console.log(error);
+    else {
+      res.send(result);
+    }
+  });
+});
 
+app.get("/getAdminStockData", (req, res) => {
+  db.query("SELECT * FROM admin_stock_view", (error, result) => {
+    if (error) console.log(error);
+    res.send(result);
+  });
+});
 
 app.get("/getQuantityUnits", (req, res)=>{
     db.query("SELECT * FROM quantity_units", (error, result)=>{
