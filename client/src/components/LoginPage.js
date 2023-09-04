@@ -6,7 +6,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom"; 
 import { Input, Ripple, initTE } from "tw-elements";
-import { useAuth } from ".../AuthContext";
+import { useAuth } from "../AuthContext";
 
 initTE({ Input, Ripple });
 

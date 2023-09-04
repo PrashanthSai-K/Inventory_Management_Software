@@ -14,7 +14,7 @@ import { React, useEffect, useState } from "react";
 import Dashboard from "./components/NavItems/Dashboard";
 import Error404 from "./components/ErrorPages/Error404";
 // import Hover from "./components/Hover";
-import LoginPage from "./components/CommonPages/LoginPage";
+import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/CommonPages/RegisterPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Cookies from "js-cookie";
@@ -22,6 +22,7 @@ import axios from "axios";
 import Navbar from "./components/Navbar";
 import { AuthProvider } from "./AuthContext";
 import Transfer from "./components/CommonPages/Transfer";
+import Graph from "./components/Graph";
 
 function App() {
 
@@ -102,6 +103,10 @@ function App() {
               <Route
                 path="/entries"
                 element={<Entries/>}
+              />
+              <Route
+                path="/g"
+                element={<Graph/>}
               />
 
             </Routes>
