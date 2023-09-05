@@ -25,6 +25,7 @@ function Master() {
   },[Cookies.get("token")])
 
 
+
   return (
     <>
       <div
@@ -38,6 +39,7 @@ function Master() {
               open && "scale-90 tablet:scale-100"
             }`}
           ></div> */}
+          
            <Table /> 
         </div>  
          
