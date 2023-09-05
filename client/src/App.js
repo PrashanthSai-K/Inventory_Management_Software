@@ -1,4 +1,6 @@
 import "./App.css";
+
+// import ManufacturerEntry from "./CommonPages/ManufacturerEntry";
 import {
   Routes,
   Route,
@@ -7,36 +9,42 @@ import {
   Navigate,
 } from "react-router-dom";
 import Vendors from "./components/NavItems/Vendors";
-import Entries from "./components/NavItems/Entries";
+import Entries from "./components/NavItems/Entries/Entries";
 import Master from "./components/NavItems/Master";
 import Supplier from "./components/NavItems/Supplier";
-import { React, useEffect, useState } from "react";
+import { React, useState,useEffect } from "react";
+
 import Dashboard from "./components/NavItems/Dashboard";
 import Error404 from "./components/ErrorPages/Error404";
 // import Hover from "./components/Hover";
 import LoginPage from "./components/LoginPage";
-import RegisterPage from "./components/CommonPages/RegisterPage";
+// import RegisterPage from "./components/RegisterPage";
+import Graph from "./components/Graph";
+// import PrivateRoute from "./PrivateRoute";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Navbar from "./components/Navbar";
 import { AuthProvider } from "./AuthContext";
-import Transfer from "./components/CommonPages/Transfer";
-import Graph from "./components/Graph";
+import Stores from "./components/NavItems/Stores/Stores";
+// import Transfer from "./components/CommonPages/Transfer";
+import Unauthorized from "./components/ErrorPages/Unauthorized";
+import Transfer from "./components/NavItems/Transfer/Transfer.js"
 
 function App() {
-
   const [open, setOpen] = useState(false);
 
   const location = useLocation();
 
   const navItems = [
+
     { Name: "Dashboard", iconName: "bi-speedometer", src: "/dashboard" },
     { Name: "Master", iconName: "bi-file-person-fill", src: "/master" },
-    { Name: "Supplier", iconName: "bi-archive-fill", src: "/supplier" },
+    // { Name: "Supplier", iconName: "bi-archive-fill", src: "/supplier" },
     { Name: "Vendors", iconName: "bi-building", src: "/vendors" },
     { Name: "Entries", iconName: "bi-list-check", src: "/entries" },
-    { Name: "Transfer", iconName:"bi-arrow-left-right", src:"/transfer"},
+    { Name: "Stores", iconName: "bi-shop", src: "/stores" },
+    { Name: "Transfer", iconName: "bi-arrow-left-right", src: "/transfer" },
     { Name: "Logout", iconName: "bi-box-arrow-right" },
   ];
    
@@ -52,14 +60,12 @@ function App() {
 
   return (
     <>
-   
       <Navbar
         location={location.pathname}
-        navItems = {navItems}
+        navItems={navItems}
         open={open}
         setOpen={setOpen}
         user={user}
-        
       />
 
       <div
@@ -83,7 +89,7 @@ function App() {
                 path="/dashboard"
                 element={<Dashboard  />}
               />
-              <Route path="/registerpage" element={<RegisterPage />} />
+              {/* <Route path="/registerpage" element={<RegisterPage />} /> */}
               <Route
                 path="/master"
                 element={<Master />}
@@ -101,6 +107,10 @@ function App() {
                 element={<Transfer  />}
               />
               <Route
+                path="/stores"
+                element={<Stores/>}
+              />
+              <Route
                 path="/entries"
                 element={<Entries/>}
               />
@@ -110,9 +120,9 @@ function App() {
               />
 
             </Routes>
+       
         </GoogleOAuthProvider>
       </div>
-
     </>
   );
 }

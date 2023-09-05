@@ -1,14 +1,15 @@
 import React from "react";
-import ManufacturerPopUp from "../EntriesPages/ManufacturerPopUp";
+import ManufacturerPopUp from "./Popups/ManufacturerPopUp";
 import { useState, useEffect, useContext } from "react";
-import SupplierPopUp from "../EntriesPages/SupplierPopUp";
-import StockPopUp from "../EntriesPages/StockPopUp";
-import ItemPopUp from "../EntriesPages/ItemPopUp";
+import SupplierPopUp from "./Popups/SupplierPopUp";
+import StockPopUp from "./Popups/StockPopUp";
+import ItemPopUp from "./Popups/ItemPopUp";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../AuthContext";
+import { useAuth } from "../../../AuthContext";
 import Cookies from "js-cookie";
 
 function Entries() {
+  
   const navigate = useNavigate();
 
   const { getUser, user } = useAuth();
@@ -37,7 +38,7 @@ function Entries() {
           <div
             onClick={() => setShowManufacturer(true)}
             style={{ backgroundColor: "#080F34" }}
-            className="w-96 h-52 mr-14 rounded-3xl mt-32 text-3xl hover:cursor-pointer text-white flex justify-center items-center "
+            className="w-96 h-52 mr-14 rounded-3xl mt-32 text-2xl hover:cursor-pointer text-white flex justify-center items-center "
           >
             <div>Manufacturer Entry</div>
           </div>
@@ -48,7 +49,7 @@ function Entries() {
           <div
             onClick={() => setShowSupplier(true)}
             style={{ backgroundColor: "#080F34" }}
-            className="w-96 h-52 rounded-3xl mt-32 text-3xl   hover:cursor-pointer flex text-white justify-center items-center "
+            className="w-96 h-52 rounded-3xl mt-32 text-2xl   hover:cursor-pointer flex text-white justify-center items-center "
           >
             <div>Supplier Entry</div>
           </div>
@@ -59,7 +60,7 @@ function Entries() {
           <div
             onClick={() => setShowStock(true)}
             style={{ backgroundColor: "#080F34" }}
-            className="w-96 h-52 mr-14 rounded-3xl text-3xl  hover:cursor-pointer flex text-white justify-center items-center "
+            className="w-96 h-52 mr-14 rounded-3xl text-2xl  hover:cursor-pointer flex text-white justify-center items-center "
           >
             <div> Stock Entry</div>
           </div>
@@ -67,12 +68,12 @@ function Entries() {
             isVisible={showStock}
             onClose={() => setShowStock(false)}
           />
-          {user.role === "slbincharge" && (
+          {user.role === "slsincharge" && (
             <>
               <div
                 onClick={() => setShowItem(true)}
                 style={{ backgroundColor: "#080F34" }}
-                className="w-96 h-52 rounded-3xl flex text-3xl  hover:cursor-pointer text-white justify-center items-center "
+                className="w-96 h-52 rounded-3xl flex text-2xl  hover:cursor-pointer text-white justify-center items-center "
               >
                 <div>Item Entry</div>
               </div>

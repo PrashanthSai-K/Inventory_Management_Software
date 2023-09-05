@@ -4,22 +4,23 @@ import React, { useState, useEffect } from "react";
 function Table() {
   const [stockData, setStockData] = useState([]);
 
-  async function fetchStockData() {
-    const response = await axios.get("http://localhost:4000/getAdminStockData");
-    setStockData(response.data);
+    async function fetchStockData() {
+      const response = await axios.get("http://localhost:4000/getAdminStockData");
+      setStockData(response.data);
+      // console.log(stockData);
+    }
+    useEffect(() => {
+      fetchStockData();
+    });
+  
     // console.log(stockData);
-  }
-  useEffect(() => {
-    fetchStockData();
-  });
-
-  console.log(stockData);
+  
 
   return (
-    <div className="w-11/12 h-1/6">
-      <div  style={{height:"490px"}} class="sm:-mx-6 lg:-mx-8 overflow-x-auto overflow-y-auto border-gray-700 rounded-lg bg-sky-800 ">
-        <div class=" align-middle inline-block min-w-full  bg-blue-800">
-          <div class="shadow overflow-hidden sm:rounded-lg    ">
+    <div className="w-11/12 max-h-10">
+      <div class="sm:-mx-6 lg:-mx-8 overflow-y-auto overflow-x-auto border-gray-700 rounded-lg  ">
+        <div class=" align-middle inline-block min-w-full ">
+          <div class="shadow sm:rounded-lg h-96">
             <table class="min-w-full text-sm text-gray-400 ">
               <thead class="bg-gray-800 text-xs uppercase font-medium">
                 <tr>

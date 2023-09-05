@@ -1,99 +1,51 @@
-import React, { Fragment, useEffect, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../AuthContext";
-import { BarChart, Bar, XAxis, YAxis, Brush, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { PieChart, Pie, } from 'recharts';
-import { LineChart, Line, } from 'recharts';
-import Cookies from "js-cookie";
+import {React,  useEffect, useState } from "react";
+
+import axios from 'axios';
+import {
+  BarChart,
+  Bar,
+  Brush,
+  ReferenceLine,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+
 
 function Dashboard() {
 
-  const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
-  const { getUser, user, isLoggedIn } = useAuth();
-
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    if (!Cookies.get("token")) {
-      navigate("/")
-    } else {
-      getUser();
-    }
-  });
-  const data = [
-    {
-        name: 'Page A',
-        Scrab: 4000,
-        Stock: 2400,
-        amt: 2400,
-    },
-    {
-        name: 'Page B',
-        Scrab: 3000,
-        Stock: 1398,
-        amt: 2210,
-    },
-    {
-        name: 'Page C',
-        Scrab: 2000,
-        Stock: 9800,
-        amt: 2290,
-    },
-    {
-        name: 'Page D',
-        Scrab: 2780,
-        Stock: 3908,
-        amt: 2000,
-    },
-    {
-        name: 'Page E',
-        Scrab: 1890,
-        Stock: 4800,
-        amt: 2181,
-    },
-    {
-        name: 'Page F',
-        Scrab: 2390,
-        Stock: 3800,
-        amt: 2500,
-    },
-    {
-        name: 'Page E',
-        Scrab: 1890,
-        Stock: 4800,
-        amt: 2181,
-    },
-    {
-        name: 'Page E',
-        Scrab: 1890,
-        Stock: 4800,
-        amt: 2181,
-    }];
+    fetchCategories();
+  }, []);
 
-    const data01 = [
-      { name: 'Group A', value: 400, color: "red" },
-      { name: 'Group B', value: 300, color: "red" },
-      { name: 'Group C', value: 300, color: "red" },
-      { name: 'Group D', value: 200, color: "red" },
-      { name: 'Group E', value: 278, color: "red" },
-      { name: 'Group F', value: 189, color: "red" },{ name: 'Group A', value: 400, color: "red" },
-      { name: 'Group B', value: 300, color: "red" },
-      { name: 'Group C', value: 300, color: "red" },
-      { name: 'Group D', value: 200, color: "red" },
-      { name: 'Group E', value: 278, color: "red" }
-  ];
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/getCategories'); // Replace '/api/data' with your API endpoint
+      setCategories(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+ 
+
 
 
 
 
   return (
     <>
-      {user.user_name}
-      <ResponsiveContainer width="50%" height="50%">
+      <ResponsiveContainer width="57%" height="50%">
         <BarChart
           width={500}
           height={300}
-          data={data}
+          data={categories}
           margin={{
             top: 5,
             right: 30,
@@ -102,48 +54,19 @@ function Dashboard() {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="name" tick={{ fontSize: 12 /* Your desired font size */ }} />
           <YAxis />
           <Tooltip />
-          <Legend />
-          <Brush startIndex={0} endIndex={2} dataKey="name" height={10} stroke='#8884d8' />
-          <Bar dataKey="Stock" fill="#8884d8" />
-          <Bar dataKey="Scrab" fill="#82ca9d" />
+          <Legend verticalAlign="top" wrapperStyle={{ lineHeight: '40px' }} />
+          <ReferenceLine y={0} stroke="#000" />
+          <Brush startIndex={0} endIndex={3}  height={10} stroke="#8884d8" />
+          <Bar dataKey="Stock" fill="#82ca9d" barSize={70}/>
         </BarChart>
       </ResponsiveContainer>
 
-
-
-
-
-
-
-
-      <ResponsiveContainer width="50%" height="70%">
-        <PieChart width={400} height={400}>
-
-          <Pie
-            dataKey="value"
-            isAnimationActive={true}
-            data={data01}
-            cx="50%"
-            cy="50%"
-            outerRadius={200}
-            label      />
-
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
-
-      {user.length ? (
-        <div className="text-2xl">
-          {user.email_id},{user.role},{user.dept_code}
-        </div>
-      ) : (
-        ""
-      )}
     </>
-  );
+
+  )
 }
 
-export default Dashboard;
+export default Dashboard

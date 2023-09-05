@@ -3,15 +3,7 @@ const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const key = process.env.JWT_KEY;
 const mysql = require("mysql");
-const dotenv = require("dotenv").config();
-
-const db = mysql.createPool({
-  host: process.env.DB_HOST_PUBLIC,
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT_PUBLIC,
-});
+const db = require("../database/db.js");
 
 const clientId =
   "494572126295-g8ok8a5g0kvr3ceodj12h5orod5oe38v.apps.googleusercontent.com";
@@ -32,36 +24,38 @@ const verifyToken = async function (req, res, next) {
   }
 };
 
+const createToken = (result) => {
+
+    JSON.parse(JSON.stringify(result));
+    const token = jwt.sign(
+      {
+        user_id: result[0].faculty_id,
+        user_name: result[0].name,
+        email_id: result[0].email_id,
+        dept_code: result[0].department_code,
+        role: result[0].role,
+      },
+      key
+    );
+    // console.log(token);
+    return  token;
+};
+
 const createSession = function (req, res, next) {
   // console.log(res.locals.payload);
   const email = res.locals.payload.email;
   console.log(email);
-  db.query(
-    "SELECT * FROM faculty WHERE email_id = ? ",
-    [email],
-    (error, result) => {
-      if (error) {
-        res.status(404).json({error:"Unknown Error"});
+  db.query("SELECT * FROM faculty WHERE email_id = ? ", [email])
+    .catch((error) => res.status(400).json({ error: "There was some error" }))
+    .then((response) => {
+      if (response.length <= 0) {
+        res.status(401).json({ error: "Unauthorised Access" });
       } else {
-        JSON.parse(JSON.stringify(result));
-        // console.log(result[0]);
-        const token = jwt.sign(
-          {
-            user_id: result[0].faculty_id,
-            user_name: result[0].name,
-            email_id: result[0].email_id,
-            dept_code: result[0].department_code,
-            role: result[0].role,
-          },
-          key
-        );
-        console.log(token);
+        const token = createToken(response);
         res.locals.token = token;
         next();
       }
-    }
-  );
-  
+    });
 };
 
 const getUser = function (req, res, next) {
@@ -70,7 +64,7 @@ const getUser = function (req, res, next) {
     const data = jwt.verify(token, key);
     res.send(data);
   } catch (error) {
-    res.status(404).json({error:"Invalid Token"});
+    res.status(404).json({ error: "Invalid Token" });
   }
 };
 
