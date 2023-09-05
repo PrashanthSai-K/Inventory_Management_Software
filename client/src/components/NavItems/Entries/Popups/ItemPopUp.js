@@ -13,9 +13,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
     supplierName: "",
     itemName: "",
     subName: "",
-    Spec1: "",
-    Spec2: "",
-    Spec3: "NIL",
+    desc: "",
     cost: "",
     units: "",
   });
@@ -24,7 +22,6 @@ const ItemPopUp = ({ isVisible, onClose }) => {
   const [manufacturer, setManufacturer] = useState([]);
   const [supplier, setSupplier] = useState([]);
   const [quantityUnits, setQuantityUnits] = useState([]);
-  const [message, setMessage] = useState(null);
   const [msuggestion, setMSuggestion] = useState(false);
   const [isMTyping, setIsMTyping] = useState(false);
   const [ssuggestion, setSSuggestion] = useState(false);
@@ -36,15 +33,15 @@ const ItemPopUp = ({ isVisible, onClose }) => {
   //<--------Fetching datas required for form input--------->
 
   async function fetchManufacturer() {
-    const response = await axios.get("http://localhost:4000/getManufacturer");
+    const response = await axios.get("http://localhost:4000/api/getManufacturer");
     setManufacturer(response.data);
   }
   async function fetchSupplier() {
-    const response = await axios.get("http://localhost:4000/getSupplier");
+    const response = await axios.get("http://localhost:4000/api/getSupplier");
     setSupplier(response.data);
   }
   async function fetchQuantityUnits() {
-    const response = await axios.get("http://localhost:4000/getQuantityUnits");
+    const response = await axios.get("http://localhost:4000/api/getQuantityUnits");
     setQuantityUnits(response.data);
   }
 
@@ -56,13 +53,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
 
   //<----------End of Fetch data for forms ------------->
 
-  const clearMessage = () => {
-    setMessage(null);
-  };
 
-  useEffect(() => {
-    setTimeout(clearMessage, 3000);
-  }, [message]);
 
   //<--------Functions to show suggestion for manufacturer in form -------------->
 
@@ -142,9 +133,9 @@ const ItemPopUp = ({ isVisible, onClose }) => {
   const HandleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios
-      .post("http://localhost:4000/itemadd", data)
+      .post("http://localhost:4000/api/itemadd", data)
       .catch((error) => console.log(error))
-      .then((response) => setMessage(response.data));
+
       window.scrollTo({ top: 0 });
       // setData({
       //   itemType: "",
@@ -183,8 +174,8 @@ const ItemPopUp = ({ isVisible, onClose }) => {
               <span className="px-1 text-2xl text-gray-600">Item Entry</span>
             </div>
             {manufacturer && supplier && (
+
               <form onChange={handleChange}>
-                {message ? <div className="absolute">{message}</div> : null}
                 <div style={{ gap: "100px" }} className="py-1 flex  pb-8">
                   <span className="px-1 text-lg text-gray-600">Item Type</span>
                   <select
@@ -233,6 +224,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       required
                       onChange={handleManufacturerChange}
+                      autoComplete="off"
                     />
                   </div>
                   <div className="flex" style={{ paddingLeft: "177px" }}>
@@ -271,6 +263,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
                     onChange={handleSupplierChange}
+                    autoComplete="off"
                   />
                   </div>
                   <div className="flex" style={{ paddingLeft: "177px" }}>
@@ -306,6 +299,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     className="text-md block px-3 py-2 rounded-lg w-80
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   />
                 </div>
                 <div style={{ gap: "60px" }} className="py-1 flex pb-8">
@@ -317,39 +311,19 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     className="text-md block px-3 py-2 rounded-lg w-80
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   />
                 </div>
                 <div style={{ gap: "86px" }} className="py-1 flex pb-8">
-                  <span className="px-1 text-lg text-gray-600">Item Spec-1</span>
+                  <span className="px-1 text-lg text-gray-600">Item Description</span>
                   <input
                     type="text"
-                    name="Spec1"
-                    value={data.Spec1}
+                    name="desc"
+                    value={data.desc}
                     className="text-md block px-3 py-2 rounded-lg w-80
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
-                  />
-                </div>
-                <div style={{ gap: "86px" }} className="py-1 flex pb-8">
-                  <span className="px-1 text-lg text-gray-600">Item Spec-2</span>
-                  <input
-                    type="text"
-                    name="Spec2"
-                    value={data.Spec2}
-                    className="text-md block px-3 py-2 rounded-lg w-80
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
-                    required
-                  />
-                </div>
-                <div style={{ gap: "85px" }} className="py-1 flex pb-8">
-                  <span className="px-1 text-lg text-gray-600">Item Spec-3</span>
-                  <input
-                    type="text"
-                    name="Spec3"
-                    value={data.Spec3}
-                    className="text-md block px-3 py-2 rounded-lg w-80
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
-                    required
+                    autoComplete="off"
                   />
                 </div>
                 <div style={{ gap: "70px" }} className="py-1 flex pb-8">
@@ -361,6 +335,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     className="text-md block px-3 py-2 rounded-lg w-80
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   />
                 </div>
                 <div style={{ gap: "65px" }} className="py-1 flex  pb-8">
@@ -371,6 +346,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     className="text-md block px-3 py-2 rounded-lg w-80
                 bg-white border-2 border-gray-300 placeholder-gray-600 h-10 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   >
                     <option value="" selected>
                       Select Units

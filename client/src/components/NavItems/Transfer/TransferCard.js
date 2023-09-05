@@ -2,26 +2,25 @@ import React,{useState} from "react";
 import Lotties from "../../../Lotties/Lotties";
 import Accept from "../../../Lotties/accept.json";
 import Reject from "../../../Lotties/reject.json";
+import axios from "axios";
 
-const TransferCard = ({data}) => {
+const TransferCard = ({data, user}) => {
 
-    const clickfunction = ()=>{
-        console.log("Accepted")
+    const handleAccept = async(id)=>{
+
+        try{
+          // console.log(id)
+          // console.log(user.user_id)
+          const response = await axios.post("http://localhost:4000/api/acceptRequest", {transfer_id :id, user_id : user.user_id})
+                          .then((response)=>console.log(response)) 
+        }catch(error){
+          console.log(error)
+        }
+
       }
-      const clickfunction2 = ()=>{
+      const handleReject = async()=>{
         console.log("Rejected")
       }
-    
-      const defaultOptions = {
-        loop: false,
-        autoplay: false,
-        animationData: Accept,
-        rendererSettings: {
-          preserveAspectRatio: "xMidYMid slice",
-        },
-      };
-    
-      const [stopped, setStopped] = useState(true);
 
   const toSentenceCase = (str)=>{
     str =str.toLowerCase().split(" ").map(function(s){
@@ -29,9 +28,7 @@ const TransferCard = ({data}) => {
     })
     return str.join(" ")
   }
-
-  // console.log(toSentenceCase("hi and how are yo"));
-      
+    
   return (
     <>
       <div className="card">
@@ -47,13 +44,15 @@ const TransferCard = ({data}) => {
               animationData={Accept}
               height={50}
               width={50}
-              click={clickfunction}
+              click={handleAccept}
+              clickData = {data.id}
             />
             <Lotties
               animationData={Reject}
               height={50}
               width={50}
-              click={clickfunction2}
+              click={handleReject}
+              clickData = {data.id}
             />
           </div>
         </div>
@@ -69,8 +68,8 @@ const TransferCard = ({data}) => {
             <div className="pt-4">Item code : {data.item_code}</div>
           </div>
           <div className="text-sm p-6   ">
-            <div>Item Subame : {data.item_subnam}</div>
-            <div className="pt-4">Item Desc : {data.item_spec1} {data.item_spec2}</div>
+            <div>Item Subame : {data.item_subname}</div>
+            <div className="pt-4">Item Desc : {data.item_description}</div>
           </div>
           <div className="text-sm p-6">
             <div>Transfer item From : {toSentenceCase(data.from_labname)}</div>

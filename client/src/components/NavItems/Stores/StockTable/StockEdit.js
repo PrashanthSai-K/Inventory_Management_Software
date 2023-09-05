@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function StockEdit({ data, onClose, onSubmit }) {
+
   const [formData, setFormData] = useState({
     item_code: "",
     manufacturer_id: "",
@@ -31,7 +32,7 @@ function StockEdit({ data, onClose, onSubmit }) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/stockEdit",
+        "http://localhost:4000/api/stockEdit",
         formData
       );
 
@@ -45,7 +46,6 @@ function StockEdit({ data, onClose, onSubmit }) {
     }
   };
 
-  // console.log(formData);
 
   return (
     <div className="popup-overlay">

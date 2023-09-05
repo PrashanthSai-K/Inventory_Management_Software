@@ -25,8 +25,9 @@ const verifyToken = async function (req, res, next) {
 };
 
 const createToken = (result) => {
-
+    
     JSON.parse(JSON.stringify(result));
+    console.log(result[0])
     const token = jwt.sign(
       {
         user_id: result[0].faculty_id,
@@ -37,7 +38,7 @@ const createToken = (result) => {
       },
       key
     );
-    // console.log(token);
+    console.log(token);
     return  token;
 };
 
@@ -46,16 +47,23 @@ const createSession = function (req, res, next) {
   const email = res.locals.payload.email;
   console.log(email);
   db.query("SELECT * FROM faculty WHERE email_id = ? ", [email])
-    .catch((error) => res.status(400).json({ error: "There was some error" }))
+    
     .then((response) => {
-      if (response.length <= 0) {
+      // console.log(response)
+      if(response.length <= 0) {
         res.status(401).json({ error: "Unauthorised Access" });
-      } else {
+      }else if(response.statusCode == 400) {
+        console.log(response.statusCode);
+        res.status(400).json({ error: "Unauthorised Access" });
+      }else{
+        console.log("Else:",response.statusCode);
         const token = createToken(response);
+        console.log("Token call")
         res.locals.token = token;
         next();
       }
-    });
+    })
+    .catch((error) => res.status(400).json({ error: "There was some error" }));
 };
 
 const getUser = function (req, res, next) {
@@ -64,7 +72,7 @@ const getUser = function (req, res, next) {
     const data = jwt.verify(token, key);
     res.send(data);
   } catch (error) {
-    res.status(404).json({ error: "Invalid Token" });
+    res.status(400).json({ error: "Invalid Token" });
   }
 };
 

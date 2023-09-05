@@ -1,10 +1,14 @@
-import { React} from 'react'
+import { React, useState} from 'react'
 import ItemTable from './ItemTable/ItemTable';
 import StockTable from './StockTable/StockTable';
 
 
 
 function Stores() {
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  
   
   return (
     <>

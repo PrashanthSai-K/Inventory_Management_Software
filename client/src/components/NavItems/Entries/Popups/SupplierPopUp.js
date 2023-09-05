@@ -26,7 +26,7 @@ const SupplierPopUp = ({ isVisible, onClose }) => {
     const HandleSubmit = async (e) => {
         e.preventDefault();
         const response = await axios
-            .post("http://localhost:4000/supplieradd", data)
+            .post("http://localhost:4000/api/supplieradd", data)
             .catch((error) => console.log(error))
             .then((response)=>setMessage(response.data));   
             // .then(() => navigate("/"));

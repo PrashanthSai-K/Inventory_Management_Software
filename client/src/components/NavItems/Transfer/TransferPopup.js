@@ -21,12 +21,12 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage }) => {
   const [stock, setStock] = useState([]);
 
   async function fetchItems() {
-    const response = await axios.get("http://localhost:4000/getItems");
+    const response = await axios.get("http://localhost:4000/api/getItems");
     setItem(response.data);
   }
 
   async function fetchStock() {
-    const response = await axios.get("http://localhost:4000/getStock");
+    const response = await axios.get("http://localhost:4000/api/getStock");
     setStock(response.data);
   }
 
@@ -102,7 +102,7 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage }) => {
       //   user_id: user.user_id,
       // });
       const response = await axios.post(
-        "http://localhost:4000/transferRequest",
+        "http://localhost:4000/api/transferRequest",
         {
           resData: {
             ...data,

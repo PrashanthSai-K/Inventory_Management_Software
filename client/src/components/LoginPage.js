@@ -14,20 +14,13 @@ function LoginPage() {
 
   const navigate = useNavigate();
 
-  // async function loginUser(response) {
-  //   const result = await axios
-  //     .post("http://localhost:4000/loginUser", { res: response })
-  //     .catch((error) => console.log(error))
-  //     .then((response)=>Cookies.set("token", response.data))
-  //     .then(()=>getUser())
-  //     .then(()=>navigate("/dashboard"));
-  // }
 
   const { login, getUser } = useAuth();
 
   useEffect(()=>{
     if(Cookies.get('token')){
       getUser().then(()=>navigate('/dashboard'))
+      .catch((error)=>navigate("/unauthorizerd"))
     }
   })
 

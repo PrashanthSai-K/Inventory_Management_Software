@@ -10,13 +10,13 @@ function Dashboard() {
   const { getUser, user, isLoggedIn } = useAuth();
 
 
-  useEffect(() => {
-    if(!Cookies.get("token")){
-      navigate("/")
-    }else{
-      getUser();
-    }
-  });
+  // useEffect(() => {
+  //   if(!Cookies.get("token")){
+  //     navigate("/")
+  //   }else{
+  //     getUser();
+  //   }
+  // });
 
   
 

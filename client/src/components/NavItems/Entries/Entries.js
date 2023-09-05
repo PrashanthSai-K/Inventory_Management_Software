@@ -27,10 +27,21 @@ function Entries() {
     }
   });
 
+  const [message, setMessage] = useState(null);
+
+  const clearMessage = () => {
+    setMessage(null);
+  };
+
+  useEffect(() => {
+    setTimeout(clearMessage, 3000);
+  }, [message]);
+
   return (
     <>
       {user.role}
       <div className="flex justify-center items-center">
+      {message ? <div>{message}</div> : null}
         <div
           style={{ width: "1100px" }}
           className="flex gap-16 flex-wrap justify-center items-center "
@@ -66,9 +77,11 @@ function Entries() {
           </div>
           <StockPopUp
             isVisible={showStock}
+            user={user}
+            setMessage ={setMessage}
             onClose={() => setShowStock(false)}
           />
-          {user.role === "slsincharge" && (
+          {user.role === "slbincharge" && (
             <>
               <div
                 onClick={() => setShowItem(true)}
@@ -79,6 +92,7 @@ function Entries() {
               </div>
               <ItemPopUp
                 isVisible={showItem}
+                user={user}
                 onClose={() => setShowItem(false)}
               />
             </>

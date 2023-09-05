@@ -1,17 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-function Table() {
-  const [stockData, setStockData] = useState([]);
+function Table({stockData}) {
 
-    async function fetchStockData() {
-      const response = await axios.get("http://localhost:4000/getAdminStockData");
-      setStockData(response.data);
-      // console.log(stockData);
-    }
-    useEffect(() => {
-      fetchStockData();
-    });
   
     console.log(stockData);
   

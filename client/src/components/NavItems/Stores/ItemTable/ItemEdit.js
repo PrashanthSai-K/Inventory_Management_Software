@@ -43,7 +43,7 @@ useEffect(() => {
 const HandleSubmit = async (e) => {
   e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/itemEdit", formData);
+      const response = await axios.post("http://localhost:4000/api/itemEdit", formData);
       
       if(response.status==200){
         console.log(response)

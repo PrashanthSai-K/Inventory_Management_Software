@@ -32,6 +32,7 @@ import Unauthorized from "./components/ErrorPages/Unauthorized";
 import Transfer from "./components/NavItems/Transfer/Transfer.js"
 
 function App() {
+  
   const [open, setOpen] = useState(false);
 
   const location = useLocation();

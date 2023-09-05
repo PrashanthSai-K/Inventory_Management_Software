@@ -5,6 +5,7 @@ import axios from "axios";
 import ItemEdit from "./ItemEdit";
 
 function ItemTable() {
+  
   //For open popup
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
@@ -36,34 +37,19 @@ function ItemTable() {
 
   const [itemData, setItemData] = useState([]);
   async function fetchItemData() {
-    const response = await axios.get("http://localhost:4000/getItems");
+    const response = await axios.get("http://localhost:4000/api/getItems");
     setItemData(response.data);
     console.log(response.data);
   } 
 
   useEffect(() => {
     fetchItemData();
-    // console.log(manufacturer);
   }, []);
 
   const onSubmit = () =>{
     fetchItemData();
     handleCloseEdit();
   }
-
-  // async function HandleDelete(item_code){
-  //   // e.preventDefault();
-  //   // console.log(item_code)
-  //   try {
-  //     const response = await axios.post("http://localhost:4000/itemdelete", {item_code:item_code});
-  //     // console.log();
-      
-  //   } catch (error) {
-  //     console.log(error);
-  //     console.log("Error deleting item."); 
-  //   }
-  //   // window.location.reload();
-  // };
 
   return (
     <div>
@@ -72,7 +58,7 @@ function ItemTable() {
       <div className=" justify-center items-center flex flex-col gap-10 ">
         <div
           style={{ width: "90%", height: "400px" }}
-          className="relative  overflow-x-auto rounded-3xl overflow-y-auto scrollbar-thin scrollbar-none scrollbar-thumb-gray-400 scrollbar-track-gray-200"
+          className="relative  overflow-x-auto rounded-3xl overflow-y-auto scroll-smooth"
         >
           <table className="w-full text-sm text-left text-gray-500  dark:text-gray-400 rounded-3xl ">
             <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
