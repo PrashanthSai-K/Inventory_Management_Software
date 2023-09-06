@@ -12,6 +12,7 @@ const Navbar = ({ location, open, setOpen, navItems }) => {
   function navUsed() {
     return navItems.some((item) => item.src === location);
   }
+  
 
   return (
     <>

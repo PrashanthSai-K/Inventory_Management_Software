@@ -230,6 +230,19 @@ app.get("/getCategories", (req, res) => {
   });
 });
 
+app.get("/getInventory", (req, res) => {
+  db.query("SELECT CONCAT(UPPER(LEFT(DATE_FORMAT( created_at , '%b'), 3)), ' ', RIGHT(DATE_FORMAT(created_at, '%Y'), 2)) AS name , SUM(inventory_value) AS Cost FROM stocktable GROUP BY created_at", (error, result) => {
+    res.send(result);
+  });
+});
+
+app.get("/getLabItem", (req, res) => {
+  db.query("SELECT * FROM lab_item_view", (error, result) => {
+    res.send(result);
+  });
+});
+
+
 app.get("/getItems", (req, res) => {
   db.query("SELECT * FROM itemtable", (error, result) => {
     if (error) console.log(error);
@@ -257,7 +270,7 @@ app.get("/getQuantityUnits", (req, res) => {
   });
 });
 
-app.get("/getAdminStockData", (req, res) => {
+app.get("/api/getAdminStockData", (req, res) => {
   db.query("SELECT * FROM admin_stock_view", (error, result) => {
     if (error) console.log(error);
     res.send(result);
