@@ -1,6 +1,7 @@
 const { OAuth2Client } = require("google-auth-library");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
+const dotenv = require('dotenv').config();
 const key = process.env.JWT_KEY;
 const mysql = require("mysql");
 const db = require("../database/db.js");
@@ -25,20 +26,25 @@ const verifyToken = async function (req, res, next) {
 };
 
 const createToken = (result) => {
-
-    JSON.parse(JSON.stringify(result));
-    const token = jwt.sign(
-      {
-        user_id: result[0].faculty_id,
-        user_name: result[0].name,
-        email_id: result[0].email_id,
-        dept_code: result[0].department_code,
-        role: result[0].role,
-      },
-      key
-    );
-    // console.log(token);
-    return  token;
+    try{
+      JSON.parse(JSON.stringify(result));
+      // console.log(key)
+      const token = jwt.sign(
+        {
+          user_id: result[0].faculty_id,
+          user_name: result[0].name,
+          email_id: result[0].email_id,
+          dept_code: result[0].department_code,
+          role: result[0].role,
+        },
+        key
+      );
+      console.log(token);
+      return  token;
+    }catch(error){
+      console.log(error)
+    }
+    
 };
 
 const createSession = function (req, res, next) {
@@ -46,15 +52,25 @@ const createSession = function (req, res, next) {
   const email = res.locals.payload.email;
   console.log(email);
   db.query("SELECT * FROM faculty WHERE email_id = ? ", [email])
-    .catch((error) => res.status(400).json({ error: "There was some error" }))
     .then((response) => {
-      if (response.length <= 0) {
+      console.log(response)
+      if(response.length <= 0) {
         res.status(401).json({ error: "Unauthorised Access" });
-      } else {
+      }else if(response.statusCode == 400) {
+        console.log(response.statusCode);
+        res.status(400).json({ error: "Unauthorised Access" });
+      }else{
+        console.log("Else:",response.statusCode);
         const token = createToken(response);
+        // console.log("Token call")
         res.locals.token = token;
         next();
+        
       }
+    })
+    .catch((error) => {
+      console.log(error)
+      res.status(400).json({ error: "There was some error" })
     });
 };
 
@@ -64,7 +80,7 @@ const getUser = function (req, res, next) {
     const data = jwt.verify(token, key);
     res.send(data);
   } catch (error) {
-    res.status(404).json({ error: "Invalid Token" });
+    res.status(400).json({ error: "Invalid Token" });
   }
 };
 

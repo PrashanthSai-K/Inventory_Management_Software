@@ -21,24 +21,35 @@ function Entries() {
 
   useEffect(() => {
     if (!Cookies.get("token")) {
-      navigate("/");
+      // navigate("/");
     } else {
       getUser();
     }
   });
 
+  const [message, setMessage] = useState(null);
+
+  const clearMessage = () => {
+    setMessage(null);
+  };
+
+  useEffect(() => {
+    setTimeout(clearMessage, 3000);
+  }, [message]);
+
   return (
     <>
       {user.role}
       <div className="flex justify-center items-center">
+      {message ? <div>{message}</div> : null}
         <div
-          style={{ width: "1100px" }}
-          className="flex gap-16 flex-wrap justify-center items-center "
+          
+          className="entries-gap-adjust flex mt-10 gap-36 w-full flex-wrap justify-center items-center "
         >
           <div
             onClick={() => setShowManufacturer(true)}
             style={{ backgroundColor: "#080F34" }}
-            className="w-96 h-52 mr-14 rounded-3xl mt-32 text-2xl hover:cursor-pointer text-white flex justify-center items-center "
+            className="w-96 h-52 mx-4 rounded-3xl text-2xl hover:cursor-pointer text-white flex justify-center items-center"
           >
             <div>Manufacturer Entry</div>
           </div>
@@ -49,7 +60,7 @@ function Entries() {
           <div
             onClick={() => setShowSupplier(true)}
             style={{ backgroundColor: "#080F34" }}
-            className="w-96 h-52 rounded-3xl mt-32 text-2xl   hover:cursor-pointer flex text-white justify-center items-center "
+            className="w-96 h-52 mx-4 rounded-3xl text-2xl  hover:cursor-pointer flex text-white justify-center items-center"
           >
             <div>Supplier Entry</div>
           </div>
@@ -60,25 +71,28 @@ function Entries() {
           <div
             onClick={() => setShowStock(true)}
             style={{ backgroundColor: "#080F34" }}
-            className="w-96 h-52 mr-14 rounded-3xl text-2xl  hover:cursor-pointer flex text-white justify-center items-center "
+            className="w-96 h-52 mx-4 rounded-3xl text-2xl  hover:cursor-pointer flex text-white justify-center items-center"
           >
             <div> Stock Entry</div>
           </div>
           <StockPopUp
             isVisible={showStock}
+            user={user}
+            setMessage ={setMessage}
             onClose={() => setShowStock(false)}
           />
-          {user.role === "slsincharge" && (
+          {user.role === "slbincharge" && (
             <>
               <div
                 onClick={() => setShowItem(true)}
                 style={{ backgroundColor: "#080F34" }}
-                className="w-96 h-52 rounded-3xl flex text-2xl  hover:cursor-pointer text-white justify-center items-center "
+                className="w-96 h-52 mx-4 rounded-3xl flex text-2xl  hover:cursor-pointer text-white justify-center items-center "
               >
                 <div>Item Entry</div>
               </div>
               <ItemPopUp
                 isVisible={showItem}
+                user={user}
                 onClose={() => setShowItem(false)}
               />
             </>

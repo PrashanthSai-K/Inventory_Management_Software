@@ -100,43 +100,30 @@ function StockTable({getStock,fetchGetStock}) {
     });
   };
 
-  // async function HandleDelete(stock_id){
-  //   // e.preventDefault();
-  //   // console.log(item_code)
-  //   try {
-  //     const response = await axios.post("http://localhost:4000/stockdelete", {stock_id:stock_id});
-  //     // console.log();
-
-  //   } catch (error) {
-  //     console.log(error);
-  //     console.log("Error deleting item.");
-  //   }
-  //   // window.location.reload();
-  // };
-
   return (
     <div>
-      <div className="flex  w-full h-auto my-10 justify-between font-semibold">
-        <div className="ml-10 text-2xl font-semibold">Stock Edit</div>
-        <div className="flex">
-          <div className="h-auto">
-          <input
-            name="inputQuery"
-            type="text"
-            value={searchQuery}
-            onClick={() => setClick(false)}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search..."
-            className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black"
-          />
+      <div style={{width:"90%"}} className=" flex ml-20 h-auto mt-5 mb-5 justify-between  font-semibold" >
+        <div className="sub-titles text-2xl font-semibold">Stock Edit</div>
+        <div className="flex input-field">
+            <div className="h-auto">
+              <input
+                name="inputQuery"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => {
+                  setClick(false);
+                  setSearchQuery(e.target.value)}}
+                placeholder="Search..."
+                className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black"
+              />
+            </div>
+            <div
+              onClick={() => setClick(true)}
+              className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
+            >
+              <i className="bi bi-search"></i>
+            </div>
           </div>
-          <div
-            onClick={() => setClick(true)}
-            className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 mr-16 px-2"
-          >
-            <i className="bi bi-search"></i>
-          </div>
-        </div>
       </div>
 
 
@@ -145,6 +132,7 @@ function StockTable({getStock,fetchGetStock}) {
           style={{ width: "90%", height: "30%", maxHeight: "300px" }}
           class="relative rounded-2xl overflow-x-auto overflow-y-auto scrollbar-none"
         >
+         
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
             <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>

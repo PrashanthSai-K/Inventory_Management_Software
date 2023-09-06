@@ -2,7 +2,7 @@ import Lottie from "react-lottie";
 
 import React, { useState } from "react";
 
-const Lotties = ({ height, width, animationData, click}) => {
+const Lotties = ({ height, width, animationData, click, clickData}) => {
 
   const [stopped, setStopped] = useState(true);
 
@@ -23,7 +23,7 @@ const Lotties = ({ height, width, animationData, click}) => {
       onMouseLeave={() => {
         setStopped(true);
       }}
-      onClick={click}
+      onClick={()=>click(clickData)}
     >
       <Lottie
         options={options}

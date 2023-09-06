@@ -1,11 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../AuthContext";
+import TrackCard from "./TrackCard";
 
-const TrackTransfer = ({ isVisible, onClose, trackTransferData }) => {
-
-
-  // console.log("transfer data" ,trackTransferData)
+const TrackTransfer = ({ isVisible, onClose, trackTransferData, user , setMessage, setError}) => {
 
   if (!isVisible) return null;
 
@@ -28,26 +26,14 @@ const TrackTransfer = ({ isVisible, onClose, trackTransferData }) => {
             <div className="mt-6 flex flex-col justify-center items-center gap-10">
               {trackTransferData && trackTransferData.map((data, index) => {
                 return (
-                  <div className="relative track-card w-11/12 rounded-xl">
-                    {/* <div class="pl-4">{index + 1}</div> */}
-                    <div className="flex flex-wrap">
-                      <div class="px-6 py-4 whitespace-nowrap">Item Code:{data.item_code}</div>
-                      <div class="px-6 py-4 whitespace-nowrap">Item Type:{data.item_type}</div>
-                      <div class="px-6 py-4 whitespace-nowrap">Item Name:{data.item_name}</div>
-
-                    </div>
-                    <div className="flex flex-wrap">
-                      <div class="px-6 py-4 whitespace-nowrap">Item Subname: {data.item_subname}</div>
-                      <div class="px-6 py-4 whitespace-nowrap">Item Spec: {data.item_spec1} {data.item_spec2}</div>
-                      <div class="px-6 py-4 whitespace-nowrap">Requested From: {data.transfered_from}</div>
-                      <div class="px-6 py-4 whitespace-nowrap">Transfer Quantity: {data.transfer_qty}</div>
-                    </div>
-                    <div className="flex flex-wrap">
-                      <div class="px-6 py-4 whitespace-nowrap">Cost Per Item : {data.cost_per_item}</div>
-                      <div class="px-6 py-4 ">Status : {data.status}</div>
-                      <button>Cancel</button>
-                    </div>
-                  </div >
+                  <TrackCard 
+                    data={data} 
+                    index={index} 
+                    onClose={onClose} 
+                    user={user} 
+                    setError = {setError}
+                    setMessage = {setMessage}
+                  />
                 )
               })}
             </div>

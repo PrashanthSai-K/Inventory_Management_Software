@@ -22,7 +22,7 @@ const Navbar = ({ location, open, setOpen, navItems }) => {
             <div
               className={`${
                 open ? "w-64" : "w-20"
-              } h-screen bg-blue-800 w-1/6 fixed left-0 right-0 navbar duration-300`}
+              } h-full bg-blue-800 w-1/6 fixed left-0 right-0 navbar duration-300`}
             >
               <img
                 src="/images/control.png"

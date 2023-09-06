@@ -5,6 +5,8 @@ import axios from "axios";
 
 const ItemPopUp = ({ isVisible, onClose }) => {
 
+
+  const [message, setMessage] = useState(null)
   //<-------------Assigning state requird state variables --------->
 
   const [data, setData] = useState({
@@ -13,9 +15,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
     supplierName: "",
     itemName: "",
     subName: "",
-    Spec1: "",
-    Spec2: "",
-    Spec3: "NIL",
+    desc: "",
     cost: "",
     units: "",
   });
@@ -24,7 +24,6 @@ const ItemPopUp = ({ isVisible, onClose }) => {
   const [manufacturer, setManufacturer] = useState([]);
   const [supplier, setSupplier] = useState([]);
   const [quantityUnits, setQuantityUnits] = useState([]);
-  const [message, setMessage] = useState(null);
   const [msuggestion, setMSuggestion] = useState(false);
   const [isMTyping, setIsMTyping] = useState(false);
   const [ssuggestion, setSSuggestion] = useState(false);
@@ -32,19 +31,18 @@ const ItemPopUp = ({ isVisible, onClose }) => {
 
   //<----------End of assigning state variables ------------>
 
-
   //<--------Fetching datas required for form input--------->
 
   async function fetchManufacturer() {
-    const response = await axios.get("http://localhost:4000/getManufacturer");
+    const response = await axios.get("http://localhost:4000/api/getManufacturer");
     setManufacturer(response.data);
   }
   async function fetchSupplier() {
-    const response = await axios.get("http://localhost:4000/getSupplier");
+    const response = await axios.get("http://localhost:4000/api/getSupplier");
     setSupplier(response.data);
   }
   async function fetchQuantityUnits() {
-    const response = await axios.get("http://localhost:4000/getQuantityUnits");
+    const response = await axios.get("http://localhost:4000/api/getQuantityUnits");
     setQuantityUnits(response.data);
   }
 
@@ -56,13 +54,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
 
   //<----------End of Fetch data for forms ------------->
 
-  const clearMessage = () => {
-    setMessage(null);
-  };
 
-  useEffect(() => {
-    setTimeout(clearMessage, 3000);
-  }, [message]);
 
   //<--------Functions to show suggestion for manufacturer in form -------------->
 
@@ -142,56 +134,58 @@ const ItemPopUp = ({ isVisible, onClose }) => {
   const HandleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios
-      .post("http://localhost:4000/itemadd", data)
+      .post("http://localhost:4000/api/itemadd", data)
       .catch((error) => console.log(error))
       .then((response) => setMessage(response.data));
-      window.scrollTo({ top: 0 });
-      // setData({
-      //   itemType: "",
-      //   manufacturerName: "",
-      //   supplierName: "",
-      //   itemName: "",
-      //   subName: "",
-      //   Spec1: "",
-      //   Spec2: "",
-      //   Spec3: "NIL",
-      //   cost: "",
-      //   units: "",
-      // });
+    window.scrollTo({ top: 0 });
+    // setData({
+    //   itemType: "",
+    //   manufacturerName: "",
+    //   supplierName: "",
+    //   itemName: "",
+    //   subName: "",
+    //   Spec1: "",
+    //   Spec2: "",
+    //   Spec3: "NIL",
+    //   cost: "",
+    //   units: "",
+    // });
   };
-// console.log(supplier)
+  // console.log(supplier)
   //<----------End of form handling----------->
 
   if (!isVisible) return null;
 
   return (
-    
     <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
       <div className="flex flex-col">
-        <button
-          className="text-white text-3xl place-self-end"
-          onClick={() => onClose()}
-        >
-          X
-        </button>
         <div
-          style={{ width: "1000px", height: "600px" }}
-          className="bg-white overflow-x-auto overflow-y-auto border-gray-700 rounded-lg"
+          style={{ height: "600px" }}
+          className="popup-responsive bg-white w-full px-14 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
         >
+          <button
+            className="text-black rounded-full border-black border-2 px-2 text-3xl place-self-end"
+            onClick={() => onClose()}
+          > 
+            X
+          </button>
           <div className="flex flex-col justify-center items-center">
-            <div className="py-1 flex  pb-8 mt-8">
-              <span className="px-1 text-2xl text-gray-600">Item Entry</span>
+            <div className="py-1 flex pb-2">
+              <span className="px-1 text-black font-medium text-2xl whitespace-nowrap">
+                Item Entry
+              </span>
             </div>
             {manufacturer && supplier && (
+
               <form onChange={handleChange}>
                 {message ? <div className="absolute">{message}</div> : null}
-                <div style={{ gap: "100px" }} className="py-1 flex  pb-8">
+                <div className="py-1 flex flex-wrap">
                   <span className="px-1 text-lg text-gray-600">Item Type</span>
                   <select
                     id="itemType"
                     name="itemType"
                     value={data.itemType}
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                    className="text-md block px-3 py-2 rounded-lg w-full
               bg-white border-2 h-10 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
                   >
@@ -219,8 +213,8 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     <option value="Acrylic">Acrylic</option>
                   </select>
                 </div>
-                <div className="py-1  pb-8">
-                  <div className="flex " style={{ gap: "27px" }}>
+                <div className="py-1 ">
+                  <div className="flex flex-wrap mt-8 ">
                     <span className="px-1 text-lg text-gray-600">
                       Manufacturer Name
                     </span>
@@ -229,17 +223,17 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                       name="manufacturerName"
                       value={data.manufacturerName}
                       list="manufacturers"
-                      className="text-md block px-3 py-2 rounded-lg w-80
+                      className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       required
                       onChange={handleManufacturerChange}
+                      autoComplete="off"
                     />
                   </div>
-                  <div className="flex" style={{ paddingLeft: "177px" }}>
+                  <div className="flex flex-wrap">
                     {isMTyping && msuggestion && (
                       <div
-                        
-                        className="text-md block px-3 py-2 rounded-b-lg w-80 border-t-0
+                        className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       >
                         {manufacturerResult &&
@@ -259,25 +253,26 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     )}
                   </div>
                 </div>
-                <div  className="py-1 pb-8">
-                  <div style={{ gap: "65px" }} className="flex">
-                  <span className="px-1 text-lg text-gray-600">Supplier Name</span>
-                  <input
-                    type="text"
-                    name="supplierName"
-                    value={data.supplierName}
-                    list="supplier"
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                <div className="py-1">
+                  <div className="flex flex-wrap mt-8">
+                    <span className="px-1 text-lg text-gray-600">
+                      Supplier Name
+                    </span>
+                    <input
+                      type="text"
+                      name="supplierName"
+                      value={data.supplierName}
+                      list="supplier"
+                      className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
-                    required
-                    onChange={handleSupplierChange}
-                  />
+                      required
+                      onChange={handleSupplierChange}
+                    />
                   </div>
-                  <div className="flex" style={{ paddingLeft: "177px" }}>
+                  <div className="flex flex-wrap ">
                     {isSTyping && ssuggestion && (
                       <div
-                        
-                        className="text-md block px-3 py-2 rounded-b-lg w-80 border-t-0
+                        className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       >
                         {supplierResult &&
@@ -297,80 +292,97 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     )}
                   </div>
                 </div>
-                <div style={{ gap: "92px" }} class="py-1 flex pb-8">
+                <div class="flex flex-wrap mt-8">
                   <span className="px-1 text-lg text-gray-600">Item Name</span>
                   <input
                     type="text"
                     name="itemName"
                     value={data.itemName}
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                    className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   />
                 </div>
-                <div style={{ gap: "60px" }} className="py-1 flex pb-8">
-                  <span className="px-1 text-lg text-gray-600">Item Sub-Name</span>
+                <div className="flex flex-wrap mt-8">
+                  <span className="px-1 text-lg text-gray-600">
+                    Item Sub-Name
+                  </span>
                   <input
                     type="text"
                     name="subName"
                     value={data.subName}
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                    className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   />
                 </div>
-                <div style={{ gap: "86px" }} className="py-1 flex pb-8">
-                  <span className="px-1 text-lg text-gray-600">Item Spec-1</span>
+                <div className="flex flex-wrap mt-8">
+                  <span className="px-1 text-lg text-gray-600">
+                    Item Spec-1
+                  </span>
                   <input
                     type="text"
                     name="Spec1"
                     value={data.Spec1}
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                    className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
                   />
                 </div>
-                <div style={{ gap: "86px" }} className="py-1 flex pb-8">
-                  <span className="px-1 text-lg text-gray-600">Item Spec-2</span>
+                <div className="flex flex-wrap mt-8">
+                  <span className="px-1 text-lg text-gray-600">
+                    Item Spec-2
+                  </span>
                   <input
                     type="text"
                     name="Spec2"
                     value={data.Spec2}
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                    className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
                   />
                 </div>
-                <div style={{ gap: "85px" }} className="py-1 flex pb-8">
-                  <span className="px-1 text-lg text-gray-600">Item Spec-3</span>
+                <div className="flex flex-wrap mt-8">
+                  <span className="px-1 text-lg text-gray-600">
+                    Item Spec-3
+                  </span>
                   <input
                     type="text"
                     name="Spec3"
                     value={data.Spec3}
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                    className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   />
                 </div>
-                <div style={{ gap: "70px" }} className="py-1 flex pb-8">
-                  <span className="px-1 text-lg text-gray-600">Cost Per Item</span>
+                <div className="flex flex-wrap mt-8">
+                  <span className="px-1 text-lg text-gray-600">
+                    Cost Per Item
+                  </span>
                   <input
                     type="text"
                     name="cost"
                     value={data.cost}
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                    className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   />
                 </div>
-                <div style={{ gap: "65px" }} className="py-1 flex  pb-8">
-                  <span className="px-1 text-lg text-gray-600">Quantity Units</span>
+                <div className="flex flex-wrap mt-8">
+                  <span className="px-1 text-lg text-gray-600">
+                    Quantity Units
+                  </span>
                   <select
                     name="units"
                     value={data.units}
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                    className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 h-10 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   >
                     <option value="" selected>
                       Select Units
@@ -382,7 +394,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                 </div>
                 <center>
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded mb-10 "
+                    className="bg-blue-500 mt-6 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded mb-10 "
                     onClick={HandleSubmit}
                   >
                     Submit

@@ -2,31 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .table {
-    border-spacing: 0 15px;
-    
-}
-
-i {
-    font-size: 1rem !important;
-}
-
-.table tr {
-    border-radius: 20px;
-    background-color: #080F34;
-}
-
-tr td:nth-child(n+5),
-tr th:nth-child(n+5) {
-    border-radius: 0 .625rem .625rem 0;
-}
-
-tr td:nth-child(1),
-tr th:nth-child(1) {
-    border-radius: .625rem 0 0 .625rem;
-} */
-
-
 
 .navbar{
     background-color: #080F34;
@@ -39,24 +14,24 @@ tr th:nth-child(1) {
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
-  border-radius: 4px;
+  border-radius: 200px;
 }
 
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 4px;
+  border-radius: 200px;
 }
 
 
 ::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 4px;
+  border-radius: 200px;
 }
 
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-  border-radius: 4px;
+  border-radius: 200px;
 }
 /* Popup overlay styles */
 .popup-overlay {
@@ -70,6 +45,7 @@ tr th:nth-child(1) {
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  
 }
 
 /* Popup content styles */
@@ -81,19 +57,15 @@ tr th:nth-child(1) {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-width: 500px;
+  margin-right: 20px;
+  margin-left: 20px;
+  
 }
-
-.close-button {
-  margin-left: 95%;
-  border-radius: 25px;
-  padding: 0px 10px;
-  border: 2px solid black;
-  background: none;
-  cursor: pointer;
-  color: #000000;
-  font-size: 18px;
-}
-
 
 
 .card {
@@ -111,7 +83,7 @@ tr th:nth-child(1) {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-@media (max-width:768px) {
+@media (max-width:780px) {
   .card{
     height: auto;
   }
@@ -121,5 +93,143 @@ tr th:nth-child(1) {
   .track-card{
     height: auto !important;
   }
+  .titles{
+    font-size: 20px;
+  }
+  .sub-titles{
+    font-size: 18px;
+    margin-left: 30px;
+    font-weight: 600;
+  }
+  .input-field{
+    display: none;
+  }
+}
+@media (max-width:1000px) {
+  .vendor-responsive{
+    transform: scale(.9);
+  }
+  .gap-change{
+    gap: 20px;
+  }
+  .card-amount-adjust{
+    font-size: 25px;
+  }
+  .entries-gap-adjust{
+    gap: 50px;
+  }
+}
+@media (max-width:530px) {
+  .vendor-responsive{
+    transform: scale(.8);
+  }
+  .gap-change{
+    gap: 0px;
+  }
+  .card-text-adjust{
+    font-size: 15px;
+  }
 }
 
+@media (max-width:450px) {
+  .vendor-responsive{
+    transform: scale(.7);
+  }
+  .popup-content{
+    min-width: 450px;
+  }
+}
+
+@media (max-width:900px) {
+  .input-field2{
+    display: none;
+  }
+  .sub-titles2{
+    font-size: 18px;
+  }
+  .popup-responsive{
+    transform: scale(0.8);
+  }
+}
+
+
+.loader {
+  transform: rotateZ(45deg);
+  perspective: 1000px;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  color: #000000;
+}
+  .loader:before,
+  .loader:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    transform: rotateX(70deg);
+    animation: 1s spin linear infinite;
+  }
+  .loader:after {
+    color: #080F34;
+    transform: rotateY(70deg);
+    animation-delay: .4s;
+  }
+
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotateZ(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateZ(360deg);
+  }
+}
+
+@keyframes rotateccw {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes spin {
+  0%,
+  100% {
+    box-shadow: .2em 0px 0 0px currentcolor;
+  }
+  12% {
+    box-shadow: .2em .2em 0 0 currentcolor;
+  }
+  25% {
+    box-shadow: 0 .2em 0 0px currentcolor;
+  }
+  37% {
+    box-shadow: -.2em .2em 0 0 currentcolor;
+  }
+  50% {
+    box-shadow: -.2em 0 0 0 currentcolor;
+  }
+  62% {
+    box-shadow: -.2em -.2em 0 0 currentcolor;
+  }
+  75% {
+    box-shadow: 0px -.2em 0 0 currentcolor;
+  }
+  87% {
+    box-shadow: .2em -.2em 0 0 currentcolor;
+  }
+}
+
+.fade{
+  opacity: 0;
+}
+.fade-in {
+  opacity: 1 ;
+  transition: opacity 1s ease-in; /* Adjust the duration and easing function as needed */
+}

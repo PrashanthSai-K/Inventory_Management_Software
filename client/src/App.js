@@ -32,6 +32,7 @@ import Unauthorized from "./components/ErrorPages/Unauthorized";
 import Transfer from "./components/NavItems/Transfer/Transfer.js"
 
 function App() {
+  
   const [open, setOpen] = useState(false);
 
   const location = useLocation();
@@ -108,11 +109,11 @@ function App() {
               />
               <Route
                 path="/stores"
-                element={<Stores/>}
+                element={<Stores />}
               />
               <Route
                 path="/entries"
-                element={<Entries/>}
+                element={<Entries />}
               />
               <Route
                 path="/g"
