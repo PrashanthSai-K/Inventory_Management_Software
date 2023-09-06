@@ -233,7 +233,7 @@ function Dashboard({ open }) {
   };
 
   const colors = ['#4287f5', '#67cc52', '#f5d142', '#a142f5', '#33ff88', '#f542d1', '#8833ff', '#ff8833', '#33ff33', '#ff33ff', '#33ffff', '#ffff33', '#3333ff'];
-  
+
 
   return (
     <>
@@ -243,14 +243,14 @@ function Dashboard({ open }) {
       ) : (
 
         <>
-        
+
           <div style={{ backgroundColor: "#F4F4F4" }}>
             <h1 style={{ fontFamily: 'Iceland', fontWeight: "bold", fontSize: "40px" }} class="text-start pl-24 pt-10">Dashboard</h1>
             <center style={{ paddingTop: "20px" }}>
               <div
-                className={` shadow-2xl p-10 bg-white rounded-2xl shadow ${isCostFullScreen ? 'fixed top-0 left-0 max-w z-50 full-screen' :'max-w-7xl'
+                className={` shadow-2xl p-10 bg-white rounded-2xl shadow ${isCostFullScreen ? 'fixed top-0 left-0 max-w z-50 full-screen' : 'max-w-7xl'
                   }`}
-                style={{ width: isCostFullScreen ? '100%' : '100%', height: isCostFullScreen ? '100%' : '530px'}}
+                style={{ width: isCostFullScreen ? '100%' : '100%', height: isCostFullScreen ? '100%' : '530px' }}
               >
                 <h4 style={{ fontFamily: 'Iceland', fontWeight: "bold", borderBottom: "1px solid gray", display: "flex", justifyContent: "space-between" }} className=" text-start text-3xl pb-2">Cost Overview <button onClick={toggleCostFullScreen}><i class={`bi bi-arrows-${isCostFullScreen ? 'collapse' : 'fullscreen'}`}></i></button></h4>
                 <br />
@@ -281,7 +281,7 @@ function Dashboard({ open }) {
             </center>
             <br /><br />
 
-            <div style={{ display: 'flex', gap: '30px', justifyContent: "center"}}>
+            <div style={{ display: 'flex', gap: '30px', justifyContent: "center" }}>
 
               <div
                 className={`shadow-2xl p-10 bg-white rounded-2xl shadow ${isStockFullScreen ? 'fixed top-0 left-0 max-w z-50 full-screen  ' : 'max-w-2xl'
@@ -289,7 +289,7 @@ function Dashboard({ open }) {
                 style={{
                   width: isStockFullScreen ? '100%' : '100%',
                   height: isStockFullScreen ? '100%' : '530px',
-                  
+
                 }}
               >
                 <h4
@@ -382,6 +382,109 @@ function Dashboard({ open }) {
 
             </div>
           </div>
+
+
+
+
+        
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Product name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Color
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Category
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Price
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Apple MacBook Pro 17"
+                </th>
+                <td class="px-6 py-4">
+                    Silver
+                </td>
+                <td class="px-6 py-4">
+                    Laptop
+                </td>
+                <td class="px-6 py-4">
+                    $2999
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                </td>
+            </tr>
+            <tr class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Microsoft Surface Pro
+                </th>
+                <td class="px-6 py-4">
+                    White
+                </td>
+                <td class="px-6 py-4">
+                    Laptop PC
+                </td>
+                <td class="px-6 py-4">
+                    $1999
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                </td>
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Magic Mouse 2
+                </th>
+                <td class="px-6 py-4">
+                    Black
+                </td>
+                <td class="px-6 py-4">
+                    Accessories
+                </td>
+                <td class="px-6 py-4">
+                    $99
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                </td>
+            </tr>
+            <tr class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Google Pixel Phone
+                </th>
+                <td class="px-6 py-4">
+                    Gray
+                </td>
+                <td class="px-6 py-4">
+                    Phone
+                </td>
+                <td class="px-6 py-4">
+                    $799
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
+
+
+          
+
         </>)}
     </>
 
