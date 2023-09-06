@@ -20,7 +20,8 @@ export function AuthProvider({ children }) {
     return new Promise(async (resolve, reject) => {
       try {
         const token = Cookies.get("token");
-        const result = await axios.post("http://localhost:4000/getUser", {
+        // console.log(token);
+        const result = await axios.post("http://localhost:4000/api/getUser", {
           token: token,
         }).catch((error) => console.log(error));
         setUser(result.data);
@@ -35,15 +36,16 @@ export function AuthProvider({ children }) {
 
   async function login(response) {
     try {
-      const result = await axios.post("http://localhost:4000/loginUser", { res: response });
+      const result = await axios.post("http://localhost:4000/api/loginUser", { res: response });
       Cookies.set("token", result.data)
       setIsLoggedIn(true)
       await getUser();
       navigate("/dashboard");
     } catch (error) {
-      if (error.response.status == 401) {
+      if (error && error.response.status == 401 || error.response.status == 400) {
         navigate("/unauthorized")
       }
+      console.log(error)
       return;
     }
 

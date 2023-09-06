@@ -10,6 +10,7 @@ function Vendors({ open }) {
 
   const [manufacturer, setManufacturer] = useState([]);
   const [supplier, setSupplier] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   //<-----End of creation of required state variables------>
 
@@ -17,13 +18,13 @@ function Vendors({ open }) {
 
   async function fetchManufacturer() {
     const response = await axios
-      .get("http://localhost:4000/getManufacturer")
+      .get("http://localhost:4000/api/getManufacturer")
       .catch((error) => console.log(error));
     setManufacturer(response.data);
   }
   async function fetchSupplier() {
     const response = await axios
-      .get("http://localhost:4000/getSupplier")
+      .get("http://localhost:4000/api/getSupplier")
       .catch((error) => console.log(error));
     setSupplier(response.data);
   }
@@ -33,6 +34,11 @@ function Vendors({ open }) {
     fetchSupplier();
   }, []);
 
+  useEffect(()=>{
+    if(supplier.length > 0 && manufacturer.length > 0){
+      setIsLoading(false);
+    }
+  }, [supplier, manufacturer])
   //<------------------- Search functionality for manufacturer table--------------------------->
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -153,6 +159,7 @@ function Vendors({ open }) {
       getUser();
     }
   }, [Cookies.get("token")]);
+
 
   //<--------End of authentication of user for the page--------->
 

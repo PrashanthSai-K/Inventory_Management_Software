@@ -1,6 +1,7 @@
 import React from "react";
 
 function StockPopup({ data, onClose }) {
+  
   return (
     <div className=" popup-overlay">
       <div className=" popup-responsive popup-content">

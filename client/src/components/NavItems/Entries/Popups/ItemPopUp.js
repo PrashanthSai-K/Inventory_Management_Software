@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ItemPopUp = ({ isVisible, onClose }) => {
+
+
+  const [message, setMessage] = useState(null)
   //<-------------Assigning state requird state variables --------->
 
   const [data, setData] = useState({
@@ -12,9 +15,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
     supplierName: "",
     itemName: "",
     subName: "",
-    Spec1: "",
-    Spec2: "",
-    Spec3: "NIL",
+    desc: "",
     cost: "",
     units: "",
   });
@@ -23,7 +24,6 @@ const ItemPopUp = ({ isVisible, onClose }) => {
   const [manufacturer, setManufacturer] = useState([]);
   const [supplier, setSupplier] = useState([]);
   const [quantityUnits, setQuantityUnits] = useState([]);
-  const [message, setMessage] = useState(null);
   const [msuggestion, setMSuggestion] = useState(false);
   const [isMTyping, setIsMTyping] = useState(false);
   const [ssuggestion, setSSuggestion] = useState(false);
@@ -34,15 +34,15 @@ const ItemPopUp = ({ isVisible, onClose }) => {
   //<--------Fetching datas required for form input--------->
 
   async function fetchManufacturer() {
-    const response = await axios.get("http://localhost:4000/getManufacturer");
+    const response = await axios.get("http://localhost:4000/api/getManufacturer");
     setManufacturer(response.data);
   }
   async function fetchSupplier() {
-    const response = await axios.get("http://localhost:4000/getSupplier");
+    const response = await axios.get("http://localhost:4000/api/getSupplier");
     setSupplier(response.data);
   }
   async function fetchQuantityUnits() {
-    const response = await axios.get("http://localhost:4000/getQuantityUnits");
+    const response = await axios.get("http://localhost:4000/api/getQuantityUnits");
     setQuantityUnits(response.data);
   }
 
@@ -54,13 +54,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
 
   //<----------End of Fetch data for forms ------------->
 
-  const clearMessage = () => {
-    setMessage(null);
-  };
 
-  useEffect(() => {
-    setTimeout(clearMessage, 3000);
-  }, [message]);
 
   //<--------Functions to show suggestion for manufacturer in form -------------->
 
@@ -140,7 +134,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
   const HandleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios
-      .post("http://localhost:4000/itemadd", data)
+      .post("http://localhost:4000/api/itemadd", data)
       .catch((error) => console.log(error))
       .then((response) => setMessage(response.data));
     window.scrollTo({ top: 0 });
@@ -182,6 +176,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
               </span>
             </div>
             {manufacturer && supplier && (
+
               <form onChange={handleChange}>
                 {message ? <div className="absolute">{message}</div> : null}
                 <div className="py-1 flex flex-wrap">
@@ -232,6 +227,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       required
                       onChange={handleManufacturerChange}
+                      autoComplete="off"
                     />
                   </div>
                   <div className="flex flex-wrap">
@@ -305,6 +301,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   />
                 </div>
                 <div className="flex flex-wrap mt-8">
@@ -318,6 +315,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   />
                 </div>
                 <div className="flex flex-wrap mt-8">
@@ -357,6 +355,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   />
                 </div>
                 <div className="flex flex-wrap mt-8">
@@ -370,6 +369,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   />
                 </div>
                 <div className="flex flex-wrap mt-8">
@@ -382,6 +382,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 h-10 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
+                    autoComplete="off"
                   >
                     <option value="" selected>
                       Select Units

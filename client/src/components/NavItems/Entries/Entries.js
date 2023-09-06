@@ -27,10 +27,21 @@ function Entries() {
     }
   });
 
+  const [message, setMessage] = useState(null);
+
+  const clearMessage = () => {
+    setMessage(null);
+  };
+
+  useEffect(() => {
+    setTimeout(clearMessage, 3000);
+  }, [message]);
+
   return (
     <>
       {user.role}
-      <div className="flex w-full justify-center items-center">
+      <div className="flex justify-center items-center">
+      {message ? <div>{message}</div> : null}
         <div
           
           className="entries-gap-adjust flex mt-10 gap-36 w-full flex-wrap justify-center items-center "
@@ -66,6 +77,8 @@ function Entries() {
           </div>
           <StockPopUp
             isVisible={showStock}
+            user={user}
+            setMessage ={setMessage}
             onClose={() => setShowStock(false)}
           />
           {user.role === "slbincharge" && (
@@ -79,6 +92,7 @@ function Entries() {
               </div>
               <ItemPopUp
                 isVisible={showItem}
+                user={user}
                 onClose={() => setShowItem(false)}
               />
             </>

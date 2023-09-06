@@ -40,3 +40,10 @@
 .table{
   height: 20%;
 }
+#my-tooltip{
+ background-color: gray;
+ padding: 5px 10px;
+ font-size: 13px;
+}
+
+

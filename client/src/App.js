@@ -16,9 +16,9 @@ import { React, useState,useEffect } from "react";
 
 import Dashboard from "./components/NavItems/Dashboard";
 import Error404 from "./components/ErrorPages/Error404";
-import Hover from "./components/Hover";
+// import Hover from "./components/Hover";
 import LoginPage from "./components/LoginPage";
-import RegisterPage from "./components/RegisterPage";
+// import RegisterPage from "./components/RegisterPage";
 import Graph from "./components/Graph";
 // import PrivateRoute from "./PrivateRoute";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -32,6 +32,7 @@ import Unauthorized from "./components/ErrorPages/Unauthorized";
 import Transfer from "./components/NavItems/Transfer/Transfer.js"
 
 function App() {
+  
   const [open, setOpen] = useState(false);
 
   const location = useLocation();
@@ -47,6 +48,8 @@ function App() {
     { Name: "Transfer", iconName: "bi-arrow-left-right", src: "/transfer" },
     { Name: "Logout", iconName: "bi-box-arrow-right" },
   ];
+   
+
 
   const [user, setUser] = useState([]);
 
@@ -87,7 +90,7 @@ function App() {
                 path="/dashboard"
                 element={<Dashboard  />}
               />
-              <Route path="/registerpage" element={<RegisterPage />} />
+              {/* <Route path="/registerpage" element={<RegisterPage />} /> */}
               <Route
                 path="/master"
                 element={<Master />}
@@ -111,6 +114,10 @@ function App() {
               <Route
                 path="/entries"
                 element={<Entries />}
+              />
+              <Route
+                path="/g"
+                element={<Graph/>}
               />
 
             </Routes>

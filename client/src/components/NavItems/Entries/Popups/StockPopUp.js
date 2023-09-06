@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 
-const StockPopUp = ({ isVisible, onClose }) => {
+const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
+
   const [data, setData] = useState({
     itemcode: "",
     stock_qty: "",
@@ -11,16 +12,20 @@ const StockPopUp = ({ isVisible, onClose }) => {
     userId: "12345",
     labCode: "",
   });
+
   const [autoForm, setAutoForm] = useState({});
 
   const [item, setItem] = useState([]);
 
   async function fetchItems() {
-    const response = await axios.get("http://localhost:4000/getItems");
+    const response = await axios.get("http://localhost:4000/api/getItems");
     setItem(response.data);
   }
 
-  // console.log(item)
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
 
   const handleChange = (e) => {
     setData(e.target.value);
@@ -41,11 +46,6 @@ const StockPopUp = ({ isVisible, onClose }) => {
     // .then(()=>navigate('/'));
   };
 
-  useEffect(() => {
-    fetchItems();
-
-    console.log(item);
-  }, []);
 
   const [itemResult, setItemResult] = useState(item);
   const [suggestion, setSuggestion] = useState(false);
@@ -78,7 +78,6 @@ const StockPopUp = ({ isVisible, onClose }) => {
     setIsTyping(false);
   }
 
-  // console.log(autoForm);
 
   if (!isVisible) return null;
 

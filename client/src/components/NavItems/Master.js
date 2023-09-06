@@ -23,10 +23,11 @@ function Master() {
     // console.log(stockData);
   }
 
+
   
   useEffect(() => {
     if (!Cookies.get("token")) {
-      // navigate("/");
+      navigate("/");
     } else {
       getUser();
       fetchStockData();
