@@ -34,7 +34,7 @@ const Transfer = () => {
 
   useEffect(() => {
     if (!Cookies.get("token")) {
-      navigate("/");
+      // navigate("/");
     } else {
       getUser()
         .then((result) => {

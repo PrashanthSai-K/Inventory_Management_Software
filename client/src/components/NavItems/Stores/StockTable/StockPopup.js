@@ -3,47 +3,72 @@ import React from "react";
 function StockPopup({ data, onClose }) {
   
   return (
-    <div className="popup-overlay">
-      <div className="popup-content">
-        <div className=" text-xl gap-6 justify-center ">
-          <button className="close-button" onClick={onClose}>
+    <div className=" popup-overlay">
+      <div className=" popup-responsive popup-content">
+        <div className="w-full text-end">
+          <button
+            className="rounded-full border-2 border-black px-2"
+            onClick={onClose}
+          >
             X
           </button>
+        </div>
+        <div className=" text-lg gap-6">
           <div className="w-full flex">
-            <div className="w-36 flex justify-end mr-5 font-bold">Item Code</div>:
-            <div className="pl-5"> {data.item_code}</div>
+            <div className="w-36 flex justify-end font-bold mr-5 whitespace-nowrap ">
+              Item Code
+            </div>
+            :<div className="pl-5 whitespace-nowrap"> {data.item_code}</div>
           </div>
           <div className="w-full flex">
-            <div className="w-36 flex justify-end mr-5 font-bold">Manufacturer Id</div>:
-            <div className="pl-5"> {data.manufacturer_id}</div>
+            <div className="w-36 flex justify-end font-bold mr-5 whitespace-nowrap ">
+            Manufacturer Id
+            </div>
+            :<div className="pl-5 whitespace-nowrap"> {data.manufacturer_id}</div>
           </div>
           <div className="w-full flex">
-            <div className="w-36 flex justify-end mr-5 font-bold">Supplier Id</div>:
-            <div className="pl-5"> {data.supplier_id}</div>
+            <div className="w-36 flex justify-end font-bold mr-5 whitespace-nowrap ">
+            Supplier Id
+            </div>
+            :<div className="pl-5 whitespace-nowrap"> {data.supplier_id}</div>
           </div>
           <div className="w-full flex">
-            <div className="w-36 flex justify-end mr-5 font-bold">Stock Id</div>:
-            <div className="pl-5"> {data.stock_qty}</div>
+            <div className="w-36 flex justify-end font-bold mr-5 whitespace-nowrap ">
+            Stock Qty
+            </div>
+            :<div className="pl-5 whitespace-nowrap"> {data.stock_qty}</div>
           </div>
           <div className="w-full flex">
-            <div className="w-36 flex justify-end mr-5 font-bold">Created At</div>:
-            <div className="pl-5"> {data.created_at}</div>
+            <div className="w-36 flex justify-end font-bold mr-5 whitespace-nowrap ">
+            Created At
+            </div>
+            :<div className="pl-5 whitespace-nowrap"> {data.created_at}</div>
           </div>
           <div className="w-full flex">
-            <div className="w-36 flex justify-end mr-5 font-bold">Dept Id</div>:
-            <div className="pl-5"> {data.dept_id}</div>
+            <div className="w-36 flex justify-end font-bold mr-5 whitespace-nowrap ">
+            Dept Id
+            </div>
+            :<div className="pl-5 whitespace-nowrap"> {data.dept_id}</div>
           </div>
           <div className="w-full flex">
-            <div className="w-36 flex justify-end mr-5 font-bold">Inventory Value</div>:
-            <div className="pl-5"> {data.inventory_value}</div>
+            <div className="w-36 flex justify-end font-bold mr-5 whitespace-nowrap ">
+            Inventory Value
+            </div>
+            :<div className="pl-5 whitespace-nowrap"> {data.inventory_value}</div>
           </div>
           <div className="w-full flex">
-            <div className="w-36 flex justify-end mr-5 font-bold">User Id</div>:
-            <div className="pl-5"> {data.user_id}</div>
-          </div>
+            <div className="w-36 flex justify-end font-bold mr-5 whitespace-nowrap ">
+            User Id
+            </div>
+            :
+            <div className="pl-5 whitespace-nowrap">
+              {data.user_id}
+            </div>
         </div>
       </div>
     </div>
+    </div>
+   
   );
 }
 

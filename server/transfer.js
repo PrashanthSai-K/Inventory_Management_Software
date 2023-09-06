@@ -126,6 +126,7 @@ const cancelTransferRequest = async function (req, res, next) {
                     ["CANCELED", req.body.transfer_id, req.body.dept_id],
                     async (error, result) => {
                         if (error) {
+                            console.log(error)
                             await connection.rollback();
                             res.status(400).json({ "Data": "Some Internal error" });
                             reject(error)

@@ -3,7 +3,7 @@ import ItemPopup from "./ItemPopup";
 import { useState, useEffect } from "react";
 import ItemEdit from "./ItemEdit";
 
-function ItemTable({itemData,fetchItemData}) {
+function ItemTable({itemData , fetchItemData}) {
   //For open popup
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
@@ -33,8 +33,6 @@ function ItemTable({itemData,fetchItemData}) {
     // setEditData(null);
     fetchItemData();
   };
-
-  
 
   const onSubmit = () => {
     fetchItemData();
@@ -73,6 +71,8 @@ function ItemTable({itemData,fetchItemData}) {
       setFilteredData(filteredResults);
     }
   }, [click, itemData, searchQuery]);
+
+
 
   //sort by functionality
   const [sortOrder, setSortOrder] = useState("asc");
@@ -115,29 +115,33 @@ function ItemTable({itemData,fetchItemData}) {
   //   }
   //   // window.location.reload();
   // };
-
+// console.log(click);
   return (
     <div>
-      <div className="text-3xl font-semibold py-4 pl-10">
+      <div className="titles text-3xl font-semibold py-4 pl-10">
         Item & Stock Management
       </div>
-        <div className="flex  w-full h-auto my-10 justify-between font-semibold">
-          <div className="ml-10 text-2xl font-semibold">Item Edit</div>
-          <div className="flex">
+        <div style={{width:"90%"}} className="flex ml-20 h-auto mt-5 mb-5 justify-between font-semibold">
+          <div className="sub-titles text-2xl font-semibold">Item Edit</div>
+          <div className="flex input-field">
             <div className="h-auto">
               <input
                 name="inputQuery"
-                type="text"
+                type="text"            
                 value={searchQuery}
-                onClick={() => setClick(false)}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setClick(false);
+                  setSearchQuery(e.target.value)}}
                 placeholder="Search..."
                 className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black"
+                
               />
             </div>
             <div
+           
+            
               onClick={() => setClick(true)}
-              className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 mr-16 px-2"
+              className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
             >
               <i className="bi bi-search"></i>
             </div>
@@ -146,7 +150,7 @@ function ItemTable({itemData,fetchItemData}) {
       <div className=" justify-center items-center flex flex-col ">
         <div
           style={{ width: "90%", height: "50%", maxHeight: "300px" }}
-          className="relative overflow-x-auto rounded-3xl overflow-y-auto scrollbar-thin scrollbar-none scrollbar-thumb-gray-400 scrollbar-track-gray-200"
+          className="table-design relative overflow-x-auto rounded-3xl overflow-y-auto scrollbar-thin scrollbar-none scrollbar-thumb-gray-400 scrollbar-track-gray-200"
         >
           <table className="w-full text-sm text-left text-gray-500  dark:text-gray-400 rounded-3xl ">
             <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

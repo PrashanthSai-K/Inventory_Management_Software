@@ -40,24 +40,14 @@ function Stores() {
 
   return (
     <>
-      {isLoading ? (
-        <div className="flex justify-center items-center h-full">
-          <span class="loader"></span>
-        </div >
-      ) : (
-        <div
-          className={` gap-6 justify-center  duration-300 `}
-        >
-          <ItemTable itemData={itemData} fetchItemData={fetchItemData} />
-
-          <StockTable getStock={getStock} fetchGetStock={fetchGetStock} />
-          <br />
-        </div>
-
-      )
-
-      }
-
+    <div
+        className={`overflow-x-hidden gap-6 justify-center  duration-300 `}
+      >
+        <ItemTable itemData={itemData} fetchItemData={fetchItemData}/>
+      
+        <StockTable getStock={getStock} fetchGetStock={fetchGetStock}/>
+        <br/> 
+      </div>
     </>
 
 

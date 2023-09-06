@@ -61,4 +61,4 @@ function Master() {
   )
 }
 
-export default Master
+export default Master;

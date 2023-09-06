@@ -57,55 +57,49 @@ app.post("/api/supplieradd", (req, res) => {
 });
 
 app.post("/api/itemEdit", (req, res) => {
-    const item_type = req.body.item_type;
-    const item_name = req.body.item_name;
-    const item_subname = req.body.item_subname;
-    const item_spec1 = req.body.item_spec1;
-    const item_spec2 = req.body.item_spec2;
-    const item_spec3 = req.body.item_spec3;
-    const manufacturer_id = req.body.manufacturer_id;
-    const quantity_units = req.body.quantity_units;
-    const supplier_id = req.body.supplier_id;
-    const cost_per_item = req.body.cost_per_item;
-    const item_code = req.body.item_code;
+  const item_type = req.body.item_type;
+  const item_name = req.body.item_name;
+  const item_subname = req.body.item_subname;
+  const item_description = req.body.item_description;
+  const manufacturer_id = req.body.manufacturer_id;
+  const quantity_units = req.body.quantity_units;
+  const supplier_id = req.body.supplier_id;
+  const cost_per_item = req.body.cost_per_item;
+  const item_code = req.body.item_code;
 
     db.query(
         `UPDATE itemtable 
       SET item_type = ?, 
           item_name = ?, 
           item_subname = ?, 
-          item_spec1 = ?, 
-          item_spec2 = ?, 
-          item_spec3 = ?, 
+          item_description = ?,
           cost_per_item = ?, 
           quantity_units = ?, 
           manufacturer_id = ?, 
           supplier_id = ?
       WHERE item_code = ?`,
-        [
-            item_type,
-            item_name,
-            item_subname,
-            item_spec1,
-            item_spec2,
-            item_spec3,
-            cost_per_item,
-            quantity_units,
-            manufacturer_id,
-            supplier_id,
-            item_code,
-        ]
-    )
-        .then(() => res.status(200).json({ message: "Error updating item." }))
-        .catch((error) => console.log(error));
-    // (error, result) => {
-    //   if (error) {
-    //     console.log(error);
-    //     res.status(500).send("Error updating item.");
-    //   } else {
-    //     res.send("Edited Successfully");
-    //   }
-    // }
+    [
+      item_type,
+      item_name,
+      item_subname,
+      item_description,
+      cost_per_item,
+      quantity_units,
+      manufacturer_id,
+      supplier_id,
+      item_code,
+    ]
+  )
+    .then(() => res.status(200).json({ message: "Error updating item." }))
+    .catch((error) => console.log(error));
+  // (error, result) => {
+  //   if (error) {
+  //     console.log(error);
+  //     res.status(500).send("Error updating item.");
+  //   } else {
+  //     res.send("Edited Successfully");
+  //   }
+  // }
 });
 
 app.post("/api/stockEdit", (req, res) => {
@@ -245,6 +239,13 @@ app.get("/api/getQuantityUnits", (req, res) => {
             res.send(result);
         }
     });
+})
+
+app.get("/api/getAdminStockData", (req, res) => {
+  db.query("SELECT * FROM admin_stock_view", (error, result) => {
+    if (error) console.log(error);
+    res.send(result);
+  });
 });
 
 app.get("/api/getAdminStockData", (req, res) => {

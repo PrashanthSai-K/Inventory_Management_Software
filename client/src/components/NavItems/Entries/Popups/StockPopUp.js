@@ -10,7 +10,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
     supplierId: "",
     inventoryValue: "",
     userId: "12345",
-    labCode: ""
+    labCode: "",
   });
 
   const [autoForm, setAutoForm] = useState({});
@@ -32,43 +32,18 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
   };
 
   const HandleSubmit = async (e) => {
-
-    try {
-
-      e.preventDefault();
-      const result = item.filter((items) => {
-        if (items.item_code == data.itemcode) return items;
-      });
-
-      data.manufacturerId = result[0].manufacturer_id;
-      data.supplierId = result[0].supplier_id;
-      data.inventoryValue = result[0].cost_per_item * data.stock_qty;
-      data.userId = user.user_id;
-
-      const response = await axios
-        .post("http://localhost:4000/api/stockadd", data)
-        .then((response)=>{
-          if(response && response.status == 200){
-            setMessage(response.data.message)
-          }
-        })
-        .then(() => {
-          setData({
-            itemcode: "",
-            stock_qty: "",
-            manufacturerId: "",
-            supplierId: "",
-            inventoryValue: "",
-            userId: "",
-            labCode: ""
-          })
-        })
-        
-      setAutoForm({});
-      onClose();
-    } catch (error) {
-      console.log(error);
-    }
+    e.preventDefault();
+    const result = item.filter((items) => {
+      if (items.item_code == data.itemcode) return items;
+    });
+    // console.log(result);
+    data.manufacturerId = result[0].manufacturer_id;
+    data.supplierId = result[0].supplier_id;
+    data.inventoryValue = result[0].cost_per_item * data.stock_qty;
+    const response = await axios
+      .post("http://localhost:4000/stockadd", data)
+      .catch((error) => console.log(error));
+    // .then(()=>navigate('/'));
   };
 
 
@@ -109,32 +84,32 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
       <div className="flex flex-col">
-        <button
-          className="text-white text-3xl place-self-end"
-          onClick={() => onClose()}
-        >
-          X
-        </button>
         <div
-          style={{ width: "1000px", height: "600px" }}
-          className="bg-white overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
+          style={{ height: "600px" }}
+          className="popup-responsive bg-white w-full px-14 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
         >
-          <div class="py-1 flex  pb-8 mt-8">
-            <span class="px-1 text-2xl text-gray-600">Stock Entry</span>
+          <button
+            className="text-black rounded-full border-black border-2 px-2 text-3xl place-self-end"
+            onClick={() => onClose()}
+          >
+            X
+          </button>
+          <div class="py-1 flex pb-2">
+            <span class="px-1 text-black font-medium text-2xl whitespace-nowrap">
+              Stock Entry
+            </span>
           </div>
           <form onSubmit={HandleSubmit}>
-            <div className="py-1  " >
-              <div className="flex" style={{ gap: "165px" }}>
-                <span className="px-1 text-lg text-gray-600">
-                  Item
-                </span>
+            <div className="py-1  ">
+              <div className="flex flex-wrap mt-8 pb-8">
+                <span className="text-lg pb-1 text-gray-600 ">Item</span>
                 <input
                   type="text"
                   name="itemcode"
                   list="itemcode"
                   value={data.itemcode}
                   onChange={handleItemChange}
-                  className="text-md block px-3 py-2 rounded-lg w-80 border-b-0
+                  className="text-md block px-3 py-2 rounded-lg w-full border-b-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                   required
                   autoComplete="off"
@@ -164,67 +139,67 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
               </div>
             </div>
 
-            <div style={{ gap: "120px" }} class="py-1 flex pb-8 mt-5">
-              <span class="px-1 text-lg text-gray-600">Item Name</span>
+            <div class="py-1 flex flex-wrap pb-8">
+              <span class="text-lg pb-1 text-gray-600 ">Item Name</span>
               <input
                 type="text"
                 name="subName"
                 value={autoForm.item_name}
-                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                className="text-md block px-3 py-2 rounded-lg w-full text-gray-500
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                 required
                 disabled
               />
             </div>
-            <div style={{ gap: "90px" }} class="py-1 flex pb-8">
+            <div class="py-1 flex flex-wrap pb-8">
               <span class="px-1 text-lg text-gray-600">Item Sub-Name</span>
               <input
                 type="text"
                 name="subName"
                 value={autoForm.item_subname}
-                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                className="text-md block px-3 py-2 rounded-lg w-full text-gray-500
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                 required
                 disabled
               />
             </div>
-            <div style={{ gap: "85px" }} class="py-1 flex pb-8">
+            <div class="py-1 flex flex-wrap pb-8">
               <span class="px-1 text-lg text-gray-600">Item Description</span>
               <input
                 type="text"
                 name="subName"
-                value={autoForm.item_description}
-                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                value={autoForm.item_spec1}
+                className="text-md block px-3 py-2 rounded-lg w-full text-gray-500
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                 required
                 disabled
               />
             </div>
-            <div style={{ gap: "120px" }} class="py-1 flex pb-8">
+            <div class="py-1 flex flex-wrap pb-8">
               <span class="px-1 text-lg text-gray-600">Item Type</span>
               <input
                 type="text"
                 name="subName"
                 value={autoForm.item_type}
-                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                className="text-md block px-3 py-2 rounded-lg w-full text-gray-500
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                 required
                 disabled
               />
             </div>
-            <div style={{ gap: "90px" }} class="py-1 flex pb-8">
+            <div class="py-1 flex flex-wrap pb-8">
               <span class="px-1 text-lg text-gray-600">Cost Per Item</span>
               <input
                 type="text"
                 name="subName"
                 value={autoForm.cost_per_item}
-                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                className="text-md block px-3 py-2 rounded-lg w-full text-gray-500
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                 required
                 disabled
               />
             </div>
-            <div style={{ gap: "90px" }} class="py-1 flex pb-8">
+            <div class="py-1 flex flex-wrap pb-8">
               <span class="px-1 text-lg text-gray-600">Lab Code</span>
               <input
                 type="text"
@@ -233,12 +208,12 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
                 onChange={(e) =>
                   setData({ ...data, [e.target.name]: e.target.value })
                 }
-                className="text-md block px-3 py-2 rounded-lg w-80 text-gray-500
+                className="text-md block px-3 py-2 rounded-lg w-full text-gray-500
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                 required
               />
             </div>
-            <div style={{ gap: "92px" }} class=" flex mt-2">
+            <div class=" flex flex-wrap mt-2">
               <span class="px-1 text-lg text-gray-600">Stock Quantity</span>
               <input
                 type="number"
@@ -248,7 +223,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
                 }
                 value={data.stock_qty}
                 required
-                className="text-md block px-3 py-2 rounded-lg w-80 
+                className="text-md block px-3 py-2 rounded-lg w-full 
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
               />
             </div>

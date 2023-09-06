@@ -45,6 +45,7 @@
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  
 }
 
 /* Popup content styles */
@@ -56,19 +57,15 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-width: 500px;
+  margin-right: 20px;
+  margin-left: 20px;
+  
 }
-
-.close-button {
-  margin-left: 95%;
-  border-radius: 25px;
-  padding: 0px 10px;
-  border: 2px solid black;
-  background: none;
-  cursor: pointer;
-  color: #000000;
-  font-size: 18px;
-}
-
 
 
 .card {
@@ -86,7 +83,7 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-@media (max-width:768px) {
+@media (max-width:780px) {
   .card{
     height: auto;
   }
@@ -95,6 +92,63 @@
   }
   .track-card{
     height: auto !important;
+  }
+  .titles{
+    font-size: 20px;
+  }
+  .sub-titles{
+    font-size: 18px;
+    margin-left: 30px;
+    font-weight: 600;
+  }
+  .input-field{
+    display: none;
+  }
+}
+@media (max-width:1000px) {
+  .vendor-responsive{
+    transform: scale(.9);
+  }
+  .gap-change{
+    gap: 20px;
+  }
+  .card-amount-adjust{
+    font-size: 25px;
+  }
+  .entries-gap-adjust{
+    gap: 50px;
+  }
+}
+@media (max-width:530px) {
+  .vendor-responsive{
+    transform: scale(.8);
+  }
+  .gap-change{
+    gap: 0px;
+  }
+  .card-text-adjust{
+    font-size: 15px;
+  }
+}
+
+@media (max-width:450px) {
+  .vendor-responsive{
+    transform: scale(.7);
+  }
+  .popup-content{
+    min-width: 450px;
+  }
+}
+
+@media (max-width:900px) {
+  .input-field2{
+    display: none;
+  }
+  .sub-titles2{
+    font-size: 18px;
+  }
+  .popup-responsive{
+    transform: scale(0.8);
   }
 }
 
