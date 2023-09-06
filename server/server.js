@@ -208,6 +208,33 @@ app.get("/api/getManufacturer", (req, res) => {
         .then((response) => res.send(response))
 });
 
+app.get("/getCategories", (req, res) => {
+  db.query("SELECT * FROM categories_view", (error, result) => {
+    res.send(result);
+  });
+});
+
+app.get("/getInventory", (req, res) => {
+  db.query("SELECT CONCAT(UPPER(LEFT(DATE_FORMAT( created_at , '%b'), 3)), ' ', RIGHT(DATE_FORMAT(created_at, '%Y'), 2)) AS name , SUM(inventory_value) AS Cost FROM stocktable GROUP BY created_at", (error, result) => {
+    res.send(result);
+  });
+});
+
+app.get("/getLabItem", (req, res) => {
+  db.query("SELECT * FROM lab_item_view", (error, result) => {
+    res.send(result);
+  });
+});
+
+
+app.get("/getItems", (req, res) => {
+  db.query("SELECT * FROM itemtable", (error, result) => {
+    if (error) console.log(error);
+    else {
+      res.send(result);
+    }
+  })});
+
 app.get("/api/getSupplier", (req, res) => {
     db.query("SELECT * FROM supplier", (error, result) => {
         res.send(result);
