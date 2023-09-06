@@ -16,13 +16,15 @@ const Transfer = () => {
   const [trackTransferData, setTrackTransferData] = useState([]);
   const [transferData, setTransferData] = useState([]);
   const [noData, setNoData] = useState(false);
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
+
 
 
 
   const onClose = () => {
     setTransferPopup(false);
     setTrackTransfer(false);
-    // setTimeout(window.location.reload(), 4000);
     fetchTransferData();
   };
 
@@ -41,12 +43,10 @@ const Transfer = () => {
         })
         .catch((error) => console.log(error));
     }
-  });
+  },[isLoading, message, error]);
 
-  console.log(user)
-
-  useEffect(()=>{
-    if(trackTransferData.length >0 && transferData.length > 0){
+  useEffect(() => {
+    if (trackTransferData.length > 0 && transferData.length > 0) {
       setIsLoading(false);
     }
   })
@@ -58,10 +58,10 @@ const Transfer = () => {
 
       const result = await axios.post("http://localhost:4000/api/getTransferData", data)
       if (result.status == 200) {
-        if(result.data.data == "No Data"){
+        if (result.data.data == "No Data") {
           setNoData(true);
           setIsLoading(false);
-        }else{
+        } else {
           setTransferData(result.data.data);
         }
       }
@@ -71,15 +71,15 @@ const Transfer = () => {
   }
 
 
-  const [message, setMessage] = useState(null);
 
   const clearMessage = () => {
     setMessage(null);
+    setError(null);
   };
-
+  
   useEffect(() => {
-    setTimeout(clearMessage, 3000);
-  }, [message]);
+    setTimeout(clearMessage, 6000);
+  }, [message, error]);
 
   async function fetchTrackTransferData(data) {
 
@@ -101,7 +101,7 @@ const Transfer = () => {
   return (
     <>
       {isLoading ? (
-      <div className="flex justify-center items-center h-full"><span class="loader"></span></div>
+        <div className="flex justify-center items-center h-full"><span class="loader"></span></div>
       ) : (
         <div className="bg-white  overflow-x-auto overflow-y-auto border-gray-700 rounded-lg w-full">
           <div className="flex justify-between w-full">
@@ -109,7 +109,16 @@ const Transfer = () => {
             <div>{user.dept_code}</div>
           </div>
           <div className="p-8">
-            {message ? <div>{message}</div> : null}
+            {message ? (
+              <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{message}</span>
+              </div>
+            ) : null}
+            {error ? (
+              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{error}</span>
+              </div>
+            ) : null}
             <div className="flex items-center justify-between	pt-4">
               <div className="text-2xl">Transfer Items :</div>
               <div className="flex gap-4">
@@ -129,10 +138,10 @@ const Transfer = () => {
             </div>
             <div className="pt-8 flex flex-col gap-10">
               Pending request:
-              {noData ? <div>No Data</div> : ( 
-              transferData && transferData.map((data) =>
-                <TransferCard data={data} user={user} />
-              )
+              {noData ? <div>No Data</div> : (
+                transferData && transferData.map((data) =>
+                  <TransferCard setMessage={setMessage} setError={setError} data={data} user={user} />
+                )
               )}
             </div>
           </div>
@@ -142,6 +151,7 @@ const Transfer = () => {
             isVisible={showTransferPopup}
             onClose={onClose}
             setMessage={setMessage}
+            setError = {setError}
           />
 
           <TrackTransfer
@@ -149,7 +159,8 @@ const Transfer = () => {
             trackTransferData={trackTransferData}
             isVisible={showTrackTransfer}
             onClose={onClose}
-
+            setError = {setError}
+            setMessage = {setMessage}
           />
 
         </div>

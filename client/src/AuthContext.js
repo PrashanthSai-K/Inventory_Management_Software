@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
     return new Promise(async (resolve, reject) => {
       try {
         const token = Cookies.get("token");
-        console.log(token);
+        // console.log(token);
         const result = await axios.post("http://localhost:4000/api/getUser", {
           token: token,
         }).catch((error) => console.log(error));

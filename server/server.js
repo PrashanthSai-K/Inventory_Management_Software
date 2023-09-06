@@ -9,7 +9,7 @@ const {
 } = require("./auth/loginMiddleware.js");
 const cookieParser = require("cookie-parser");
 const db = require("./database/db.js");
-const {getTransferData } = require("./transfer.js");
+const {getTransferData, transferRequest, acceptRequest, rejectRequest, cancelTransferRequest , deleteTransferRequest} = require("./transfer.js");
 
 const app = express();
 app.use(cors());
@@ -270,34 +270,13 @@ app.get("/api/getAdminStockData", (req, res) => {
     })
 })
 
-app.post("/api/getTransferData", (req,res)=>{
-    const user_dept = req.body.dept_code
-    db.query("SELECT * FROM transfer_request_merged_view WHERE transfered_from = ? AND status = ?", [user_dept, "PENDING"])
-        .catch((error) => res.status(500).json({ error: "There was some Error" }))
-        .then((response) => {
-            if(response.length > 0){
-                res.status(200).json({ data: response })
-            }else{
-                res.status(200).json({ data: "No Data"})
-            }
-         })
-})
+app.post("/api/getTransferData", getTransferData)
 
-app.post("/api/transferRequest", (req, res) => {
+app.post("/api/transferRequest", transferRequest)
 
-    // console.log(req.body.resData.itemcode)
-    const item_code = req.body.resData.itemcode;
-    const manufacturer_id = req.body.resData.manufacturerId;
-    const supplier_id = req.body.resData.supplierId;
-    const transfer_qty = req.body.resData.stockReq;
-    const transfer_to = req.body.resData.reqLabId;
-    const transfer_from = req.body.resData.fromLabId;
-    const user_id = req.body.resData.user_id;
+app.post("/api/cancelTransferRequest", cancelTransferRequest);
 
-    db.query("INSERT INTO transfertable (item_code, manufacturer_id, supplier_id, transfer_qty, transfer_to, transfered_from, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)", [item_code, manufacturer_id, supplier_id, transfer_qty, transfer_to, transfer_from, user_id])
-        .then(() => res.status(200).json({ message: "Inserted Sucessfully" })).catch((error) => res.status(400).json({ error: "There was some Error" }));
-
-})
+app.post("/api/deleteTransferrequest", deleteTransferRequest)
 
 app.post("/api/getTrackTransfer", (req, res) => {
     try {
@@ -313,26 +292,9 @@ app.post("/api/getTrackTransfer", (req, res) => {
     }
 })
 
-app.post("/api/acceptRequest", (req, res) => {
+app.post("/api/acceptRequest", acceptRequest);
 
-    var datas
-    db.query("SELECT * FROM transfertable WHERE id = ? ", [req.body.transfer_id]).then((response) => {
-        datas = response;
-        if (datas[0].status == 'PENDING') {
-            db.query("UPDATE transfertable SET status = ? WHERE id = ?", ["LABAPPROVED", req.body.transfer_id])
-                .then((response) => res.send("Approved Sucessfully"));
-        }else if(datas[0].status == 'LABAPPROVED'){
-            db.query("UPDATE transfertable SET status = ? WHERE id = ?", ["APPROVED", req.body.transfer_id])
-                .then((response) => res.send("Approved Sucessfully"));
-        }
-    });
-
-
-    // db.query("UPDATE transfertable SET status = ? WHERE id = ?", ["PENDING", req.body.transfer_id])
-    //     .then((response) => res.send("Approved Sucessfully"));
-    // console.log(req.body.transfer_id, req.body.user_id);
-
-})
+app.post("/api/rejectRequest", rejectRequest);
 
 const server = https.createServer()
 

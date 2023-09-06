@@ -40,6 +40,7 @@ function Master() {
     }
   }, [stockData]);
 
+
   return (
     <>
       {isLoading ? (
@@ -51,11 +52,6 @@ function Master() {
           <h1 className="text-2xl font-semibold ">Master Page</h1>
           <div className="flex flex-col justify-center items-center gap-10 ">
             <center> <Cards /></center>
-            {/* <div
-            class={`flex flex-col mt-16 w-11/12 scale-90 tablet:scale-100 ${
-              open && "scale-90 tablet:scale-100"
-            }`}
-          ></div> */}
             <Table stockData={stockData}/>
           </div>
         </div>

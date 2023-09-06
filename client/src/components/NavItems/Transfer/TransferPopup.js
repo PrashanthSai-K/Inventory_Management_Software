@@ -4,16 +4,14 @@ import { useAuth } from "../../../AuthContext";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const TransferPopup = ({ isVisible, onClose, user, setMessage }) => {
+const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [data, setData] = useState({
     itemcode: "",
     showStock: "",
     stockReq: "",
-    // manufacturerId: "",
-    // supplierId: "",
-    // user_id: "",
-    // reqLabId: "",
     fromLabId: "",
   });
 
@@ -91,16 +89,11 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage }) => {
   };
 
   const handleSubmit = async (e) => {
+
     try {
+      setIsLoading(true);
       e.preventDefault();
       const sendItem = item.find((f) => f.item_code == data.itemcode);
-      // setData({
-      //   ...data,
-      //   manufacturerId: sendItem.manufacturer_id,
-      //   supplierId: sendItem.supplier_id,
-      //   reqLabId: user.dept_code,
-      //   user_id: user.user_id,
-      // });
       const response = await axios.post(
         "http://localhost:4000/api/transferRequest",
         {
@@ -114,12 +107,19 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage }) => {
         }
       );
       if (response.status == 200) {
-        setMessage(response.data.message);
+        console.log(response.data);
+        setMessage(response.data.Data);
         onClose();
+        setIsLoading(false);
       }
     } catch (error) {
-      
-      if (error.response.status == 400) setMessage(error.response.data.error);
+
+      if (error) {
+        console.log(error);
+        setError(error.response.data.Data);
+        onClose();
+        setIsLoading(false);
+      }
     }
   };
 
@@ -127,119 +127,123 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage }) => {
 
   return (
     <>
-      <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-        <div className="flex flex-col">
-          <button
-            className="text-white text-3xl place-self-end"
-            onClick={() => onClose()}
-          >
-            X
-          </button>
-          <div className="flex flex-col justify-center items-center bg-white p-8 rounded-2xl">
-            <div className="py-1 flex  pb-8 mt-8">
-              <span className="px-1 text-2xl text-gray-600">
-                Transfer Request
-              </span>
-            </div>
-           
-            <form onSubmit={handleSubmit}>
-              {/* {message ? <div>{message}</div>: null} */}
-              <div className="py-1 flex mb-8 mt-8 gap-14">
-                <span className="px-1 text-lg text-gray-600">Item Name</span>
-                <input
-                  type="text"
-                  name="itemcode"
-                  list="itemcode"
-                  value={data.itemcode}
-                  onChange={handleItemChange}
-                  className="text-md block px-3 py-2 rounded-lg w-80 border-b-0
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
-                  required
-                  autoComplete="off"
-                />
+      {isLoading ? (
+        <div className="flex justify-center items-center h-full"><span class="loader"></span></div>
+      ) : (
+        <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
+          <div className="flex flex-col">
+            <button
+              className="text-white text-3xl place-self-end"
+              onClick={() => onClose()}
+            >
+              X
+            </button>
+            <div className="flex flex-col justify-center items-center bg-white p-8 rounded-2xl">
+              <div className="py-1 flex  pb-8 mt-8">
+                <span className="px-1 text-2xl text-gray-600">
+                  Transfer Request
+                </span>
               </div>
-              <div style={{ paddingLeft: "205px" }}>
-                {isTyping && suggestion && (
-                  <div
-                    className="text-md block px-3 py-2 rounded-b-lg w-80 border-t-0
+
+              <form onSubmit={handleSubmit}>
+                {/* {message ? <div>{message}</div>: null} */}
+                <div className="py-1 flex mb-8 mt-8 gap-14">
+                  <span className="px-1 text-lg text-gray-600">Item Name</span>
+                  <input
+                    type="text"
+                    name="itemcode"
+                    list="itemcode"
+                    value={data.itemcode}
+                    onChange={handleItemChange}
+                    className="text-md block px-3 py-2 rounded-lg w-80 border-b-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                    required
+                    autoComplete="off"
+                  />
+                </div>
+                <div style={{ paddingLeft: "205px" }}>
+                  {isTyping && suggestion && (
+                    <div
+                      className="text-md block px-3 py-2 rounded-b-lg w-80 border-t-0
+                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                    >
+                      {itemResult &&
+                        itemResult.slice(0, 2).map((result) => {
+                          return (
+                            <div
+                              key={result.item_code}
+                              value={result.item_code}
+                              className="hover:bg-sky-100 rounded-lg"
+                              onClick={() => resultClick(result.item_code)}
+                            >
+                              {result.item_code}-{result.item_name}
+                            </div>
+                          );
+                        })}
+                    </div>
+                  )}
+                </div>
+                <div style={{ gap: "38px" }} class="py-1 flex pb-8">
+                  <span class="px-1 text-lg text-gray-600">Request From</span>
+                  <input
+                    type="text"
+                    name="fromLabId"
+                    value={data.fromLabId}
+                    onChange={handleReqFromChange}
+                    className="text-md block px-3 py-2 rounded-lg w-80
+                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                    required
+                  />
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={checkAvailability}
                   >
-                    {itemResult &&
-                      itemResult.slice(0, 2).map((result) => {
-                        return (
-                          <div
-                            key={result.item_code}
-                            value={result.item_code}
-                            className="hover:bg-sky-100 rounded-lg"
-                            onClick={() => resultClick(result.item_code)}
-                          >
-                            {result.item_code}-{result.item_name}
-                          </div>
-                        );
-                      })}
-                  </div>
-                )}
-              </div>
-              <div style={{ gap: "38px" }} class="py-1 flex pb-8">
-                <span class="px-1 text-lg text-gray-600">Request From</span>
-                <input
-                  type="text"
-                  name="fromLabId"
-                  value={data.fromLabId}
-                  onChange={handleReqFromChange}
-                  className="text-md block px-3 py-2 rounded-lg w-80
+                    Check avail
+                  </button>
+                </div>
+                <div style={{ gap: "35px" }} class="py-1 flex pb-8">
+                  <span class="px-1 text-lg text-gray-600">Stock Available</span>
+                  <input
+                    type="text"
+                    name="cost"
+                    value={data.showStock}
+                    className="text-md block px-3 py-2 rounded-lg w-80
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
-                  required
-                />
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={checkAvailability}
-                >
-                  Check avail
-                </button>
-              </div>
-              <div style={{ gap: "35px" }} class="py-1 flex pb-8">
-                <span class="px-1 text-lg text-gray-600">Stock Available</span>
-                <input
-                  type="text"
-                  name="cost"
-                  value={data.showStock}
-                  className="text-md block px-3 py-2 rounded-lg w-80
+                    required
+                    disabled
+                  />
+                </div>
+                <div>
+                  Kindly enter the stock after checking availablity{" "}
+                  <span style={{ color: "red", fontSize: "25px" }}>*</span>
+                </div>
+                <div style={{ gap: "35px" }} class="py-1 flex pb-8">
+                  <span class="px-1 text-lg text-gray-600">Stock required</span>
+                  <input
+                    type="text"
+                    name="stockReq"
+                    value={data.stockReq}
+                    onChange={(e) =>
+                      setData({ ...data, [e.target.name]: e.target.value })
+                    }
+                    className="text-md block px-3 py-2 rounded-lg w-80
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
-                  required
-                  disabled
-                />
-              </div>
-              <div>
-                Kindly enter the stock after checking availablity{" "}
-                <span style={{ color: "red", fontSize: "25px" }}>*</span>
-              </div>
-              <div style={{ gap: "35px" }} class="py-1 flex pb-8">
-                <span class="px-1 text-lg text-gray-600">Stock required</span>
-                <input
-                  type="text"
-                  name="stockReq"
-                  value={data.stockReq}
-                  onChange={(e) =>
-                    setData({ ...data, [e.target.name]: e.target.value })
-                  }
-                  className="text-md block px-3 py-2 rounded-lg w-80
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
-                  required
-                />
-              </div>
-              <center>
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded mb-10"
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </center>
-            </form>
+                    required
+                  />
+                </div>
+                <center>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded mb-10"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </center>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

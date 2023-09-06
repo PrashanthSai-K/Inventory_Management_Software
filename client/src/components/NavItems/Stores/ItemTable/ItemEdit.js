@@ -9,9 +9,7 @@ function ItemEdit({ data, onClose , onSubmit}) {
     item_type: "",
     item_name: "",
     item_subname: "",
-    item_spec1: "",
-    item_spec2: "",
-    item_spec3: "",
+    item_description: "",
     manufacturer_id: "",
     quantity_units: "",
     supplier_id: "",
@@ -49,6 +47,7 @@ const HandleSubmit = async (e) => {
         console.log(response)
         onClose();
       }
+      
     
     } catch (error) {
       console.log(error);
@@ -124,39 +123,13 @@ const HandleSubmit = async (e) => {
           </div>
           <div className="flex justify-center items-center">
           <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-md pr-5 font-bold">Item Spec1</label>
+          <label for="itemCode" className="text-md pr-5 font-bold">Item Description</label>
           </div>
           <input
             type="text"
             name="item_spec1"
             onChange={handleChange}
-            value={formData.item_spec1}
-            className="text-md block px-3 py-2 rounded-lg w-80
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
-          />
-          </div>
-          <div className="flex justify-center items-center">
-          <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-md pr-5 font-bold">Item Spec2</label>
-          </div>
-          <input
-            type="text"
-            name="item_spec2"
-            onChange={handleChange}
-            value={formData.item_spec2}
-            className="text-md block px-3 py-2 rounded-lg w-80
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
-          />
-          </div>
-          <div className="flex justify-center items-center">
-          <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-md pr-5 font-bold">Item Spec3</label>
-          </div>
-          <input
-            type="text"
-            name="item_spec3"
-            onChange={handleChange}
-            value={formData.item_spec3}
+            value={formData.item_description}
             className="text-md block px-3 py-2 rounded-lg w-80
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
           />
