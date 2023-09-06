@@ -239,7 +239,10 @@ function Dashboard({ open }) {
     <>
 
       {isLoading ? (
-        <div>Loading .....</div>
+        <div className="flex flex-col justify-center items-center h-full duration-800 ">
+        <span class="loader animate-bounce duration-800"></span>
+         Loading
+      </div >
       ) : (
 
         <>

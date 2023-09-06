@@ -44,9 +44,10 @@ function Master() {
   return (
     <>
       {isLoading ? (
-      <div className="flex justify-center items-center h-full">
-        <span class="loader"></span>
-      </div >
+      <div className="flex flex-col justify-center items-center h-full duration-800 ">
+      <span class="loader animate-bounce duration-800"></span>
+       Loading
+    </div >
       ) : (
         <div>
           <h1 className="text-2xl font-semibold ">Master Page</h1>

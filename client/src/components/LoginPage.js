@@ -35,7 +35,10 @@ function LoginPage() {
   return (
     <>
       {isLoading ? (
-        <div className="flex justify-center items-center h-full"><span class="loader"></span></div>
+        <div className="flex flex-col justify-center items-center h-full duration-800 ">
+        <span class="loader animate-bounce duration-800"></span>
+         Loading
+      </div >
 
       ) : (
         <div className="h-full w-full flex justify-center items-center bg-sky-200">
