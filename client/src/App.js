@@ -106,11 +106,11 @@ function App() {
               />
               <Route
                 path="/stores"
-                element={<Stores/>}
+                element={<Stores />}
               />
               <Route
                 path="/entries"
-                element={<Entries/>}
+                element={<Entries />}
               />
 
             </Routes>

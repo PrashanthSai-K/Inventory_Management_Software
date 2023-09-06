@@ -7,20 +7,20 @@ function Cards() {
         { color: "bg-teal-400", src: "total" }
       ];
   return (
-    <div className=' w-full'>
-         <div className="items-center flex w-full gap-10   mt-8 scale-90 flex-wrap tablet:scale-100">
+    <div className='w-full justify-center items-center'>
+         <div className="items-center justify-center flex w-full gap-10 mt-8 scale-90 flex-wrap tablet:scale-100">
             {cards.map((items) => (
               <div
-                className={`w-96 h-36 ${items.color} rounded-3xl  flex tablet:h-40`}
+                className={`w-80 h-36 ${items.color} rounded-3xl  flex tablet:h-40`}
               >
                 <div className="flex flex-col h-full rounded-l-3xl w-1/2 ml-8 items-center justify-around">
-                  <div className="font-bold  text-xl tablet:text-4xl">
+                  <div className="font-bold  text-xl tablet:text-2xl">
                    Total price
                   </div>
-                  <div className="font-bold  text-4xl tablet:text-4xl">
+                  <div className="card-amount-adjust font-bold text-3xl">
                     80rs
                   </div>
-                  <div className="text-lg  underline cursor-pointer tablet:text-xl">
+                  <div className="card-text-adjust text-lg underline cursor-pointer tablet:text-sm">
                     View entire list
                   </div>
                 </div>

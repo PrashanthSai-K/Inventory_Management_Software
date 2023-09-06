@@ -44,11 +44,8 @@ const HandleSubmit = async (e) => {
       const response = await axios.post("http://localhost:4000/itemEdit", formData);
       
       if(response.status==200){
-        console.log(response)
         onClose();
       }
-      
-    
     } catch (error) {
       console.log(error);
       setMessage("Error updating item."); 
@@ -58,142 +55,292 @@ const HandleSubmit = async (e) => {
   // console.log(formData);  
 
   return (
-    <div className="popup-overlay ">
-      <div className="popup-content overflow-y-auto">
-        <button className="close-button" onClick={onClose}>
-          X
-        </button>
-        <form onSubmit={HandleSubmit} className="flex flex-col gap-3">
-          <span className="px-1 text-lg text-gray-600 ">Item Table</span>
-          <div className="flex justify-center items-center ">
-            <div className="w-40 flex justify-end">
-          <label for="itemCode" className="text-md pr-5 font-bold">Item Code</label>
+    <>
+    <div className="fixed inset-0 z-40 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
+      <div className="flex flex-col">
+        <div
+          style={{ height: "600px" }}
+          className="popup-responsive bg-white w-full px-14 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
+        >
+          <button
+            className="text-black rounded-full border-black border-2 px-2 text-3xl place-self-end"
+            onClick={() => onClose()}
+          >
+            X
+          </button>
+          <div class="py-1 flex pb-2">
+            <span class="px-1 text-black font-medium text-2xl whitespace-nowrap">
+              Item Table
+            </span>
           </div>
-          <div>
+          <form onSubmit={HandleSubmit} className="flex flex-col gap-3">
+          <div className="flex flex-wrap">
+          <div className="flex ">
+          <label  for="item_code" className="text-md pr-5 ">Item Code</label>
+          </div>
           <input
-            id="itemCode"
             type="text"
             name="item_code"
             onChange={handleChange}
             value={formData.item_code}
             disabled
-            className="text-md block px-3 py-2 rounded-lg w-80
+            className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
           />
           </div>
-          </div> 
-          <div className="flex justify-center items-center">
-          <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-md pr-5 font-bold">Item Type</label>
+          <div className="flex flex-wrap">
+          <div className="flex ">
+          <label  for="item_type" className="text-md pr-5 ">Item Type</label>
           </div>
           <input
             type="text"
             name="item_type"
             onChange={handleChange}
             value={formData.item_type}
-            className="text-md block px-3 py-2 rounded-lg w-80
+            className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
           />
           </div>
-          <div className="flex justify-center items-center">
-          <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-md pr-4 font-bold">Item Name</label>
+          <div className="flex flex-wrap ">
+          <div className="flex ">
+          <label  for="item_name" className="text-md pr-4 ">Item Name</label>
           </div>
           <input
             type="text"
             name="item_name"
             onChange={handleChange}
             value={formData.item_name}
-            className="text-md block px-3 py-2 rounded-lg w-80
+            className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
           />
           </div>
-          <div className="flex justify-center items-center">
-          <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-md mr-4 font-bold">Item Subname</label>
+          <div className="flex flex-wrap">
+          <div className="flex ">
+          <label  for="item_subname" className="text-md mr-4 ">Item Subname</label>
           </div>
           <input
             type="text"
             name="item_subname"
             onChange={handleChange}
             value={formData.item_subname}
-            className="text-md block px-3 py-2 rounded-lg w-80 
+            className="text-md block px-3 py-2 rounded-lg w-full 
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
           />
           </div>
-          <div className="flex justify-center items-center">
-          <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-md pr-5 font-bold">Item Description</label>
+          <div className="flex flex-wrap">
+          <div className="flex ">
+          <label  for="item_description" className="text-md pr-5 ">Item Description</label>
           </div>
           <input
             type="text"
-            name="item_spec1"
+            name="item_description"
             onChange={handleChange}
             value={formData.item_description}
-            className="text-md block px-3 py-2 rounded-lg w-80
+            className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
           />
           </div>
-          <div className="flex justify-center items-center ">
-          <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-md pr-5 font-bold">Manufacturer Id</label>
+          <div className="flex flex-wrap ">
+          <div className="flex ">
+          <label  for="manufacturer_id" className="text-md pr-5 ">Manufacturer Id</label>
           </div>
           <input
             type="text"
             name="manufacturer_id"
+            disabled
             onChange={handleChange}
             value={formData.manufacturer_id}
-            className="text-md block px-3 py-2 rounded-lg w-80 
+            className="text-md block px-3 py-2 rounded-lg w-full 
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
           />
           </div>
-          <div className="flex justify-center items-center">
-          <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-md pr-5 font-bold">Quantity Units</label>
+          <div className="flex flex-wrap">
+          <div className="flex ">
+          <label  for="quantity_units" className="text-md pr-5 ">Quantity Units</label>
           </div>
           <input
             type="text"
             name="quantity_units"
             onChange={handleChange}
             value={formData.quantity_units}
-            className="text-md block px-3 py-2 rounded-lg w-80 
+            className="text-md block px-3 py-2 rounded-lg w-full 
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
           />
           </div>
-          <div className="flex justify-center items-center">
-          <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-md pr-5 font-bold">Supplier Id</label>
+          <div className="flex flex-wrap">
+          <div className="flex ">
+          <label  for="supplier_id" className="text-md pr-5 ">Supplier Id</label>
           </div>
           <input
             type="text"
+            disabled
             name="supplier_id"
             onChange={handleChange}
             value={formData.supplier_id}
-            className="text-md block px-3 py-2 rounded-lg w-80
+            className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
           />
           </div>
-          <div className="flex justify-center items-center">
-          <div className="w-40  flex justify-end">
-          <label for="itemCode" className="text-md pr-5 font-bold">Cost Per Item</label>
+          <div className="flex flex-wrap">
+          <div className="flex ">
+          <label  for="cost_per_item" className="text-md pr-5 ">Cost Per Item</label>
           </div>
           <input
             type="text"
             name="cost_per_item"
             onChange={handleChange}
             value={formData.cost_per_item}
-            className="text-md block px-3 py-2 rounded-lg w-80 
+            className="text-md block px-3 py-2 rounded-lg w-full 
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
           />
           </div>
           <div className="flex justify-center ">
-          <button  className="border-2 border-black w-1/2 rounded-lg py-1 " type="submit">
-            submit
-          </button>
+          <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded mt-4"
+                type="submit"
+              >
+                Submit
+              </button>
           </div>
         </form>
+        </div>
       </div>
     </div>
+    </>
+    // <div className="popup-overlay ">
+    //   <div className="popup-content overflow-y-auto">
+    //   <div className="w-full text-end mt-96" >
+    //     <button className="border-2 border-black rounded-full px-2" onClick={onClose}>
+    //       X
+    //     </button>
+    //     </div>
+    //     <form onSubmit={HandleSubmit} className="flex flex-col gap-3">
+    //       <center className="px-1 pb-4 text-lg text-gray-600 ">Item Table</center>
+    //       <div className="flex flex-wrap">
+    //       <div className="flex ">
+    //       <label  for="item_code" className="text-md pr-5 ">Item Code</label>
+    //       </div>
+    //       <input
+    //         type="text"
+    //         name="item_code"
+    //         onChange={handleChange}
+    //         value={formData.item_code}
+    //         className="text-md block px-3 py-2 rounded-lg w-full
+    //             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+    //       />
+    //       </div>
+    //       <div className="flex flex-wrap">
+    //       <div className="flex ">
+    //       <label  for="item_type" className="text-md pr-5 ">Item Type</label>
+    //       </div>
+    //       <input
+    //         type="text"
+    //         name="item_type"
+    //         onChange={handleChange}
+    //         value={formData.item_type}
+    //         className="text-md block px-3 py-2 rounded-lg w-full
+    //             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+    //       />
+    //       </div>
+    //       <div className="flex flex-wrap ">
+    //       <div className="flex ">
+    //       <label  for="item_name" className="text-md pr-4 ">Item Name</label>
+    //       </div>
+    //       <input
+    //         type="text"
+    //         name="item_name"
+    //         onChange={handleChange}
+    //         value={formData.item_name}
+    //         className="text-md block px-3 py-2 rounded-lg w-full
+    //             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+    //       />
+    //       </div>
+    //       <div className="flex flex-wrap">
+    //       <div className="flex ">
+    //       <label  for="item_subname" className="text-md mr-4 ">Item Subname</label>
+    //       </div>
+    //       <input
+    //         type="text"
+    //         name="item_subname"
+    //         onChange={handleChange}
+    //         value={formData.item_subname}
+    //         className="text-md block px-3 py-2 rounded-lg w-full 
+    //             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+    //       />
+    //       </div>
+    //       <div className="flex flex-wrap">
+    //       <div className="flex ">
+    //       <label  for="item_description" className="text-md pr-5 ">Item Description</label>
+    //       </div>
+    //       <input
+    //         type="text"
+    //         name="item_description"
+    //         onChange={handleChange}
+    //         value={formData.item_description}
+    //         className="text-md block px-3 py-2 rounded-lg w-full
+    //             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+    //       />
+    //       </div>
+    //       <div className="flex flex-wrap ">
+    //       <div className="flex ">
+    //       <label  for="manufacturer_id" className="text-md pr-5 ">Manufacturer Id</label>
+    //       </div>
+    //       <input
+    //         type="text"
+    //         name="manufacturer_id"
+    //         onChange={handleChange}
+    //         value={formData.manufacturer_id}
+    //         className="text-md block px-3 py-2 rounded-lg w-full 
+    //             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+    //       />
+    //       </div>
+    //       <div className="flex flex-wrap">
+    //       <div className="flex ">
+    //       <label  for="quantity_units" className="text-md pr-5 ">Quantity Units</label>
+    //       </div>
+    //       <input
+    //         type="text"
+    //         name="quantity_units"
+    //         onChange={handleChange}
+    //         value={formData.quantity_units}
+    //         className="text-md block px-3 py-2 rounded-lg w-full 
+    //             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+    //       />
+    //       </div>
+    //       <div className="flex flex-wrap">
+    //       <div className="flex ">
+    //       <label  for="supplier_id" className="text-md pr-5 ">Supplier Id</label>
+    //       </div>
+    //       <input
+    //         type="text"
+    //         name="supplier_id"
+    //         onChange={handleChange}
+    //         value={formData.supplier_id}
+    //         className="text-md block px-3 py-2 rounded-lg w-full
+    //             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+    //       />
+    //       </div>
+    //       <div className="flex flex-wrap">
+    //       <div className="flex ">
+    //       <label  for="cost_per_item" className="text-md pr-5 ">Cost Per Item</label>
+    //       </div>
+    //       <input
+    //         type="text"
+    //         name="cost_per_item"
+    //         onChange={handleChange}
+    //         value={formData.cost_per_item}
+    //         className="text-md block px-3 py-2 rounded-lg w-full 
+    //             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+    //       />
+    //       </div>
+    //       <div className="flex justify-center ">
+    //       <button  className="border-2 border-black w-1/2 rounded-lg py-1 " type="submit">
+    //         submit
+    //       </button>
+    //       </div>
+    //     </form>
+    //   </div>
+    // </div>
   );
 }
 

@@ -1,98 +1,90 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-function Table() {
-  const [stockData, setStockData] = useState([]);
+function Table({stockData}) {
 
-    async function fetchStockData() {
-      const response = await axios.get("http://localhost:4000/getAdminStockData");
-      setStockData(response.data);
-      // console.log(stockData);
-    }
-    useEffect(() => {
-      fetchStockData();
-    });
   
     // console.log(stockData);
 
-     // Search functionality
+// Search functionality
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
-  const [click, setClick] = useState(false);
+const [searchQuery, setSearchQuery] = useState("");
+const [filteredData, setFilteredData] = useState([]);
+const [click, setClick] = useState(false);
 
-  useEffect(() => {
-    if (click || searchQuery == "") {
-      const filteredResults = stockData.filter((item) => {
-        const propertiesToSearch = [
-          "item_name",
-          "item_type",
-          "item_code",
-          "item_subname",
-          "dept_id",
-          "manufacturer_name",
-          "quantity_units",
-          "supplier_name",
-          "cost_per_item",
-          "contact",
-          "stock_qty",
-          "inventory_value",
-          "user_id",
-        ];
-        return propertiesToSearch.some((property) =>
-          typeof item[property] === "string"
-            ? item[property].toLowerCase().includes(searchQuery.toLowerCase())
-            : typeof item[property] === "number"
-            ? item[property].toString().includes(searchQuery)
-            : false
-        );
-      });
-
-      setFilteredData(filteredResults);
-    }
-  }, [click, stockData, searchQuery]);
-
-  //sort by functionality
-  const [sortOrder, setSortOrder] = useState("asc");
-  const [sortedColumn, setSortedColumn] = useState("");
-
-  const sortData = (column) => {
-    let newSortOrder = "asc";
-    if (column === sortedColumn) {
-      newSortOrder = sortOrder === "asc" ? "desc" : "asc";
-    }
-    setSortOrder(newSortOrder);
-    setSortedColumn(column);
-
-    filteredData.sort((a, b) => {
-      const valueA =
-        typeof a[column] === "string" ? a[column].toLowerCase() : a[column];
-      const valueB =
-        typeof b[column] === "string" ? b[column].toLowerCase() : b[column];
-
-      if (valueA < valueB) {
-        return newSortOrder === "asc" ? -1 : 1;
-      }
-      if (valueA > valueB) {
-        return newSortOrder === "asc" ? 1 : -1;
-      }
-      return 0;
+useEffect(() => {
+  if (click || searchQuery == "") {
+    const filteredResults = stockData.filter((item) => {
+      const propertiesToSearch = [
+        "item_code",
+        "item_type",
+        "item_name",
+        "item_subname",
+        "cost_per_item",
+        "quantity_units",
+        "manufacturer_name",
+        "supplier_name",
+        "contact",
+        "stock_qty",
+        "inventory_value",
+        "user_id",
+        "dept_id"
+      ];
+      return propertiesToSearch.some((property) =>
+        typeof item[property] === "string"
+          ? item[property].toLowerCase().includes(searchQuery.toLowerCase())
+          : typeof item[property] === "number"
+          ? item[property].toString().includes(searchQuery)
+          : false
+      );
     });
-  };
-  
+
+    setFilteredData(filteredResults);
+  }
+}, [click, stockData, searchQuery]);
+
+
+//sort by functionality
+const [sortOrder, setSortOrder] = useState("asc");
+const [sortedColumn, setSortedColumn] = useState("");
+
+const sortData = (column) => {
+  let newSortOrder = "asc";
+  if (column === sortedColumn) {
+    newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+  }
+  setSortOrder(newSortOrder);
+  setSortedColumn(column);
+
+  filteredData.sort((a, b) => {
+    const valueA =
+      typeof a[column] === "string" ? a[column].toLowerCase() : a[column];
+    const valueB =
+      typeof b[column] === "string" ? b[column].toLowerCase() : b[column];
+
+    if (valueA < valueB) {
+      return newSortOrder === "asc" ? -1 : 1;
+    }
+    if (valueA > valueB) {
+      return newSortOrder === "asc" ? 1 : -1;
+    }
+    return 0;
+  });
+};
 
   return (
-    <div  className="w-11/12">
-      <div className="flex  w-full h-auto  justify-between font-semibold">
-        <div className="ml-10 text-2xl font-semibold">Master Table</div>
-        <div className="flex">
+    <div  className=" w-9/12">
+      <div className="flex  w-full mb-5 h-auto  justify-between font-semibold">
+        <div className="sub-titles2 text-center text-2xl font-semibold">Master Table</div>
+        <div className="input-field2 flex">
           <div className="h-auto">
             <input
               name="inputQuery"
               type="text"
               value={searchQuery}
-              onClick={() => setClick(false)}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setClick(false);
+                setSearchQuery(e.target.value)}
+              }
               placeholder="Search..."
               className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black"
             />
@@ -105,7 +97,7 @@ function Table() {
           </div>
         </div>
       </div>
-      <div class="sm:-mx-6 lg:-mx-8 overflow-y-auto overflow-x-auto border-gray-700 rounded-lg  ">
+      <div class="sm:-mx-6 lg:-mx-8 overflow-y-auto overflow-x-auto border-gray-700 rounded-lg">
         <div class=" align-middle inline-block min-w-full ">
           <div style={{ width: "90%", height: "50%", maxHeight: "360px" }} class="shadow sm:rounded-lg h-96">
             <table  class="min-w-full text-sm text-gray-400 ">

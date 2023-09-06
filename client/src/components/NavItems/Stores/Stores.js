@@ -33,12 +33,12 @@ function Stores() {
   return (
     <>
     <div
-        className={` gap-6 justify-center  duration-300 `}
+        className={`overflow-x-hidden gap-6 justify-center  duration-300 `}
       >
         <ItemTable itemData={itemData} fetchItemData={fetchItemData}/>
       
         <StockTable getStock={getStock} fetchGetStock={fetchGetStock}/>
-        <br/>
+        <br/> 
       </div>
     </>
 
