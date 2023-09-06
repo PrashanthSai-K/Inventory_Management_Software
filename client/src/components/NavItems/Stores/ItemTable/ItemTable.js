@@ -72,8 +72,6 @@ function ItemTable({itemData , fetchItemData}) {
     }
   }, [click, itemData, searchQuery]);
 
-
-
   //sort by functionality
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortedColumn, setSortedColumn] = useState("");
@@ -102,6 +100,14 @@ function ItemTable({itemData , fetchItemData}) {
     });
   };
 
+  // <-------------------------------search bar enter function---------------------------->
+
+  const handleKeyEnter = (e) => {
+    if(e.key === "Enter") {
+      setClick(true);
+    }
+  };
+
   // async function HandleDelete(item_code){
   //   // e.preventDefault();
   //   // console.log(item_code)
@@ -127,19 +133,17 @@ function ItemTable({itemData , fetchItemData}) {
             <div className="h-auto">
               <input
                 name="inputQuery"
-                type="text"            
+                type="text"
                 value={searchQuery}
+                onKeyDown={handleKeyEnter}
                 onChange={(e) => {
                   setClick(false);
                   setSearchQuery(e.target.value)}}
                 placeholder="Search..."
                 className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black"
-                
               />
             </div>
-            <div
-           
-            
+            <div  
               onClick={() => setClick(true)}
               className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
             >

@@ -156,6 +156,14 @@ function Vendors({ open }) {
 
   //<--------End of authentication of user for the page--------->
 
+  const handleKeyEnter= (e)=>{
+    if(e.key==="Enter"){
+      setClick(true);
+      setButtonClick(true);
+    }
+  }
+
+
   return (
     <>
       <div className="overflow-x-hidden">
@@ -181,6 +189,7 @@ function Vendors({ open }) {
                     <input
                       name="inputQuery"
                       type="text"
+                      onKeyDown={handleKeyEnter}
                       value={searchQuery}
                       onChange={(e) => {
                         setClick(false);
@@ -254,6 +263,7 @@ function Vendors({ open }) {
                     <input
                       name="inputQuery"
                       type="text"
+                      onKeyDown={handleKeyEnter}
                       value={supplierSearchQuery}
                       onChange={(e) => {
                         setButtonClick(false);

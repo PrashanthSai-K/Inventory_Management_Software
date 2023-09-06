@@ -71,6 +71,12 @@ const sortData = (column) => {
   });
 };
 
+const handleKeyEnter = (e) => {
+  if(e.key === "Enter") {
+    setClick(true);
+  }
+};
+
   return (
     <div  className=" w-9/12">
       <div className="flex  w-full mb-5 h-auto  justify-between font-semibold">
@@ -80,6 +86,7 @@ const sortData = (column) => {
             <input
               name="inputQuery"
               type="text"
+              onKeyDown={handleKeyEnter}
               value={searchQuery}
               onChange={(e) => {
                 setClick(false);

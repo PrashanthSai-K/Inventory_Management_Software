@@ -100,6 +100,14 @@ function StockTable({getStock,fetchGetStock}) {
     });
   };
 
+    // <-------------------------------search bar enter function---------------------------->
+
+    const handleKeyEnter = (e) => {
+      if(e.key === "Enter"){
+        setClick(true);
+      }
+    }
+
   // async function HandleDelete(stock_id){
   //   // e.preventDefault();
   //   // console.log(item_code)
@@ -124,6 +132,7 @@ function StockTable({getStock,fetchGetStock}) {
                 name="inputQuery"
                 type="text"
                 value={searchQuery}
+                onKeyDown={handleKeyEnter}
                 onChange={(e) => {
                   setClick(false);
                   setSearchQuery(e.target.value)}}
