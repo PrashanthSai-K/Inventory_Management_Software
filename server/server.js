@@ -277,7 +277,7 @@ app.post("/api/transferRequest", transferRequest)
 
 app.post("/api/cancelTransferRequest", cancelTransferRequest);
 
-app.post("/api/deleteTransferrequest", deleteTransferRequest)
+app.post("/api/deleteTransferrequest", deleteTransferRequest);
 
 app.post("/api/getTrackTransfer", (req, res) => {
     try {

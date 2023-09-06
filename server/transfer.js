@@ -118,7 +118,7 @@ const cancelTransferRequest = async function (req, res, next) {
             res.status(400).json({ "Data": "Seome internal error" });
             return;
         }
-        console.log(selectResult);
+        // console.log(selectResult[0].transfer_to == req.body.dept_id);
         if (selectResult.length > 0 && selectResult[0].transfer_to == req.body.dept_id) {
 
             const updateResult = await new Promise((resolve, reject) => {
