@@ -19,7 +19,6 @@ import Error404 from "./components/ErrorPages/Error404";
 // import Hover from "./components/Hover";
 import LoginPage from "./components/LoginPage";
 // import RegisterPage from "./components/RegisterPage";
-import Graph from "./components/Graph";
 // import PrivateRoute from "./PrivateRoute";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Cookies from "js-cookie";
@@ -30,10 +29,7 @@ import Stores from "./components/NavItems/Stores/Stores";
 // import Transfer from "./components/CommonPages/Transfer";
 import Unauthorized from "./components/ErrorPages/Unauthorized";
 import Transfer from "./components/NavItems/Transfer/Transfer.js"
-import PieChart from "./components/NavItems/Dashboard/Graphs/Piechart";
-import Piechart from "./components/NavItems/Dashboard/Graphs/Piechart";
-import Barchart from "./components/NavItems/Dashboard/Graphs/Barchart";
-import Areachart from "./components/NavItems/Dashboard/Graphs/Areachart";
+
 
 
 function App() {
@@ -93,7 +89,8 @@ function App() {
               />
               <Route
                 path="/dashboard"
-                element={<Dashboard  />}
+                element={<Dashboard open={open}
+                setOpen={setOpen} />}
               />
               {/* <Route path="/registerpage" element={<RegisterPage />} /> */}
               <Route
@@ -120,17 +117,8 @@ function App() {
                 path="/entries"
                 element={<Entries />}
               />
-              <Route
-                path="/g"
-                element={<Graph/>}
-              />
-
-              <Route path="/pie" element={<Piechart/>}/>
-
-              <Route path="/bar" element={<Barchart/>}/>
 
 
-              <Route path="/area" element={<Areachart/>}/>
 
 
             </Routes>
