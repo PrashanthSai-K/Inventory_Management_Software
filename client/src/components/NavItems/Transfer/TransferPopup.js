@@ -128,43 +128,47 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
   return (
     <>
       {isLoading ? (
-        <div className="flex justify-center items-center h-full"><span class="loader"></span></div>
+        <div className="flex justify-center items-center h-full"><label class="loader"></label></div>
       ) : (
         <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
           <div className="flex flex-col">
+          <div
+          style={{ height: "600px" }}
+          className="popup-responsive popup-responsive-small bg-white w-full px-14 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
+        >
             <button
-              className="text-white text-3xl place-self-end"
+              className="text-black rounded-full border-black px-2 border-2 text-3xl place-self-end"
               onClick={() => onClose()}
             >
               X
             </button>
             <div className="flex flex-col justify-center items-center bg-white p-8 rounded-2xl">
-              <div className="py-1 flex  pb-8 mt-8">
-                <span className="px-1 text-2xl text-gray-600">
+              <div className="py-1 flex  pb-8">
+                <span className="px-1 text-2xl font-medium text-black">
                   Transfer Request
                 </span>
               </div>
 
               <form onSubmit={handleSubmit}>
                 {/* {message ? <div>{message}</div>: null} */}
-                <div className="py-1 flex mb-8 mt-8 gap-14">
-                  <span className="px-1 text-lg text-gray-600">Item Name</span>
+                <div className="flex flex-wrap">
+                  <label className="text-md pr-5 mb-3 whitespace-nowrap">Item Name</label>
                   <input
                     type="text"
                     name="itemcode"
                     list="itemcode"
                     value={data.itemcode}
                     onChange={handleItemChange}
-                    className="text-md block px-3 py-2 rounded-lg w-80 border-b-0
+                    className="text-md block px-3 py-2 rounded-lg w-full border-b-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
                     autoComplete="off"
                   />
                 </div>
-                <div style={{ paddingLeft: "205px" }}>
+                <div>
                   {isTyping && suggestion && (
                     <div
-                      className="text-md block px-3 py-2 rounded-b-lg w-80 border-t-0
+                      className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     >
                       {itemResult &&
@@ -173,7 +177,8 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
                             <div
                               key={result.item_code}
                               value={result.item_code}
-                              className="hover:bg-sky-100 rounded-lg"
+                              className="text-md px-3 py-2 w-full border-none
+                              bg-white border-2 focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none hover:bg-sky-100 rounded-lg"
                               onClick={() => resultClick(result.item_code)}
                             >
                               {result.item_code}-{result.item_name}
@@ -183,14 +188,14 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
                     </div>
                   )}
                 </div>
-                <div style={{ gap: "38px" }} class="py-1 flex pb-8">
-                  <span class="px-1 text-lg text-gray-600">Request From</span>
+                <div class="py-1 flex flex-wrap gap-3 pb-8">
+                  <label class="text-md pr-5 whitespace-nowrap">Request From</label>
                   <input
                     type="text"
                     name="fromLabId"
                     value={data.fromLabId}
                     onChange={handleReqFromChange}
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                    className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
                   />
@@ -201,24 +206,24 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
                     Check avail
                   </button>
                 </div>
-                <div style={{ gap: "35px" }} class="py-1 flex pb-8">
-                  <span class="px-1 text-lg text-gray-600">Stock Available</span>
+                <div class="flex flex-wrap ">
+                  <label class="text-md mb-3 whitespace-nowrap">Stock Available</label>
                   <input
                     type="text"
                     name="cost"
                     value={data.showStock}
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                    className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
                     disabled
                   />
                 </div>
-                <div>
+                <div className="whitespace-nowrap">
                   Kindly enter the stock after checking availablity{" "}
-                  <span style={{ color: "red", fontSize: "25px" }}>*</span>
+                  <label style={{ color: "red", fontSize: "25px" }}>*</label>
                 </div>
-                <div style={{ gap: "35px" }} class="py-1 flex pb-8">
-                  <span class="px-1 text-lg text-gray-600">Stock required</span>
+                <div class="py-1 flex flex-wrap  pb-8">
+                  <label class="text-md mb-3 whitespace-nowrap">Stock required</label>
                   <input
                     type="text"
                     name="stockReq"
@@ -226,7 +231,7 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
                     onChange={(e) =>
                       setData({ ...data, [e.target.name]: e.target.value })
                     }
-                    className="text-md block px-3 py-2 rounded-lg w-80
+                    className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
                   />
@@ -240,6 +245,7 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
                   </button>
                 </center>
               </form>
+            </div>
             </div>
           </div>
         </div>

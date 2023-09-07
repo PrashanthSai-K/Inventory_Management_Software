@@ -119,17 +119,17 @@ const Transfer = () => {
                 <span class="block sm:inline">{error}</span>
               </div>
             ) : null}
-            <div className="flex items-center justify-between	pt-4">
-              <div className="text-2xl">Transfer Items :</div>
-              <div className="flex gap-4">
+            <div className="flex flex-wrap gap-5 items-center justify-between	pt-4">
+              <div className="text-2xl whitespace-nowrap">Transfer Items :</div>
+              <div className="flex flex-wrap gap-5">
                 <div
-                  className="bg-blue-500 hover:bg-blue-700 text-white text-sm h-10 py-2 px-4 rounded w-42"
+                  className="bg-blue-500 whitespace-nowrap hover:bg-blue-700 text-white text-sm h-10 py-2 px-4 rounded w-42"
                   onClick={() => setTrackTransfer(true)}
                 >
                   Track Your Request
                 </div>
                 <div
-                  className="bg-blue-500 hover:bg-blue-700 text-white h-10 text-sm  py-2 px-4 rounded w-42"
+                  className="bg-blue-500 whitespace-nowrap hover:bg-blue-700 text-white h-10 text-sm  py-2 px-6 rounded w-42"
                   onClick={() => setTransferPopup(true)}
                 >
                   Request Transfer

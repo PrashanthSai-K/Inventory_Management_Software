@@ -101,7 +101,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
           </div>
           <form onSubmit={HandleSubmit}>
             <div className="py-1  ">
-              <div className="flex flex-wrap mt-8 pb-8">
+              <div className="flex flex-wrap mt-8">
                 <span className="text-lg pb-1 text-gray-600 ">Item</span>
                 <input
                   type="text"
@@ -115,10 +115,10 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
                   autoComplete="off"
                 />
               </div>
-              <div style={{ paddingLeft: "205px" }}>
+              <div>
                 {isTyping && suggestion && (
                   <div
-                    className="text-md block px-3 py-2 rounded-b-lg w-80 border-t-0
+                    className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                   >
                     {itemResult &&
