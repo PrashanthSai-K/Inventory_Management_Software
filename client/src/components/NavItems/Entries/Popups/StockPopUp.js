@@ -121,7 +121,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
                     className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                   >
-                    {itemResult &&
+                    {itemResult && itemResult.length > 0 ?(
                       itemResult.slice(0, 4).map((result) => {
                         return (
                           <div
@@ -133,7 +133,9 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
                             {result.item_code}-{result.item_name}
                           </div>
                         );
-                      })}
+                      })):(
+                        <div>No Match</div>
+                      )}
                   </div>
                 )}
               </div>

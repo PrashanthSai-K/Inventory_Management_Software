@@ -23,7 +23,6 @@ function Master() {
     // console.log(stockData);
   }
 
-
   
   useEffect(() => {
     if (!Cookies.get("token")) {

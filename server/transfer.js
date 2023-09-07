@@ -378,7 +378,7 @@ const rejectRequest = async function (req, res, next) {
         await connection.beginTransaction();
 
         const updateResult = await new Promise((resolve, reject) => {
-            connection.query("UPDATE transfertale SET status = ? WHERE id = ?", ["REJECTED", req.body.id], async (error, result) => {
+            connection.query("UPDATE transfertable SET status = ? WHERE id = ?", ["REJECTED", req.body.id], async (error, result) => {
                 if (error) {
                     await connection.rollback();
                     res.status(500).json({ "Data": "Some Internal Error" });

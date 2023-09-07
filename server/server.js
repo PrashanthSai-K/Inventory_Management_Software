@@ -259,21 +259,6 @@ app.get("/api/getStock", (req, res) => {
     });
 });
 
-app.get("/api/getQuantityUnits", (req, res) => {
-    db.query("SELECT * FROM quantity_units", (error, result) => {
-        if (error) console.log(error);
-        else {
-            res.send(result);
-        }
-    });
-})
-
-app.get("/api/getAdminStockData", (req, res) => {
-  db.query("SELECT * FROM admin_stock_view", (error, result) => {
-    if (error) console.log(error);
-    res.send(result);
-  });
-});
 
 app.get("/api/getAdminStockData", (req, res) => {
     db.query("SELECT * FROM admin_stock_view", (error, result) => {
@@ -291,12 +276,7 @@ app.get("/api/getQuantityUnits", (req, res) => {
     })
 })
 
-app.get("/api/getAdminStockData", (req, res) => {
-    db.query("SELECT * FROM admin_stock_view", (error, result) => {
-        if (error) console.log(error);
-        res.send(result)
-    })
-})
+
 
 app.post("/api/getTransferData", getTransferData)
 

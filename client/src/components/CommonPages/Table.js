@@ -1,86 +1,89 @@
 import React, { useState, useEffect } from "react";
 
-function Table({stockData}) {
+function Table({ stockData }) {
+  // console.log(stockData);
 
-  
-    // console.log(stockData);
+  // Search functionality
 
-// Search functionality
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [click, setClick] = useState(false);
 
-const [searchQuery, setSearchQuery] = useState("");
-const [filteredData, setFilteredData] = useState([]);
-const [click, setClick] = useState(false);
+  useEffect(() => {
+    if (click || searchQuery == "") {
+      const filteredResults = stockData.filter((item) => {
+        const propertiesToSearch = [
+          "item_code",
+          "item_type",
+          "item_name",
+          "item_subname",
+          "item_description",
+          "cost_per_item",
+          "quantity_units",
+          "manufacturer_name",
+          "supplier_name",
+          "contact",
+          "stock_qty",
+          "inventory_value",
+          "user_id",
+          "dept_id",
+        ];
+        return propertiesToSearch.some((property) =>
+          typeof item[property] === "string"
+            ? item[property].toLowerCase().includes(searchQuery.toLowerCase())
+            : typeof item[property] === "number"
+            ? item[property].toString().includes(searchQuery)
+            : false
+        );
+      });
 
-useEffect(() => {
-  if (click || searchQuery == "") {
-    const filteredResults = stockData.filter((item) => {
-      const propertiesToSearch = [
-        "item_code",
-        "item_type",
-        "item_name",
-        "item_subname",
-        "cost_per_item",
-        "quantity_units",
-        "manufacturer_name",
-        "supplier_name",
-        "contact",
-        "stock_qty",
-        "inventory_value",
-        "user_id",
-        "dept_id"
-      ];
-      return propertiesToSearch.some((property) =>
-        typeof item[property] === "string"
-          ? item[property].toLowerCase().includes(searchQuery.toLowerCase())
-          : typeof item[property] === "number"
-          ? item[property].toString().includes(searchQuery)
-          : false
-      );
+      setFilteredData(filteredResults);
+    }
+  }, [click, stockData, searchQuery]);
+
+  //sort by functionality
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortedColumn, setSortedColumn] = useState("");
+
+  const sortData = (column) => {
+    
+    let newSortOrder = "asc";
+    if (column === sortedColumn) {
+      newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+    }
+    setSortOrder(newSortOrder);
+    setSortedColumn(column);
+   
+
+    filteredData.sort((a, b) => {
+      console.log(column);
+      const valueA =
+        typeof a[column] === "string" ? a[column].toLowerCase() : a[column];
+      const valueB =
+        typeof b[column] === "string" ? b[column].toLowerCase() : b[column];
+
+      if (valueA < valueB) {
+        return newSortOrder === "asc" ? -1 : 1;
+      }
+      if (valueA > valueB) {
+        return newSortOrder === "asc" ? 1 : -1;
+      }
+      return 0;
     });
+  };
 
-    setFilteredData(filteredResults);
-  }
-}, [click, stockData, searchQuery]);
-
-
-//sort by functionality
-const [sortOrder, setSortOrder] = useState("asc");
-const [sortedColumn, setSortedColumn] = useState("");
-
-const sortData = (column) => {
-  let newSortOrder = "asc";
-  if (column === sortedColumn) {
-    newSortOrder = sortOrder === "asc" ? "desc" : "asc";
-  }
-  setSortOrder(newSortOrder);
-  setSortedColumn(column);
-
-  filteredData.sort((a, b) => {
-    const valueA =
-      typeof a[column] === "string" ? a[column].toLowerCase() : a[column];
-    const valueB =
-      typeof b[column] === "string" ? b[column].toLowerCase() : b[column];
-
-    if (valueA < valueB) {
-      return newSortOrder === "asc" ? -1 : 1;
+  const handleKeyEnter = (e) => {
+    if (e.key === "Enter") {
+      setClick(true);
     }
-    if (valueA > valueB) {
-      return newSortOrder === "asc" ? 1 : -1;
-    }
-    return 0;
-  });
-};
-
-const handleKeyEnter = (e) => {
-  if(e.key === "Enter") {
-    setClick(true);
-  }
-};
+  };
 
   return (
-    <div  className=" w-9/12">
+    <div className=" w-9/12">
       <div className="flex  w-full mb-5 h-auto  justify-between font-semibold">
-        <div className="sub-titles2 text-center text-2xl font-semibold">Master Table</div>
+        <div className="sub-titles2 text-center text-2xl font-semibold">
+          Master Table
+        </div>
         <div className="input-field2 flex">
           <div className="h-auto">
             <input
@@ -90,8 +93,8 @@ const handleKeyEnter = (e) => {
               value={searchQuery}
               onChange={(e) => {
                 setClick(false);
-                setSearchQuery(e.target.value)}
-              }
+                setSearchQuery(e.target.value);
+              }}
               placeholder="Search..."
               className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black"
             />
@@ -106,193 +109,210 @@ const handleKeyEnter = (e) => {
       </div>
       <div class="sm:-mx-6 lg:-mx-8 overflow-y-auto overflow-x-auto border-gray-700 rounded-lg">
         <div class=" align-middle inline-block min-w-full ">
-          <div style={{ width: "90%", height: "50%", maxHeight: "360px" }} class="shadow sm:rounded-lg h-96">
-            <table  class="min-w-full text-sm text-gray-400 ">
+          <div
+            style={{ width: "90%", height: "50%", maxHeight: "360px" }}
+            class="shadow sm:rounded-lg h-96"
+          >
+            <table class="min-w-full text-sm text-gray-400 ">
               <thead class="bg-gray-800 text-xs uppercase font-medium">
                 <tr>
-                  <th className="px-6 py-3" >s.no</th>
+                  <th className="px-6 py-3">s.no</th>
                   <th
-                  onClick={() => sortData("item_code")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Item Code</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("item_type")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Item Type</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("item_name")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Item Name</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("item_subname")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Item Subname</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("cost_per_item")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Cost Per Item</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("quantity_units")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Quantity Units</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("manufacturer_name")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Manufacturer Name</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("supplier_name")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Supplier Name</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("contact")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Supplier Contact</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("stock_qty")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Stock Qty</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("inventory_value")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Inventory Value</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("user_id")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Purchased By</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  onClick={() => sortData("dept_id")}
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div >Department Id</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
+                    onClick={() => sortData("item_code")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Item Code</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("item_type")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Item Type</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("item_name")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Item Name</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("item_subname")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Item Subname</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("item_description")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Item Description</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("cost_per_item")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Cost Per Item</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("quantity_units")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Quantity Units</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("manufacturer_name")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Manufacturer Name</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("supplier_name")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Supplier Name</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("contact")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Supplier Contact</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("stock_qty")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Stock Qty</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("inventory_value")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Inventory Value</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("user_id")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Purchased By</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => sortData("dept_id")}
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div>Department Id</div>
+                      <span
+                        className={`bi bi-arrow-${
+                          sortOrder === "asc" ? "up" : "down"
+                        } ml-2`}
+                      />
+                    </div>
+                  </th>
                 </tr>
               </thead>
               <tbody class="bg-gray-800">
@@ -311,6 +331,9 @@ const handleKeyEnter = (e) => {
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
                         {data.item_subname}
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        {data.item_description}
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
                         {data.cost_per_item}
@@ -339,7 +362,7 @@ const handleKeyEnter = (e) => {
                       <td class=" px-6 py-4 whitespace-nowrap">
                         {data.dept_id}
                       </td>
-                      </tr>
+                    </tr>
                   );
                 })}
               </tbody>

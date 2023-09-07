@@ -81,7 +81,7 @@ function Entries() {
             setMessage ={setMessage}
             onClose={() => setShowStock(false)}
           />
-          {user.role === "slbincharge" && (
+          {user.role === "slsincharge" && (
             <>
               <div
                 onClick={() => setShowItem(true)}
