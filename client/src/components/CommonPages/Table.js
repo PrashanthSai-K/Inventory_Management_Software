@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-function Table({ stockData }) {
-  // console.log(stockData);
+function Table({ stockData}) {
 
+  // console.log(stockData);
+ 
   // Search functionality
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -53,8 +54,8 @@ function Table({ stockData }) {
     setSortOrder(newSortOrder);
     setSortedColumn(column);
 
-    filteredData.sort((a, b) => {
-      console.log(column);
+    filteredData.sort((a, b) => { 
+
       const valueA =
         typeof a[column] === "string" ? a[column].toLowerCase() : a[column];
       const valueB =
@@ -69,6 +70,7 @@ function Table({ stockData }) {
       return 0;
     });
   };
+
 
   const handleKeyEnter = (e) => {
     if (e.key === "Enter") {

@@ -5,9 +5,11 @@ import ItemEdit from "./ItemEdit";
 
 function ItemTable({itemData , fetchItemData}) {
   //For open popup
+
+  // console.log(itemData);
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
-  // console.log(itemData);
+  
 
   const handleOpenPopup = (data) => {
     setSelectedData(data);

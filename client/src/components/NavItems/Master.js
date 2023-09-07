@@ -17,11 +17,14 @@ function Master() {
 
   const [stockData, setStockData] = useState([]);
 
-  async function fetchStockData() {
-    const response = await axios.get("http://localhost:4000/api/getAdminStockData");
-    setStockData(response.data);
-    // console.log(stockData);
-  }
+  const fetchStockData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/api/getAdminStockData"); // Replace '/api/data' with your API endpoint
+      setStockData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   
   useEffect(() => {
@@ -40,6 +43,9 @@ function Master() {
   }, [stockData]);
 
 
+
+
+
   return (
     <>
       {isLoading ? (
@@ -52,7 +58,7 @@ function Master() {
           <h1 className="text-2xl font-semibold ">Master Page</h1>
           <div className="flex flex-col justify-center items-center gap-10 ">
             <center> <Cards /></center>
-            <Table stockData={stockData}/>
+            <Table stockData={stockData} fetchStockData = {fetchStockData}/>
           </div>
         </div>
       )}
