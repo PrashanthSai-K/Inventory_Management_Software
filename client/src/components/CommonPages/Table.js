@@ -46,14 +46,12 @@ function Table({ stockData }) {
   const [sortedColumn, setSortedColumn] = useState("");
 
   const sortData = (column) => {
-    
     let newSortOrder = "asc";
     if (column === sortedColumn) {
       newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     }
     setSortOrder(newSortOrder);
     setSortedColumn(column);
-   
 
     filteredData.sort((a, b) => {
       console.log(column);
@@ -67,6 +65,9 @@ function Table({ stockData }) {
       }
       if (valueA > valueB) {
         return newSortOrder === "asc" ? 1 : -1;
+      }
+      if (valueA === valueB) {
+        return newSortOrder
       }
       return 0;
     });
@@ -118,12 +119,11 @@ function Table({ stockData }) {
                 <tr>
                   <th className="px-6 py-3">s.no</th>
                   <th
-                    onClick={() => sortData("item_code")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Item Code</div>
+                      <div onClick={() => sortData("item_code")}>Item Code</div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -132,12 +132,11 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("item_type")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Item Type</div>
+                      <div onClick={() => sortData("item_type")}>Item Type</div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -146,12 +145,11 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("item_name")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Item Name</div>
+                      <div onClick={() => sortData("item_name")}>Item Name</div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -160,12 +158,13 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("item_subname")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Item Subname</div>
+                      <div onClick={() => sortData("item_subname")}>
+                        Item Subname
+                      </div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -174,12 +173,13 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("item_description")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Item Description</div>
+                      <div onClick={() => sortData("item_description")}>
+                        Item Description
+                      </div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -188,12 +188,13 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("cost_per_item")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Cost Per Item</div>
+                      <div onClick={() => sortData("cost_per_item")}>
+                        Cost Per Item
+                      </div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -202,12 +203,13 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("quantity_units")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Quantity Units</div>
+                      <div onClick={() => sortData("quantity_units")}>
+                        Quantity Units
+                      </div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -216,12 +218,13 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("manufacturer_name")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Manufacturer Name</div>
+                      <div onClick={() => sortData("manufacturer_name")}>
+                        Manufacturer Name
+                      </div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -230,12 +233,13 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("supplier_name")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Supplier Name</div>
+                      <div onClick={() => sortData("supplier_name")}>
+                        Supplier Name
+                      </div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -244,12 +248,13 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("contact")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Supplier Contact</div>
+                      <div onClick={() => sortData("contact")}>
+                        Supplier Contact
+                      </div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -258,12 +263,11 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("stock_qty")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Stock Qty</div>
+                      <div onClick={() => sortData("stock_qty")}>Stock Qty</div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -272,12 +276,13 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("inventory_value")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Inventory Value</div>
+                      <div onClick={() => sortData("inventory_value")}>
+                        Inventory Value
+                      </div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -286,12 +291,13 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("user_id")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Purchased By</div>
+                      <div onClick={() => sortData("user_id")}>
+                        Purchased By
+                      </div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"
@@ -300,12 +306,13 @@ function Table({ stockData }) {
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("dept_id")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div>Department Id</div>
+                      <div onClick={() => sortData("dept_id")}>
+                        Department Id
+                      </div>
                       <span
                         className={`bi bi-arrow-${
                           sortOrder === "asc" ? "up" : "down"

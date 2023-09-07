@@ -85,7 +85,7 @@ function ItemTable({itemData , fetchItemData}) {
     setSortedColumn(column);
 
     filteredData.sort((a, b) => { 
-      console.log(column);
+      // console.log(column);
       const valueA =
         typeof a[column] === "string" ? a[column].toLowerCase() : a[column];
       const valueB =
