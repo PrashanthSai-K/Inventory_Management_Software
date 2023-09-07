@@ -107,6 +107,12 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
         }
       );
       if (response.status == 200) {
+        setData({
+          itemcode: "",
+          showStock: "",
+          stockReq: "",
+          fromLabId: "",
+        })
         console.log(response.data);
         setMessage(response.data.Data);
         onClose();
@@ -115,6 +121,12 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
     } catch (error) {
 
       if (error) {
+        setData({
+          itemcode: "",
+          showStock: "",
+          stockReq: "",
+          fromLabId: "",
+        })
         console.log(error);
         setError(error.response.data.Data);
         onClose();

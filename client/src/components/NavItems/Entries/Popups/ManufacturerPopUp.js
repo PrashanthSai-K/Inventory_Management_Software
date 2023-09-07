@@ -2,31 +2,39 @@ import { React, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const ManufacturerPopUp = ({ isVisible, onClose }) => {
+const ManufacturerPopUp = ({ isVisible, onClose, setMessage, setError,setIsLoading }) => {
+
   const [name, setName] = useState(null);
-  const [message, setMessage] = useState(null);
-  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     setName(e.target.value);
   };
 
-  const clearMessage = () => {
-    setMessage(null);
-  };
-
-  useEffect(() => {
-    setTimeout(clearMessage, 3000);
-  }, [message]);
-
   const HandleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await axios
-      .post("http://localhost:4000/manufactureradd", { name: name })
-      .catch((error) => console.log(error))
-      .then((response) => setMessage(response.data));
-    // .then(() => navigate('/'));
+    try {
+      setIsLoading(true);
+      e.preventDefault();
+      const response = await axios
+        .post("http://localhost:4000/api/manufacturerAdd", { name: name.toUpperCase() })
+      if (response && response.status == 201){
+        console.log(response);
+        setMessage(response.data.Data);
+        onClose();
+        setIsLoading(false);
+        setName(null);
+      }
+    }catch (error) {
+      if(error && error.response.status == 400){
+        setError(error.response.data.Data);
+        onClose();
+        setIsLoading(false);
+        setName(null);
+      }
+      console.log(error)
+    }
   };
+
   if (!isVisible) return null;
 
   return (
@@ -48,7 +56,7 @@ const ManufacturerPopUp = ({ isVisible, onClose }) => {
               </span>
             </div>
             <form>
-              {message ? <div>{message}</div> : null}
+             
               <div className="">
                 <div class="py-1 flex flex-wrap">
                   <span class="px-1 py-1 whitespace-nowrap text-md text-gray-600">

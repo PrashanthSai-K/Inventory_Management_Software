@@ -4,7 +4,8 @@ import axios from "axios";
 import StockPopup from "./StockPopup";
 import StockEdit from "./StockEdit";
 
-function StockTable({getStock,fetchGetStock}) {
+function StockTable({getStock,fetchGetStock, setMessage, setError, setIsLoading, isLoading}) {
+
   //For open popup
   const [stockOpenPopup, setStockOpenPopup] = useState(false);
   const [stockSelectedData, setStockSelectedData] = useState(null);
@@ -332,6 +333,10 @@ function StockTable({getStock,fetchGetStock}) {
             data={editData}
             onClose={handleCloseEdit}
             onSubmit={onSubmit}
+            setMessage={setMessage}
+            setError={setError}
+            setIsLoading ={setIsLoading}
+            isLoading = {isLoading}
           />
         </div>
       )}

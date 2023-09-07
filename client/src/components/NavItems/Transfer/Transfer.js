@@ -12,14 +12,12 @@ const Transfer = () => {
 
   const [showTransferPopup, setTransferPopup] = useState(false);
   const [showTrackTransfer, setTrackTransfer] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [trackTransferData, setTrackTransferData] = useState([]);
   const [transferData, setTransferData] = useState([]);
   const [noData, setNoData] = useState(false);
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
-
-
 
 
   const onClose = () => {
@@ -43,7 +41,7 @@ const Transfer = () => {
         })
         .catch((error) => console.log(error));
     }
-  },[isLoading, message, error]);
+  }, [isLoading, message, error]);
 
   useEffect(() => {
     if (trackTransferData.length > 0 && transferData.length > 0) {
@@ -76,7 +74,7 @@ const Transfer = () => {
     setMessage(null);
     setError(null);
   };
-  
+
   useEffect(() => {
     setTimeout(clearMessage, 6000);
   }, [message, error]);
@@ -110,12 +108,12 @@ const Transfer = () => {
           </div>
           <div className="p-8">
             {message ? (
-              <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+              <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded  fixed z-50 top-0 message" role="alert">
                 <span class="block sm:inline">{message}</span>
               </div>
             ) : null}
             {error ? (
-              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded fixed top-0 z-50 message" role="alert">
                 <span class="block sm:inline">{error}</span>
               </div>
             ) : null}
@@ -151,7 +149,7 @@ const Transfer = () => {
             isVisible={showTransferPopup}
             onClose={onClose}
             setMessage={setMessage}
-            setError = {setError}
+            setError={setError}
           />
 
           <TrackTransfer
@@ -159,13 +157,12 @@ const Transfer = () => {
             trackTransferData={trackTransferData}
             isVisible={showTrackTransfer}
             onClose={onClose}
-            setError = {setError}
-            setMessage = {setMessage}
+            setError={setError}
+            setMessage={setMessage}
           />
 
         </div>
-      )
-      }
+      )}
     </>
 
   );

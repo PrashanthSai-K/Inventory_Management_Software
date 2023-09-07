@@ -3,7 +3,7 @@ import ItemPopup from "./ItemPopup";
 import { useState, useEffect } from "react";
 import ItemEdit from "./ItemEdit";
 
-function ItemTable({itemData , fetchItemData}) {
+function ItemTable({itemData , fetchItemData, setMessage, setError}) {
   //For open popup
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
@@ -370,6 +370,8 @@ function ItemTable({itemData , fetchItemData}) {
             data={editData}
             onClose={handleCloseEdit}
             onSubmit={onSubmit}
+            setMessage={setMessage}
+            setError={setError}
           />
         </div>
       )}

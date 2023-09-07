@@ -33,6 +33,16 @@
   background: #555;
   border-radius: 200px;
 }
+
+input[type=number]{
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 /* Popup overlay styles */
 .popup-overlay {
   position: fixed;
@@ -232,4 +242,20 @@
 .fade-in {
   opacity: 1 ;
   transition: opacity 1s ease-in; /* Adjust the duration and easing function as needed */
+}
+
+.message{
+  left: 40%;
+}
+
+@media (max-width:480px) {
+  .message{
+    left: 0%;
+  }
+}
+
+@media (max-width:700px) {
+  .message{
+    left: 30%;
+  }
 }

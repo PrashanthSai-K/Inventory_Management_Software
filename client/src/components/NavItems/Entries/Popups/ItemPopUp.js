@@ -3,10 +3,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const ItemPopUp = ({ isVisible, onClose }) => {
+const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, manufacturer, supplier, quantityUnits }) => {
 
 
-  const [message, setMessage] = useState(null)
   //<-------------Assigning state requird state variables --------->
 
   const [data, setData] = useState({
@@ -15,45 +14,17 @@ const ItemPopUp = ({ isVisible, onClose }) => {
     supplierName: "",
     itemName: "",
     subName: "",
-    desc: "",
+    description: "",
     cost: "",
     units: "",
   });
 
-  const navigate = useNavigate();
-  const [manufacturer, setManufacturer] = useState([]);
-  const [supplier, setSupplier] = useState([]);
-  const [quantityUnits, setQuantityUnits] = useState([]);
   const [msuggestion, setMSuggestion] = useState(false);
   const [isMTyping, setIsMTyping] = useState(false);
   const [ssuggestion, setSSuggestion] = useState(false);
   const [isSTyping, setIsSTyping] = useState(false);
 
   //<----------End of assigning state variables ------------>
-
-  //<--------Fetching datas required for form input--------->
-
-  async function fetchManufacturer() {
-    const response = await axios.get("http://localhost:4000/api/getManufacturer");
-    setManufacturer(response.data);
-  }
-  async function fetchSupplier() {
-    const response = await axios.get("http://localhost:4000/api/getSupplier");
-    setSupplier(response.data);
-  }
-  async function fetchQuantityUnits() {
-    const response = await axios.get("http://localhost:4000/api/getQuantityUnits");
-    setQuantityUnits(response.data);
-  }
-
-  useEffect(() => {
-    fetchManufacturer();
-    fetchSupplier();
-    fetchQuantityUnits();
-  }, []);
-
-  //<----------End of Fetch data for forms ------------->
-
 
 
   //<--------Functions to show suggestion for manufacturer in form -------------->
@@ -68,7 +39,6 @@ const ItemPopUp = ({ isVisible, onClose }) => {
       setIsMTyping(false);
       setMSuggestion(false);
     }
-
     setManufacturerResult(
       manufacturer.filter((f) => f.name.toLowerCase().includes(e.target.value))
     );
@@ -127,31 +97,38 @@ const ItemPopUp = ({ isVisible, onClose }) => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    setData({ ...data, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value});
   };
-  const [error, setError] = useState(true);
 
   const HandleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await axios
-      .post("http://localhost:4000/api/itemadd", data)
-      .catch((error) => console.log(error))
-      .then((response) => setMessage(response.data));
-    window.scrollTo({ top: 0 });
-    // setData({
-    //   itemType: "",
-    //   manufacturerName: "",
-    //   supplierName: "",
-    //   itemName: "",
-    //   subName: "",
-    //   Spec1: "",
-    //   Spec2: "",
-    //   Spec3: "NIL",
-    //   cost: "",
-    //   units: "",
-    // });
+    try {
+      setIsLoading(true);
+      e.preventDefault();
+      const response = await axios.post("http://localhost:4000/api/itemAdd", data)
+      if(response && response.status == 201){
+        setMessage(response.data.Data);
+        setIsLoading(false);
+        onClose();
+      }
+      setData({
+        itemType: "",
+        manufacturerName: "",
+        supplierName: "",
+        itemName: "",
+        subName: "",
+        description: "",
+        cost: "",
+        units: "",
+      });
+    } catch (error) {
+      if(error && error.response.status == 400){
+        setError(error.response.data.Data);
+        setIsLoading(false);
+        onClose();
+      }
+    }
   };
-  // console.log(supplier)
+
   //<----------End of form handling----------->
 
   if (!isVisible) return null;
@@ -166,7 +143,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
           <button
             className="text-black rounded-full border-black border-2 px-2 text-3xl place-self-end"
             onClick={() => onClose()}
-          > 
+          >
             X
           </button>
           <div className="flex flex-col justify-center items-center">
@@ -178,7 +155,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
             {manufacturer && supplier && (
 
               <form onChange={handleChange}>
-                {message ? <div className="absolute">{message}</div> : null}
+
                 <div className="py-1 flex flex-wrap">
                   <span className="px-1 text-lg text-gray-600">Item Type</span>
                   <select
@@ -320,42 +297,16 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                 </div>
                 <div className="flex flex-wrap mt-8">
                   <span className="px-1 text-lg text-gray-600">
-                    Item Spec-1
+                    Item Description
                   </span>
-                  <input
+                  <textarea
                     type="text"
-                    name="Spec1"
-                    value={data.Spec1}
+                    name="description"
+                    max="200"
+                    value={data.description}
                     className="text-md block px-3 py-2 rounded-lg w-full
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     required
-                  />
-                </div>
-                <div className="flex flex-wrap mt-8">
-                  <span className="px-1 text-lg text-gray-600">
-                    Item Spec-2
-                  </span>
-                  <input
-                    type="text"
-                    name="Spec2"
-                    value={data.Spec2}
-                    className="text-md block px-3 py-2 rounded-lg w-full
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
-                    required
-                  />
-                </div>
-                <div className="flex flex-wrap mt-8">
-                  <span className="px-1 text-lg text-gray-600">
-                    Item Spec-3
-                  </span>
-                  <input
-                    type="text"
-                    name="Spec3"
-                    value={data.Spec3}
-                    className="text-md block px-3 py-2 rounded-lg w-full
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
-                    required
-                    autoComplete="off"
                   />
                 </div>
                 <div className="flex flex-wrap mt-8">
@@ -363,7 +314,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                     Cost Per Item
                   </span>
                   <input
-                    type="text"
+                    type="number"
                     name="cost"
                     value={data.cost}
                     className="text-md block px-3 py-2 rounded-lg w-full
@@ -388,7 +339,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                       Select Units
                     </option>
                     {quantityUnits.map((unit) => {
-                      return <option value={unit.name}>{unit.name}</option>;
+                      return <option value={unit.name} key={unit.id}>{unit.name}</option>;
                     })}
                   </select>
                 </div>

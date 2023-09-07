@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Route, useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -62,7 +62,14 @@ export function AuthProvider({ children }) {
     }
   };
 
-  //   console.log(user)
+  function checkRole({path, element, userRole,  allowedRole, redirecTo}){
+    if(userRole == allowedRole){
+      return <Route path={path} element={element} />
+    }else{
+      navigate(redirecTo);
+    }
+  }
+
 
   const value = {
     isLoggedIn,
