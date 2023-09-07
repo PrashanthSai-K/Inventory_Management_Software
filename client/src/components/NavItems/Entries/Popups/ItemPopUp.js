@@ -19,6 +19,8 @@ const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, man
     units: "",
   });
 
+  const navigate = useNavigate();
+
   const [msuggestion, setMSuggestion] = useState(false);
   const [isMTyping, setIsMTyping] = useState(false);
   const [ssuggestion, setSSuggestion] = useState(false);
@@ -213,8 +215,8 @@ const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, man
                         className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       >
-                        {manufacturerResult &&
-                          manufacturerResult.slice(0, 4).map((result) => {
+                        {manufacturerResult && manufacturerResult.length > 0 ?
+                          (manufacturerResult.slice(0, 4).map((result) => {
                             return (
                               <div
                                 key={result.id}
@@ -225,7 +227,9 @@ const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, man
                                 {result.id}-{result.name}
                               </div>
                             );
-                          })}
+                          })):(
+                            <div>No Match</div>
+                          )}
                       </div>
                     )}
                   </div>
@@ -252,7 +256,7 @@ const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, man
                         className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       >
-                        {supplierResult &&
+                        {supplierResult && supplierResult.length > 0 ? (
                           supplierResult.slice(0, 4).map((result) => {
                             return (
                               <div
@@ -264,7 +268,9 @@ const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, man
                                 {result.id}-{result.name}
                               </div>
                             );
-                          })}
+                          })) : ( 
+                            <div>No Match</div>
+                          )}
                       </div>
                     )}
                   </div>

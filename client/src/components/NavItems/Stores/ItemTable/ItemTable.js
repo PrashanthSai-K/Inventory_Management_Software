@@ -5,9 +5,11 @@ import ItemEdit from "./ItemEdit";
 
 function ItemTable({itemData , fetchItemData, setMessage, setError}) {
   //For open popup
+
+  // console.log(itemData);
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
-  // console.log(itemData);
+  
 
   const handleOpenPopup = (data) => {
     setSelectedData(data);
@@ -72,8 +74,6 @@ function ItemTable({itemData , fetchItemData, setMessage, setError}) {
     }
   }, [click, itemData, searchQuery]);
 
-
-
   //sort by functionality
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortedColumn, setSortedColumn] = useState("");
@@ -86,7 +86,8 @@ function ItemTable({itemData , fetchItemData, setMessage, setError}) {
     setSortOrder(newSortOrder);
     setSortedColumn(column);
 
-    filteredData.sort((a, b) => {
+    filteredData.sort((a, b) => { 
+      // console.log(column);
       const valueA =
         typeof a[column] === "string" ? a[column].toLowerCase() : a[column];
       const valueB =
@@ -100,6 +101,14 @@ function ItemTable({itemData , fetchItemData, setMessage, setError}) {
       }
       return 0;
     });
+  };
+
+  // <-------------------------------search bar enter function---------------------------->
+
+  const handleKeyEnter = (e) => {
+    if(e.key === "Enter") {
+      setClick(true);
+    }
   };
 
   // async function HandleDelete(item_code){
@@ -127,19 +136,17 @@ function ItemTable({itemData , fetchItemData, setMessage, setError}) {
             <div className="h-auto">
               <input
                 name="inputQuery"
-                type="text"            
+                type="text"
                 value={searchQuery}
+                onKeyDown={handleKeyEnter}
                 onChange={(e) => {
                   setClick(false);
                   setSearchQuery(e.target.value)}}
                 placeholder="Search..."
                 className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black"
-                
               />
             </div>
-            <div
-           
-            
+            <div  
               onClick={() => setClick(true)}
               className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
             >

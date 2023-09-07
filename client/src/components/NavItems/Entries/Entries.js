@@ -60,7 +60,6 @@ function Entries() {
     }
   }, [item, supplier, manufacturer, quantityUnits]);
 
-
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
 

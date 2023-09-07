@@ -75,7 +75,7 @@ const HandleSubmit = async (e) => {
           </div>
           <form onSubmit={HandleSubmit} className="flex flex-col gap-3">
           <div className="flex flex-wrap">
-          <div className="flex ">
+          <div className="flex">
           <label  for="item_code" className="text-md pr-5 ">Item Code</label>
           </div>
           <input

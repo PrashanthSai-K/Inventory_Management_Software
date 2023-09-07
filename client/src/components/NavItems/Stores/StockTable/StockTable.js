@@ -101,6 +101,28 @@ function StockTable({getStock,fetchGetStock, setMessage, setError, setIsLoading,
     });
   };
 
+    // <-------------------------------search bar enter function---------------------------->
+
+    const handleKeyEnter = (e) => {
+      if(e.key === "Enter"){
+        setClick(true);
+      }
+    }
+
+  // async function HandleDelete(stock_id){
+  //   // e.preventDefault();
+  //   // console.log(item_code)
+  //   try {
+  //     const response = await axios.post("http://localhost:4000/stockdelete", {stock_id:stock_id});
+  //     // console.log();
+
+  //   } catch (error) {
+  //     console.log(error);
+  //     console.log("Error deleting item.");
+  //   }
+  //   // window.location.reload();
+  // };
+
   return (
     <div>
       <div style={{width:"90%"}} className=" flex ml-20 h-auto mt-5 mb-5 justify-between  font-semibold" >
@@ -111,6 +133,7 @@ function StockTable({getStock,fetchGetStock, setMessage, setError, setIsLoading,
                 name="inputQuery"
                 type="text"
                 value={searchQuery}
+                onKeyDown={handleKeyEnter}
                 onChange={(e) => {
                   setClick(false);
                   setSearchQuery(e.target.value)}}

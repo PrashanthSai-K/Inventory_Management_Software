@@ -105,7 +105,6 @@ app.get("/api/getStock", (req, res) => {
 });
 
 
-
 app.get("/api/getAdminStockData", (req, res) => {
     db.query("SELECT * FROM admin_stock_view", (error, result) => {
         if (error) console.log(error);
