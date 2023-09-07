@@ -255,7 +255,7 @@ function Dashboard({ open }) {
                   }`}
                 style={{ width: isCostFullScreen ? '100%' : '100%', height: isCostFullScreen ? '100%' : '530px' }}
               >
-                <h4 style={{ fontFamily: 'Iceland', fontWeight: "bold", borderBottom: "1px solid gray", display: "flex", justifyContent: "space-between" }} className=" text-start text-3xl pb-2">Cost Overview <button onClick={toggleCostFullScreen}><i class={`bi bi-arrows-${isCostFullScreen ? 'collapse' : 'fullscreen'}`}></i></button></h4>
+                <h4 style={{ fontFamily: 'Iceland', fontWeight: "bold", borderBottom: "1px solid gray", display: "flex", justifyContent: "space-between"}} className=" text-start text-3xl pb-2">Cost Overview <button className="spin" onClick={toggleCostFullScreen}><i class={`bi bi-arrows-${isCostFullScreen ? 'collapse' : 'fullscreen'}`}></i></button></h4>
                 <br />
 
                 <ResponsiveContainer width="100%" height="80%">

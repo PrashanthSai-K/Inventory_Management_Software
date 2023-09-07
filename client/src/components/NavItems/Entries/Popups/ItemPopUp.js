@@ -166,7 +166,7 @@ const ItemPopUp = ({ isVisible, onClose }) => {
           <button
             className="text-black rounded-full border-black border-2 px-2 text-3xl place-self-end"
             onClick={() => onClose()}
-          > 
+          >
             X
           </button>
           <div className="flex flex-col justify-center items-center">
@@ -236,19 +236,20 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                         className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       >
-                        {manufacturerResult &&
-                          manufacturerResult.slice(0, 4).map((result) => {
-                            return (
-                              <div
-                                key={result.id}
-                                value={result.id}
-                                className="hover:bg-sky-100 rounded-lg"
-                                onClick={() => manuResultClick(result.id)}
-                              >
-                                {result.id}-{result.name}
-                              </div>
-                            );
-                          })}
+                        {manufacturerResult && manufacturerResult.length > 0 ? (
+                          manufacturerResult.slice(0, 4).map((result) => (
+                            <div
+                              key={result.id}
+                              value={result.id}
+                              className="hover:bg-sky-100 rounded-lg"
+                              onClick={() => manuResultClick(result.id)}
+                            >
+                              {`${result.id}-${result.name}`}
+                            </div>
+                          ))
+                        ) : (
+                          <div>No match</div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -267,15 +268,16 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       required
                       onChange={handleSupplierChange}
+                      autoComplete="off"
                     />
                   </div>
-                  <div className="flex flex-wrap ">
+                  <div className="flex flex-wrap">
                     {isSTyping && ssuggestion && (
                       <div
                         className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       >
-                        {supplierResult &&
+                        {supplierResult && supplierResult > 0 ?(
                           supplierResult.slice(0, 4).map((result) => {
                             return (
                               <div
@@ -287,7 +289,9 @@ const ItemPopUp = ({ isVisible, onClose }) => {
                                 {result.id}-{result.name}
                               </div>
                             );
-                          })}
+                          })):(
+                            <div>No Match</div>
+                          )}
                       </div>
                     )}
                   </div>
