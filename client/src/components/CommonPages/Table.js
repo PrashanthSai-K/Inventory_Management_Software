@@ -66,9 +66,6 @@ function Table({ stockData }) {
       if (valueA > valueB) {
         return newSortOrder === "asc" ? 1 : -1;
       }
-      if (valueA === valueB) {
-        return newSortOrder
-      }
       return 0;
     });
   };

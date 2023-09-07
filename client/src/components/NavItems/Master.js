@@ -31,7 +31,7 @@ function Master() {
       getUser();
       fetchStockData();
     }  
-  }, [Cookies.get("token"), stockData])
+  }, [Cookies.get("token")])
 
   useEffect(()=>{
     if(stockData.length > 0){

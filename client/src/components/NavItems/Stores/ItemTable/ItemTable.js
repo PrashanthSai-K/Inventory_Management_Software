@@ -85,16 +85,18 @@ function ItemTable({itemData , fetchItemData}) {
     setSortedColumn(column);
 
     filteredData.sort((a, b) => { 
-      // console.log(column);
+      console.log(sortOrder);
       const valueA =
         typeof a[column] === "string" ? a[column].toLowerCase() : a[column];
       const valueB =
         typeof b[column] === "string" ? b[column].toLowerCase() : b[column];
 
       if (valueA < valueB) {
+        console.log(sortOrder);
         return newSortOrder === "asc" ? -1 : 1;
       }
       if (valueA > valueB) {
+        console.log(sortOrder); 
         return newSortOrder === "asc" ? 1 : -1;
       }
       return 0;
