@@ -14,7 +14,7 @@ import Master from "./components/NavItems/Master";
 import Supplier from "./components/NavItems/Supplier";
 import { React, useState,useEffect } from "react";
 
-import Dashboard from "./components/NavItems/Dashboard";
+import Dashboard from "./components/NavItems/Dashboard/Dashboard";
 import Error404 from "./components/ErrorPages/Error404";
 // import Hover from "./components/Hover";
 import LoginPage from "./components/LoginPage";
@@ -30,6 +30,11 @@ import Stores from "./components/NavItems/Stores/Stores";
 // import Transfer from "./components/CommonPages/Transfer";
 import Unauthorized from "./components/ErrorPages/Unauthorized";
 import Transfer from "./components/NavItems/Transfer/Transfer.js"
+import PieChart from "./components/NavItems/Dashboard/Graphs/Piechart";
+import Piechart from "./components/NavItems/Dashboard/Graphs/Piechart";
+import Barchart from "./components/NavItems/Dashboard/Graphs/Barchart";
+import Areachart from "./components/NavItems/Dashboard/Graphs/Areachart";
+
 
 function App() {
   
@@ -119,6 +124,14 @@ function App() {
                 path="/g"
                 element={<Graph/>}
               />
+
+              <Route path="/pie" element={<Piechart/>}/>
+
+              <Route path="/bar" element={<Barchart/>}/>
+
+
+              <Route path="/area" element={<Areachart/>}/>
+
 
             </Routes>
        
