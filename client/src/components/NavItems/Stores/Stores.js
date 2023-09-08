@@ -31,6 +31,7 @@ function Stores() {
       .catch((error) => console.log(error));
     setGetStock(response.data);
   }
+  
   useEffect(() => {
     fetchGetStock();
     fetchItemData();

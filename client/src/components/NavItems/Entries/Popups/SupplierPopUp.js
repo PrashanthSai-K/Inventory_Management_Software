@@ -35,10 +35,15 @@ const SupplierPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading 
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-      <div className="flex flex-col">
+    <div
+    style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}
+     className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
+      <div
+      style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"center",margin:"15px"}}
+       className="flex flex-col">
         <div
-          className="popup-responsive animate1 bg-white px-14 py-5 overflow-x-auto overflow-y-auto border-gray-700 rounded-lg"
+        style={{ height: "80%" }}
+          className="bg-white px-14 py-5 animate1 overflow-x-auto overflow-y-auto border-gray-700 rounded-lg"
         >
           <div className="w-full text-end">
             <button

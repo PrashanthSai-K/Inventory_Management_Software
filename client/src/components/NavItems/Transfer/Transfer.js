@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import TransferPopup from "./TransferPopup";
 import TransferCard from "./TransferCard";
-import TrackTransfer from "./TrackTransfer";
+import TrackTransfer from "./Track/TrackTransfer.js";
 
 
 const Transfer = () => {
@@ -32,7 +32,7 @@ const Transfer = () => {
 
   useEffect(() => {
     if (!Cookies.get("token")) {
-      // navigate("/");
+      navigate("/");
     } else {
       getUser()
         .then((result) => {

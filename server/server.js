@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.get("/api/", (req, res) => {
+    db.query("SELECT * FROM itemtable").then((res)=>console.log(res)).catch((err)=>console.log(err));
     res.send("Hello from backend");
 });
 
@@ -52,26 +53,28 @@ app.get("/api/getManufacturer", (req, res) => {
         .then((response) => res.send(response))
 });
 
-app.get("/getCategories", (req, res) => {
+app.get("/api/getCategories", (req, res) => {
     db.query("SELECT * FROM categories_view", (error, result) => {
+        console.log(result);
         res.send(result);
     });
 });
 
-app.get("/getInventory", (req, res) => {
+app.get("/api/getInventory", (req, res) => {
     db.query("SELECT * FROM inventory_view", (error, result) => {
         res.send(result);
     });
 });
 
-app.get("/getLabItem", (req, res) => {
+app.get("/api/getLabItem", (req, res) => {
     db.query("SELECT * FROM lab_item_view", (error, result) => {
+        
         res.send(result);
     });
 });
 
 
-app.get("/getItems", (req, res) => {
+app.get("/api/getItems", (req, res) => {
     db.query("SELECT * FROM itemtable", (error, result) => {
         if (error) console.log(error);
         else {

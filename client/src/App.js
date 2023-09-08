@@ -141,8 +141,8 @@ function App() {
                     <CheckRole 
                       element={<Stores />} 
                       userRole={user.role} 
-                      allowedRole={"slsincharge"} 
-                      redirectTo={"/unauthorized"} 
+                      allowedRole={"slsincharge"}
+                      redirectTo={"/unauthorized"}
                     />
                   }
                 />

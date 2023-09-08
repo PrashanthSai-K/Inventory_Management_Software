@@ -19,13 +19,12 @@ function Master() {
 
   const fetchStockData = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/getAdminStockData"); // Replace '/api/data' with your API endpoint
+      const response = await axios.get("http://localhost:4000/api/getAdminStockData"); 
       setStockData(response.data);
     } catch (error) {
       console.error(error);
     }
   };
-
 
   useEffect(() => {
     if (!Cookies.get("token")) {
@@ -41,9 +40,6 @@ function Master() {
       setIsLoading(false);
     }
   }, [stockData]);
-
-
-
 
 
   return (

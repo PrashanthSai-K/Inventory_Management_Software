@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, manufacturer, supplier, quantityUnits }) => {
+const ItemPopUp = ({ isVisible, onClose, setMessage, user, setError, setIsLoading, manufacturer, supplier, quantityUnits }) => {
 
 
   //<-------------Assigning state requird state variables --------->
@@ -99,31 +99,37 @@ const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, man
 
   const handleChange = (e) => {
     e.preventDefault();
-    setData({ ...data, [e.target.name]: e.target.value});
+    setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const HandleSubmit = async (e) => {
     try {
       setIsLoading(true);
-      e.preventDefault();
-      const response = await axios.post("http://localhost:4000/api/itemAdd", data)
-      if(response && response.status == 201){
-        setMessage(response.data.Data);
+      if (data.itemType == "") {
+        setError("Select correct itemtype");
         setIsLoading(false);
-        onClose();
+        return;
+      } else {
+        e.preventDefault();
+        const response = await axios.post("http://localhost:4000/api/itemAdd", data);
+        if (response && response.status == 201) {
+          setMessage(response.data.Data);
+          setIsLoading(false);
+          onClose();
+        }
+        setData({
+          itemType: "",
+          manufacturerName: "",
+          supplierName: "",
+          itemName: "",
+          subName: "",
+          description: "",
+          cost: "",
+          units: "",
+        });
       }
-      setData({
-        itemType: "",
-        manufacturerName: "",
-        supplierName: "",
-        itemName: "",
-        subName: "",
-        description: "",
-        cost: "",
-        units: "",
-      });
     } catch (error) {
-      if(error && error.response.status == 400){
+      if (error && error.response.status == 400) {
         setError(error.response.data.Data);
         setIsLoading(false);
         onClose();
@@ -136,11 +142,15 @@ const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, man
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-      <div className="flex flex-col">
+    <div
+    style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"center"}} 
+    className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm">
+      <div 
+      style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"center",margin:"15px"}}
+      className="flex  flex-col">
         <div
-          style={{ height: "600px" }}
-          className="popup-responsive bg-white animate1 w-full px-14 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
+          style={{ height: "80%" }}
+          className="bg-white w-full px-14 animate1 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
         >
           <button
             className="text-black rounded-full border-black border-2 px-2 text-3xl place-self-end"
@@ -213,7 +223,7 @@ const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, man
                     {isMTyping && msuggestion && (
                       <div
                         className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                        bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                       >
                         {manufacturerResult && manufacturerResult.length > 0 ?
                           (manufacturerResult.slice(0, 4).map((result) => {
@@ -221,13 +231,13 @@ const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, man
                               <div
                                 key={result.id}
                                 value={result.id}
-                                className="hover:bg-sky-100 rounded-lg"
+                                className="hover:bg-sky-100 rounded-lg p-1"
                                 onClick={() => manuResultClick(result.id)}
                               >
                                 {result.id}-{result.name}
                               </div>
                             );
-                          })):(
+                          })) : (
                             <div>No Match</div>
                           )}
                       </div>
@@ -262,15 +272,15 @@ const ItemPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading, man
                               <div
                                 key={result.id}
                                 value={result.id}
-                                className="hover:bg-sky-100 rounded-lg"
+                                className="hover:bg-sky-100 rounded-lg p-1"
                                 onClick={() => supplierResultClick(result.id)}
                               >
                                 {result.id}-{result.name}
                               </div>
                             );
-                          })) : ( 
-                            <div>No Match</div>
-                          )}
+                          })) : (
+                          <div>No Match</div>
+                        )}
                       </div>
                     )}
                   </div>

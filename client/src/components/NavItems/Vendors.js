@@ -38,7 +38,7 @@ function Vendors({ open }) {
     if (supplier.length > 0 && manufacturer.length > 0) {
       setIsLoading(false);
     }
-  }, [supplier, manufacturer])
+  }, [supplier, manufacturer]);
   //<------------------- Search functionality for manufacturer table--------------------------->
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -53,8 +53,8 @@ function Vendors({ open }) {
           typeof item[property] === "string"
             ? item[property].toLowerCase().includes(searchQuery.toLowerCase())
             : typeof item[property] === "number"
-              ? item[property].toString().includes(searchQuery)
-              : false
+            ? item[property].toString().includes(searchQuery)
+            : false
         );
       });
 
@@ -103,11 +103,11 @@ function Vendors({ open }) {
         return supplierPropertiesToSearch.some((property) =>
           typeof item[property] === "string"
             ? item[property]
-              .toLowerCase()
-              .includes(supplierSearchQuery.toLowerCase())
+                .toLowerCase()
+                .includes(supplierSearchQuery.toLowerCase())
             : typeof item[property] === "number"
-              ? item[property].toString().includes(supplierSearchQuery)
-              : false
+            ? item[property].toString().includes(supplierSearchQuery)
+            : false
         );
       });
 
@@ -117,15 +117,21 @@ function Vendors({ open }) {
 
   //<--------------------sort by functionality for supplier table-------------------->
 
-  const [supplierSortOrder, setSupplierSortOrder] = useState("asc");
+  //sort by functionality
+  const [supplierSortOrder, setSupplierSortOrder] = useState({
+    name: "asc",
+    contact: "asc",
+    address: "asc",
+  });
+
   const [supplierSortedColumn, setSupplierSortedColumn] = useState("");
 
-  const supplierSortData = (column) => {
-    var newSupplierSortOrder = "asc";
-    if (column === supplierSortedColumn) {
-      newSupplierSortOrder = supplierSortOrder === "asc" ? "desc" : "asc";
-    }
-    setSupplierSortOrder(newSupplierSortOrder);
+  const handleSort = (column) => {
+    setSupplierSortOrder((prevSortOrders) => ({
+      ...prevSortOrders,
+      [column]: prevSortOrders[column] === "asc" ? "desc" : "asc",
+    }));
+
     setSupplierSortedColumn(column);
 
     supplierFilteredData.sort((a, b) => {
@@ -135,13 +141,15 @@ function Vendors({ open }) {
         typeof b[column] === "string" ? b[column].toLowerCase() : b[column];
 
       if (valueA < valueB) {
-        return newSupplierSortOrder === "asc" ? -1 : 1;
+        return supplierSortOrder[column] === "asc" ? -1 : 1;
       }
       if (valueA > valueB) {
-        return newSupplierSortOrder === "asc" ? 1 : -1;
+        return supplierSortOrder[column] === "asc" ? 1 : -1;
       }
       return 0;
     });
+
+    setSupplierFilteredData(supplierFilteredData);
   };
 
   //<------End of fetching data from api for the page ------->
@@ -154,12 +162,11 @@ function Vendors({ open }) {
 
   useEffect(() => {
     if (!Cookies.get("token")) {
-      // navigate("/");
+      navigate("/");
     } else {
       getUser();
     }
   }, [Cookies.get("token")]);
-
 
   //<--------End of authentication of user for the page--------->
 
@@ -170,15 +177,13 @@ function Vendors({ open }) {
     }
   }
 
-
-
   return (
     <>
       {isLoading ? (
         <div className="flex flex-col justify-center items-center h-full duration-800 ">
           <span class="loader animate-bounce duration-800"></span>
           Loading
-        </div >
+        </div>
       ) : (
         <div className="overflow-x-hidden ">
           <div className={` flex-1 duration-300`}>
@@ -191,8 +196,9 @@ function Vendors({ open }) {
             className={` flex justify-center w-full duration-300 mt-10`}
           >
             <div
-              className={`flex ${open ? "gap-24" : "gap-36"
-                } gap-change  flex-wrap  justify-center duration-500`}
+              className={`flex ${
+                open ? "gap-24" : "gap-36"
+              } gap-change  flex-wrap justify-center duration-500`}
             >
               <div className="duration-500 rounded-lg">
                 <h1 className="text-center text-xl font-bold animate1">Manufacturer</h1>
@@ -240,8 +246,9 @@ function Vendors({ open }) {
                               <div className="flex">
                                 <div>Manufacturer Name</div>
                                 <span
-                                  className={`bi bi-arrow-${sortOrder === "asc" ? "up" : "down"
-                                    } ml-2`}
+                                  className={`bi bi-arrow-${
+                                    sortOrder === "asc" ? "up" : "down"
+                                  } ml-2`}
                                 />
                               </div>
                             </th>
@@ -295,6 +302,9 @@ function Vendors({ open }) {
                   <th scope="col" class=""></th>
                   <th scope="col" class=""></th>
                 </div>
+                <th scope="col" class=""></th>
+                <th scope="col" class=""></th>
+
                 <div
                   class="vendor-responsive animate2 sm:-mx-6 lg:-mx-8 overflow-hidden overflow-y-auto overflow-x-auto border-gray-700 rounded-2xl duration-500"
                   style={{
@@ -311,42 +321,57 @@ function Vendors({ open }) {
                               s.no
                             </th>
                             <th
-                              onClick={() => supplierSortData("name")}
+                              onClick={() => handleSort("name")}
                               scope="col"
                               class="px-6 py-3 cursor-pointer"
                             >
                               <div className="flex">
                                 <div>Name</div>
-                                <span
-                                  className={`bi bi-arrow-${supplierSortOrder === "asc" ? "up" : "down"
+                                {supplierSortedColumn === "name" && (
+                                  <i
+                                    className={`bi bi-arrow-${
+                                      supplierSortOrder.name === "asc"
+                                        ? "up"
+                                        : "down"
                                     } ml-2`}
-                                />
+                                  ></i>
+                                )}
                               </div>
                             </th>
                             <th
-                              onClick={() => supplierSortData("address")}
+                              onClick={() => handleSort("address")}
                               scope="col"
                               class="px-6 py-3 cursor-pointer"
                             >
                               <div className="flex">
                                 <div>Address</div>
-                                <span
-                                  className={`bi bi-arrow-${supplierSortOrder === "asc" ? "up" : "down"
+                                {supplierSortedColumn === "address" && (
+                                  <i
+                                    className={`bi bi-arrow-${
+                                      supplierSortOrder.address === "asc"
+                                        ? "up"
+                                        : "down"
                                     } ml-2`}
-                                />
+                                  ></i>
+                                )}
                               </div>
                             </th>
                             <th
-                              onClick={() => supplierSortData("contact")}
+                              onClick={() => handleSort("contact")}
                               scope="col"
                               class="px-6 py-3 cursor-pointer"
                             >
                               <div className="flex">
                                 <div>Contact</div>
-                                <span
-                                  className={`bi bi-arrow-${supplierSortOrder === "asc" ? "up" : "down"
+                                {supplierSortedColumn === "contact" && (
+                                  <i
+                                    className={`bi bi-arrow-${
+                                      supplierSortOrder.contact === "asc"
+                                        ? "up"
+                                        : "down"
                                     } ml-2`}
-                                />
+                                  ></i>
+                                )}
                               </div>
                             </th>
                           </tr>
