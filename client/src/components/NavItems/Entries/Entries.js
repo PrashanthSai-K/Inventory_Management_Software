@@ -11,6 +11,8 @@ import axios from "axios";
 
 function Entries() {
 
+  const navigate = useNavigate();
+
   const { getUser, user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,7 +46,7 @@ function Entries() {
 
   useEffect(() => {
     if (!Cookies.get("token")) {
-      // navigate("/");
+      navigate("/");
     } else {
       getUser();
       fetchItems();
@@ -137,8 +139,8 @@ function Entries() {
               setIsLoading={setIsLoading}
               item={item}
             />
-            {user.role === "slbincharge" && (
-              <>
+            {/* {user.role === "slbincharge" && (
+              <> */}
                 <div
                   onClick={() => {
                     setShowItem(true)
@@ -159,8 +161,8 @@ function Entries() {
                   supplier={supplier}
                   quantityUnits={quantityUnits}
                 />
-              </>
-            )}
+              {/* </>
+            )} */}
           </div>
         </div>
       )}
