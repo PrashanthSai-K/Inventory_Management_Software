@@ -19,13 +19,12 @@ function Master() {
 
   const fetchStockData = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/getAdminStockData"); // Replace '/api/data' with your API endpoint
+      const response = await axios.get("http://localhost:4000/api/getAdminStockData"); 
       setStockData(response.data);
     } catch (error) {
       console.error(error);
     }
   };
-
 
   useEffect(() => {
     if (!Cookies.get("token")) {
@@ -43,9 +42,6 @@ function Master() {
   }, [stockData]);
 
 
-
-
-
   return (
     <>
       {isLoading ? (
@@ -54,12 +50,12 @@ function Master() {
           Loading
         </div >
       ) : (
-        <div>
-          <h1 className="text-2xl font-semibold ">Master Page</h1>
+        <div className='h-full' style={{ backgroundColor: "#F4F4F4"  }}>
+          <h1 className="text-2xl font-semibold animate1 pt-12 pl-20">Master Page</h1>
           <div className="flex flex-col justify-center items-center gap-10 ">
             <center> <Cards /></center>
             <Table stockData={stockData} fetchStockData={fetchStockData} />
-          </div>
+          </div>  
         </div>
       )}
     </>

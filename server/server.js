@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.get("/api/", (req, res) => {
+    db.query("SELECT * FROM itemtable").then((res)=>console.log(res)).catch((err)=>console.log(err));
     res.send("Hello from backend");
 });
 
@@ -52,26 +53,28 @@ app.get("/api/getManufacturer", (req, res) => {
         .then((response) => res.send(response))
 });
 
-app.get("/getCategories", (req, res) => {
+app.get("/api/getCategories", (req, res) => {
     db.query("SELECT * FROM categories_view", (error, result) => {
+        console.log(result);
         res.send(result);
     });
 });
 
-app.get("/getInventory", (req, res) => {
-    db.query("SELECT CONCAT(UPPER(LEFT(DATE_FORMAT( created_at , '%b'), 3)), ' ', RIGHT(DATE_FORMAT(created_at, '%Y'), 2)) AS name , SUM(inventory_value) AS Cost FROM stocktable GROUP BY created_at", (error, result) => {
+app.get("/api/getInventory", (req, res) => {
+    db.query("SELECT * FROM inventory_view", (error, result) => {
         res.send(result);
     });
 });
 
-app.get("/getLabItem", (req, res) => {
+app.get("/api/getLabItem", (req, res) => {
     db.query("SELECT * FROM lab_item_view", (error, result) => {
+        
         res.send(result);
     });
 });
 
 
-app.get("/getItems", (req, res) => {
+app.get("/api/getItems", (req, res) => {
     db.query("SELECT * FROM itemtable", (error, result) => {
         if (error) console.log(error);
         else {
@@ -120,6 +123,35 @@ app.get("/api/getQuantityUnits", (req, res) => {
         }
     })
 })
+
+app.get("/api/getTotalStockValueData", (req, res) => {
+    db.query("SELECT SUM(stock) AS stock FROM items_stock_view", (error, result) => {
+        if (error) console.log(error);
+        else {
+            res.send(result);
+        }
+    })
+})
+
+app.get("/api/getTotalItemValueData", (req, res) => {
+    db.query("SELECT COUNT(name) AS name FROM items_stock_view", (error, result) => {
+        if (error) console.log(error);
+        else {
+            res.send(result);
+        }
+    })
+})
+
+app.get("/api/getTotalInventoryValueData", (req, res) => {
+    db.query("SELECT SUM(Cost) AS cost FROM inventory_view", (error, result) => {
+        if (error) console.log(error);
+        else {
+            res.send(result);
+        }
+    })
+})
+
+
 
 
 app.post("/api/getTransferData", getTransferData)

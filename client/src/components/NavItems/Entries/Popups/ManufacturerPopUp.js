@@ -42,7 +42,7 @@ const ManufacturerPopUp = ({ isVisible, onClose, setMessage, setError,setIsLoadi
       <div
       style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"center",margin:"15px"}}
       className="flex flex-col ">
-        <div className="bg-white px-10 py-5 overflow-x-auto overflow-y-auto border-gray-700 rounded-lg">
+        <div className="bg-white px-10 py-5 animate1 overflow-x-auto overflow-y-auto border-gray-700 rounded-lg">
           <div className="w-full text-end">
             <button
               className="text-black rounded-full border-2 border-black px-2 text-3xl"

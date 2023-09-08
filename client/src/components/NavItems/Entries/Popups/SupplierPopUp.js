@@ -43,7 +43,7 @@ const SupplierPopUp = ({ isVisible, onClose, setMessage, setError, setIsLoading 
        className="flex flex-col">
         <div
         style={{ height: "80%" }}
-          className="bg-white px-14 py-5 overflow-x-auto overflow-y-auto border-gray-700 rounded-lg"
+          className="bg-white px-14 py-5 animate1 overflow-x-auto overflow-y-auto border-gray-700 rounded-lg"
         >
           <div className="w-full text-end">
             <button

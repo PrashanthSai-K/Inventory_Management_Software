@@ -175,7 +175,7 @@ function Vendors({ open }) {
       setClick(true);
       setButtonClick(true);
     }
-  };
+  }
 
   return (
     <>
@@ -185,9 +185,9 @@ function Vendors({ open }) {
           Loading
         </div>
       ) : (
-        <div className="overflow-x-hidden">
+        <div className="overflow-x-hidden ">
           <div className={` flex-1 duration-300`}>
-            <h1 className="text-2xl font-semibold ">Vendors</h1>
+            <h1 className="text-2xl font-semibold pt-12 pl-20 animate1">Vendors</h1>
             <div className="flex flex-col justify-center items-center ">
               <Cards />
             </div>
@@ -201,10 +201,10 @@ function Vendors({ open }) {
               } gap-change  flex-wrap justify-center duration-500`}
             >
               <div className="duration-500 rounded-lg">
-                <h1 className="text-center text-xl font-bold">Manufacturer</h1>
+                <h1 className="text-center text-xl font-bold animate1">Manufacturer</h1>
                 <div className="input-field">
-                  <div className="flex my-5">
-                    <div className="h-auto">
+                  <div className="flex justify-center my-5">
+                    <div className="h-auto animate1">
                       <input
                         name="inputQuery"
                         type="text"
@@ -220,23 +220,20 @@ function Vendors({ open }) {
                     </div>
                     <div
                       onClick={() => setClick(true)}
-                      className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full flex justify-center items-center h-8 pb-1 w-8 ml-2 bg-white"
+                      className="focus:ring-4 shadow-lg animate1 transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full flex justify-center items-center h-8 pb-1 w-8 ml-2 bg-white"
                     >
                       <i className="text-black bi bi-search"></i>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="vendor-responsive sm:-mx-6  lg:-mx-8  overflow-y-auto rounded-2xl overflow-x-auto border-gray-700  duration-500"
-                  style={{
-                    width: open ? "420px" : "420px",
-                    maxHeight: "400px",
-                  }}
+                  class="vendor-responsive sm:-mx-6  lg:-mx-9 animate2 overflow-y-auto rounded-2xl overflow-x-auto border-gray-700  duration-500"
+                  style={{ width:"500px", maxHeight: "350px" }}
                 >
-                  <div class=" align-middle inline-block min-w-full ">
+                  <div class=" align-middle inline-block min-w-full  ">
                     <div class="shadow overflow-hidden sm:rounded-lg    ">
-                      <table class="min-w-full text-sm text-gray-400 rounded-lg">
-                        <thead class="bg-gray-800 text-xs uppercase font-medium">
+                      <table class="min-w-full text-sm rounded-lg">
+                        <thead style={{backgroundColor:"#0f6af2" , color:"white"}} class="text-xs uppercase font-medium">
                           <tr>
                             <th scope="col" class="px-6 py-3">
                               s.no
@@ -257,14 +254,14 @@ function Vendors({ open }) {
                             </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{backgroundColor:"white" , fontWeight:"bold"}}>
                           {filteredData.map((data, index) => {
                             return (
-                              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                              <tr class="bg-white">
                                 <td scope="row" class="px-6 py-4 ">
                                   {index + 1}
                                 </td>
-                                <td class="px-6 py-4  text-gray-900 whitespace-nowrap dark:text-white">
+                                <td class="px-6 py-4  text-gray-900 whitespace-nowrap">
                                   {data.name}
                                 </td>
                               </tr>
@@ -278,10 +275,10 @@ function Vendors({ open }) {
               </div>
 
               <div className="duration-500">
-                <h1 className="text-center text-xl font-bold">Supplier</h1>
+                <h1 className="text-center text-xl font-bold  animate1">Supplier</h1>
                 <div className="input-field">
-                  <div className="flex my-5">
-                    <div className="h-auto">
+                  <div className="flex justify-center my-5">
+                    <div className="h-auto animate1">
                       <input
                         name="inputQuery"
                         type="text"
@@ -297,7 +294,7 @@ function Vendors({ open }) {
                     </div>
                     <div
                       onClick={() => setButtonClick(true)}
-                      className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full flex justify-center items-center h-8 w-8 pb-1 ml-2 bg-white"
+                      className="focus:ring-4 animate1 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full flex justify-center items-center h-8 w-8 pb-1 ml-2 bg-white"
                     >
                       <i className="text-black bi bi-search"></i>
                     </div>
@@ -309,16 +306,16 @@ function Vendors({ open }) {
                 <th scope="col" class=""></th>
 
                 <div
-                  class="vendor-responsive sm:-mx-6 lg:-mx-8 overflow-hidden overflow-y-auto overflow-x-auto border-gray-700 rounded-2xl duration-500"
+                  class="vendor-responsive animate2 sm:-mx-6 lg:-mx-8 overflow-hidden overflow-y-auto overflow-x-auto border-gray-700 rounded-2xl duration-500"
                   style={{
-                    width: `${open ? "420px" : "420px"}`,
-                    maxHeight: "400px",
+                    width: "600px",
+                    maxHeight: "350px",
                   }}
                 >
-                  <div class=" align-middle inline-block min-w-full  ">
+                  <div class=" align-middle inline-block min-w-full ">
                     <div class="shadow overflow-hidden sm:rounded-lg">
-                      <table class="min-w-full text-sm text-gray-400 ">
-                        <thead class="bg-gray-800 text-xs uppercase font-medium">
+                      <table class="min-w-full text-sm ">
+                        <thead style={{backgroundColor:"#0f6af2" , color:"white"}} class="text-xs uppercase font-medium">
                           <tr>
                             <th scope="col" class="px-6 py-3">
                               s.no
@@ -379,14 +376,14 @@ function Vendors({ open }) {
                             </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{backgroundColor:"white" , fontWeight:"bold"}}>
                           {supplierFilteredData.map((data, index) => {
                             return (
-                              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                              <tr class="bg-white">
                                 <td class="px-6 py-4">{index + 1}</td>
                                 <td
                                   scope="row"
-                                  class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                                  class="px-6 py-4 text-gray-900 whitespace-nowrap"
                                 >
                                   {data.name}
                                 </td>

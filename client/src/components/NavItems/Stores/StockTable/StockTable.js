@@ -121,20 +121,6 @@ function StockTable({getStock , fetchGetStock, setMessage, setError, setIsLoadin
     }
   };
 
-  // async function HandleDelete(stock_id){
-  //   // e.preventDefault();
-  //   // console.log(item_code)
-  //   try {
-  //     const response = await axios.post("http://localhost:4000/stockdelete", {stock_id:stock_id});
-  //     // console.log();
-
-  //   } catch (error) {
-  //     console.log(error);
-  //     console.log("Error deleting item.");
-  //   }
-  //   // window.location.reload();
-  // };
-
   return (
     <div>
       <div
@@ -143,7 +129,7 @@ function StockTable({getStock , fetchGetStock, setMessage, setError, setIsLoadin
       >
         <div className="sub-titles text-2xl font-semibold">Stock Edit</div>
         <div className="flex input-field">
-          <div className="h-auto">
+          <div className="h-auto animate1">
             <input
               name="inputQuery"
               type="text"
@@ -159,20 +145,21 @@ function StockTable({getStock , fetchGetStock, setMessage, setError, setIsLoadin
           </div>
           <div
             onClick={() => setClick(true)}
-            className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
+            className="focus:ring-4 animate1 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
           >
             <i className="bi bi-search"></i>
           </div>
         </div>
       </div>
 
-      <div className="flex justify-center items-center flex-col">
+
+      <div className="flex justify-center items-center flex-col animate2">
         <div
           style={{ width: "90%", height: "30%", maxHeight: "300px" }}
-          class="relative rounded-2xl overflow-x-auto overflow-y-auto scrollbar-none"
+          class="relative rounded-2xl animate overflow-x-auto overflow-y-auto scrollbar-none"
         >
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
-            <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <thead style={{backgroundColor:"#0f6af2" , color:"white"}} class="text-sm uppercase">
               <tr>
                 <th
                   scope="col"
@@ -317,12 +304,12 @@ function StockTable({getStock , fetchGetStock, setMessage, setError, setIsLoadin
                 ></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{backgroundColor:"white" , fontWeight:"bold" ,color:"black"}}>
               {filteredData.map((data, index) => {
                 return (
                   <tr
                     key={data.id}
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                    class="bg-white"
                   >
                     <td scope="row" class="px-6 text-center py-4 ">
                       {index + 1}

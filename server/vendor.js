@@ -63,35 +63,51 @@ const itemAdd = async function (req, res, next) {
         }).then((response) => resolve(response))
     })
 
+    const selectResult4 = await new Promise((resolve, reject) => {
+        db.query("SELECT * FROM itemtable").catch((error) => {
+            res.status(400).json({ Data: "Some internal Error" });
+            reject(error);
+            return;
+        }).then((response) => resolve(response))
+    })
+
     let match1 = selectResult1.some((s) => s.id == manufacturerId);
     let match2 = selectResult2.some((s) => s.id == supplierId);
     let match3 = selectResult3.some((s) => s.name == unit);
+    let match4 = selectResult4.some((s) => s.item_name == itemName);
 
     if (match1 && match2 && match3 && cost > 0) {
-        db.query(
-            `INSERT INTO itemtable 
-                        (item_type, item_name, item_subname, item_description, cost_per_item, quantity_units, manufacturer_id, supplier_id) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-            [itemType, itemName, subName, description, cost, unit, manufacturerId, supplierId,]
-        ).then((response) => {
-            res.status(201).json({ Data: "Item added sucessfully" });
-        }).catch((error) => {
-            res.status(400).json({ Data: "Some internal error" });
-        });
+        if (match4) {
+            res.status(400).json({ Data: "Item name already exists" });
+        } else {
+            db.query(
+                `INSERT INTO itemtable 
+                            (item_type, item_name, item_subname, item_description, cost_per_item, quantity_units, manufacturer_id, supplier_id) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                [itemType, itemName, subName, description, cost, unit, manufacturerId, supplierId,]
+            ).then((response) => {
+                res.status(201).json({ Data: "Item added sucessfully" });
+            }).catch((error) => {
+                res.status(400).json({ Data: "Some internal error" });
+            });
+        }
+
     } else {
         res.status(400).json({ Data: "Enter data in correct format" });
     }
 }
 
 const stockAdd = async function (req, res, next) {
-    console.log("hiii....")
+
+    console.log("hiii....");
+    console.log(req.body);
     const item_code = req.body.itemcode;
     const manufacturerId = req.body.manufacturerId;
     const supplierId = req.body.supplierId;
     const stockQty = req.body.stock_qty;
     const inventoryValue = req.body.inventoryValue;
-    const userId = req.body.userId;
-    const labCode = req.body.labCode;
+    const userId = req.body.userId.toUpperCase();
+    const labCode = req.body.labCode.toUpperCase();
     const currDate = new Date();
 
     const selectResult = await new Promise((resolve, reject) => {
@@ -105,23 +121,63 @@ const stockAdd = async function (req, res, next) {
         })
     })
 
+    const selectResult2 = await new Promise((resolve, reject) => {
+        db.query("SELECT * FROM stocktable").catch((error) => {
+            console.log(error);
+            res.status(400).json({ Data: "Some internal Error" });
+            reject(error);
+            return;
+        }).then((response) => {
+            resolve(response);
+        })
+    })
+
+    const findResult = selectResult2.find((f) => f.item_code.toUpperCase() == item_code.toUpperCase() && f.dept_id.toUpperCase() == labCode);
+
+
     if (selectResult.some((s) => s.item_code == item_code) && stockQty > 0) {
-        db.query(
-            `INSERT INTO stocktable (item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id, created_at, dept_id) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-            [item_code, manufacturerId, supplierId, stockQty, inventoryValue, userId, currDate.toISOString().split("T")[0], labCode])
-            .then((response) => {
-                if (response.affectedRows > 0)
-                    res.status(201).json({ Data: "Stock Created Sucessfully" });
-                else
-                    res.status(400).json({ Data: "Data Not Inserted check for errors" });
-            }).catch((error) => {
-                console.log(error);
-                res.status(400).json({ Data: "Some internal error" })
-            });
+
+        if (labCode.toLowerCase() == req.body.user_dept_id.toLowerCase()) {
+            if (findResult) {
+                db.query("UPDATE stocktable SET stock_qty = ?, inventory_value = ?, user_id = ? WHERE stock_id = ?", [findResult.stock_qty + stockQty, findResult.inventory_value + inventoryValue, userId, findResult.stock_id])
+                    .then((response) => {
+                        if (response.affectedRows > 0) {
+                            res.status(201).json({ Data: "Stock value updated in existing data" });
+                        } else {
+                            res.status(400).json({ Data: "Data Not Inserted check for errors" });
+                        }
+                    })
+                    .catch((error) => res.status(400).json({ Data: "Some internal error" }));
+                return;
+            } else {
+                db.query(
+                    `INSERT INTO stocktable (item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id, created_at, dept_id) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [item_code, manufacturerId, supplierId, stockQty, inventoryValue, userId, currDate.toISOString().split("T")[0], labCode])
+                    .then((response) => {
+                        if (response.affectedRows > 0) {
+                            res.status(201).json({ Data: "Stock Created Sucessfully" });
+                            return;
+                        } else {
+                            res.status(400).json({ Data: "Data Not Inserted check for errors" });
+                            return;
+                        }
+                    }).catch((error) => {
+                        res.status(400).json({ Data: "Some internal error" });
+                        return;
+                    });
+                return;
+            }
+        } else {
+            res.status(400).json({ Data: "Unable to create stock, check for authority" });
+            return;
+        }
+
+
     } else {
         console.log("no match")
-        res.status(400).json({ Data: "Some internal Error" });
+        res.status(400).json({ Data: "Check for Itemname and stock quantity" });
+        return;
     }
 
 }

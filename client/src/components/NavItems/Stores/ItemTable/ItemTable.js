@@ -125,7 +125,7 @@ function ItemTable({itemData , fetchItemData, setMessage, setError}) {
 
   return (
     <div>
-      <div className="titles text-3xl font-semibold py-4 pl-10">
+      <div className="titles text-3xl font-semibold py-4 pl-10 animate1">
         Item & Stock Management
       </div>
       <div
@@ -134,7 +134,7 @@ function ItemTable({itemData , fetchItemData, setMessage, setError}) {
       >
         <div className="sub-titles text-2xl font-semibold">Item Edit</div>
         <div className="flex input-field">
-          <div className="h-auto">
+          <div className="h-auto animate1">
             <input
               name="inputQuery"
               type="text"
@@ -150,19 +150,19 @@ function ItemTable({itemData , fetchItemData, setMessage, setError}) {
           </div>
           <div
             onClick={() => setClick(true)}
-            className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
+            className="focus:ring-4 animate1 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
           >
             <i className="bi bi-search"></i>
           </div>
         </div>
       </div>
-      <div className=" justify-center items-center flex flex-col ">
+      <div className=" justify-center items-center flex flex-col animate1 ">
         <div
           style={{ width: "90%", height: "50%", maxHeight: "300px" }}
           className="table-design relative overflow-x-auto rounded-3xl overflow-y-auto scrollbar-thin scrollbar-none scrollbar-thumb-gray-400 scrollbar-track-gray-200"
         >
-          <table className="w-full text-sm text-left text-gray-500  dark:text-gray-400 rounded-3xl ">
-            <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-sm text-left rounded-3xl ">
+            <thead style={{backgroundColor:"#0f6af2" , color:"white"}} className="text-sm uppercase" >
               <tr>
                 <th
                   scope="col"
@@ -337,11 +337,11 @@ function ItemTable({itemData , fetchItemData, setMessage, setError}) {
                 {/* <th scope="col" className="px-6 py-3 text-left tracking-wider"></th> */}
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{backgroundColor:"white" , fontWeight:"bold"}}>
               {filteredData.map((data, index) => (
                 <tr
                   key={data.id}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                  className="bg-white"
                 >
                   <td scope="row" className="px-6 py-4 ">
                     {index + 1}

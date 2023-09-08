@@ -16,8 +16,6 @@ import {
 function Areachart({inventory}) {
 
 
-
-
     const [isCostFullScreen, setisCostFullScreen] = useState(false);
 
     const toggleCostFullScreen = () => {
@@ -26,14 +24,14 @@ function Areachart({inventory}) {
 
     return (
         <>
-            <div style={{ backgroundColor: "#F4F4F4" }}>
-                <center style={{ paddingTop: "20px" }}>
+            
+                <div className="flex justify-center">
                     <div
-                        className={` shadow-2xl p-10 bg-white rounded-2xl shadow ${isCostFullScreen ? 'fixed top-0 left-0 max-w z-50 full-screen' : 'max-w-7xl'
+                        className={` shadow-2xl p-10 bg-white rounded-2xl shadow ${isCostFullScreen ? 'fixed top-0 left-0 max-w z-50 full-screen' : ''
                             }`}
-                        style={{ width: isCostFullScreen ? '100%' : '100%', height: isCostFullScreen ? '100%' : '530px' }}
+                        style={{ width: isCostFullScreen ? '100%' : '100%', height: isCostFullScreen ? '100%' : '490px' }}
                     >
-                        <h4 style={{ fontFamily: 'Iceland', fontWeight: "bold", borderBottom: "1px solid gray", display: "flex", justifyContent: "space-between" }} className=" text-start text-3xl pb-2">Cost Overview <button className="spin" onClick={toggleCostFullScreen}><i class={`bi bi-arrows-${isCostFullScreen ? 'collapse' : 'fullscreen'}`}></i></button></h4>
+                        <h4 style={{ fontFamily: 'Iceland', fontWeight: "bold", borderBottom: "1px solid gray", display: "flex", justifyContent: "space-between" }} className=" text-start text-3xl pb-2">Cost Overview <button  className="spin icon" onClick={toggleCostFullScreen}><i class={`bi bi-arrows-${isCostFullScreen ? 'collapse' : 'fullscreen'}`}></i></button></h4>
                         <br />
 
                         <ResponsiveContainer width="100%" height="80%">
@@ -58,8 +56,7 @@ function Areachart({inventory}) {
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
-                </center>
-            </div>
+                </div>
         </>
     )
 

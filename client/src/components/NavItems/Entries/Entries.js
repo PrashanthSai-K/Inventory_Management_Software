@@ -25,6 +25,7 @@ function Entries() {
   const [manufacturer, setManufacturer] = useState([]);
   const [supplier, setSupplier] = useState([]);
   const [quantityUnits, setQuantityUnits] = useState([]);
+  
 
   async function fetchItems() {
     const response = await axios.get("http://localhost:4000/api/getItems");
@@ -84,7 +85,7 @@ function Entries() {
           Loading
         </div >
       ) : (
-        <div className="flex justify-center items-center">
+        <div style={{ backgroundColor: "#F4F4F4" }} className="flex h-full justify-center items-center">
           {message ? (
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded  fixed z-50 top-0 message" role="alert">
               <span class="block sm:inline">{message}</span>
@@ -96,13 +97,19 @@ function Entries() {
             </div>
           ) : null}
 
-          <div className="entries-gap-adjust flex mt-10 gap-36 w-full flex-wrap justify-center items-center ">
+          <div className="entries-gap-adjust animate1 flex mt-10 gap-36 w-full flex-wrap justify-center items-center ">
             <div
               onClick={() => setShowManufacturer(true)}
-              style={{ backgroundColor: "#080F34" }}
-              className="w-96 h-52 mx-4 rounded-3xl text-2xl hover:cursor-pointer text-white flex justify-center items-center"
+              className="w-96 h-52 mx-4 shadow-2xl bg-white rounded-3xl text-2xl animate hover:cursor-pointer text-black flex justify-center items-center"
             >
-              <div>Manufacturer Entry</div>
+
+              <img className="w-40" src="/images/manu.png" alt="" />
+              <div className="flex gap-2 flex-col">
+                <div className="text-lg font-bold">Manufacturer Entry</div>
+                <div style={{ color: "#5e9ff2" }} className="text-sm w-44 break-words ">Streamline Manufacturer Data Entry Process.</div>
+
+
+              </div>
             </div>
             <ManufacturerPopUp
               isVisible={showManufacturer}
@@ -113,10 +120,13 @@ function Entries() {
             />
             <div
               onClick={() => setShowSupplier(true)}
-              style={{ backgroundColor: "#080F34" }}
-              className="w-96 h-52 mx-4 rounded-3xl text-2xl  hover:cursor-pointer flex text-white justify-center items-center"
+              className="w-96 h-52 mx-4 shadow-2xl animate1 bg-white rounded-3xl text-2xl  hover:cursor-pointer animate flex text-black justify-center items-center"
             >
-              <div>Supplier Entry</div>
+              <img className="w-40" src="/images/supplierentry.png" alt="" />
+              <div className="flex gap-2 flex-col">
+                <div className="text-lg font-bold">Supplier Entry</div>
+                <div style={{ color: "#5e9ff2" }} className="text-sm w-44 break-words ">Efficient Supplier Data Entry Process.</div>
+              </div>
             </div>
             <SupplierPopUp
               isVisible={showSupplier}
@@ -125,12 +135,45 @@ function Entries() {
               setError={setError}
               setIsLoading={setIsLoading}
             />
+
+            {/* {user.role === "slbincharge" && (
+              <> */}
+            <div
+              onClick={() => {
+                setShowItem(true)
+              }}
+              className="w-96 h-52 mx-4 shadow-2xl bg-white animate2 rounded-3xl flex text-2xl animate hover:cursor-pointer text-black justify-center items-center "
+            >
+              <img className="w-36" src="/images/item.png" alt="" />
+              <div className="pl-2 flex gap-2 flex-col">
+                <div className="text-lg font-bold">Item Entry</div>
+                <div style={{ color: "#5e9ff2" }} className="text-sm w-40 break-words ">Optimize Item Data Entry Process. </div>
+              </div>
+            </div>
+            <ItemPopUp
+              isVisible={showItem}
+              user={user}
+              setMessage={setMessage}
+              setError={setError}
+              onClose={() => setShowItem(false)}
+              setIsLoading={setIsLoading}
+              manufacturer={manufacturer}
+              supplier={supplier}
+              quantityUnits={quantityUnits}
+            />
+            {/* </>
+            )} */}
+
+
             <div
               onClick={() => setShowStock(true)}
-              style={{ backgroundColor: "#080F34" }}
-              className="w-96 h-52 mx-4 rounded-3xl text-2xl  hover:cursor-pointer flex text-white justify-center items-center"
+              className="w-96 h-52 mx-4  shadow-2xl bg-white  animate2 rounded-3xl text-2xl animate hover:cursor-pointer flex text-black justify-center items-center"
             >
-              <div> Stock Entry</div>
+              <img className="w-40" src="/images/stockentry.png" alt="" />
+              <div className="flex gap-2 flex-col pl-2">
+                <div className="text-lg font-bold">Stock Entry</div>
+                <div style={{ color: "#5e9ff2" }} className="text-sm w-40 break-words ">Simplify Stock Data Entry Process. </div>
+              </div>
             </div>
             <StockPopUp
               isVisible={showStock}
@@ -141,30 +184,6 @@ function Entries() {
               setIsLoading={setIsLoading}
               item={item}
             />
-            {/* {user.role === "slbincharge" && (
-              <> */}
-                <div
-                  onClick={() => {
-                    setShowItem(true)
-                  }}
-                  style={{ backgroundColor: "#080F34" }}
-                  className="w-96 h-52 mx-4 rounded-3xl flex text-2xl  hover:cursor-pointer text-white justify-center items-center "
-                >
-                  <div>Item Entry</div>
-                </div>
-                <ItemPopUp
-                  isVisible={showItem}
-                  user={user}
-                  setMessage={setMessage}
-                  setError={setError}
-                  onClose={() => setShowItem(false)}
-                  setIsLoading={setIsLoading}
-                  manufacturer={manufacturer}
-                  supplier={supplier}
-                  quantityUnits={quantityUnits}
-                />
-              {/* </>
-            )} */}
           </div>
         </div>
       )}

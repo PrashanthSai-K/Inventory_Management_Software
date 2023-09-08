@@ -20,36 +20,77 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoadi
   };
 
   const HandleSubmit = async (e) => {
-    try {
-      setIsLoading(true);
-      e.preventDefault();
-      const result = item.filter((items) => {
-        if (items.item_code == data.itemcode) return items;
-      });
-      if (result.length > 0) {
-        data.manufacturerId = result[0].manufacturer_id;
-        data.supplierId = result[0].supplier_id;
-        data.inventoryValue = result[0].cost_per_item * data.stock_qty;
-
-        const response = await axios.post("http://localhost:4000/api/stockAdd", data);
-        console.log("response : ", response)
-        if (response && response.status == 201) {
-          setMessage(response.data.Data);
+    if (window.confirm("Are you sure want to add stock?")) {
+      try {
+        setIsLoading(true);
+        e.preventDefault();
+        const result = item.filter((items) => {
+          if (items.item_code == data.itemcode) return items;
+        });
+        if (result.length > 0) {
+          data.manufacturerId = result[0].manufacturer_id;
+          data.supplierId = result[0].supplier_id;
+          data.inventoryValue = result[0].cost_per_item * data.stock_qty;
+          data.userId = user.user_id;
+          const response = await axios.post("http://localhost:4000/api/stockAdd", { ...data, user_dept_id: user.dept_code });
+          console.log("response : ", response)
+          if (response && response.status == 201) {
+            setMessage(response.data.Data);
+            setData({
+              itemcode: "",
+              stock_qty: "",
+              manufacturerId: "",
+              supplierId: "",
+              inventoryValue: "",
+              userId: "",
+              labCode: "",
+            })
+            setIsLoading(false);
+            onClose();
+          }
+        } else {
+          setError("Enter Valid item name");
+          setData({
+            itemcode: "",
+            stock_qty: "",
+            manufacturerId: "",
+            supplierId: "",
+            inventoryValue: "",
+            userId: "",
+            labCode: "",
+          });
           setIsLoading(false);
           onClose();
         }
-      } else {
-        setError("Enter Valid item name");
-        setIsLoading(false);
-        onClose();
+      } catch (error) {
+        if (error && error.response.status == 400) {
+          setError(error.response.data.Data);
+          setData({
+            itemcode: "",
+            stock_qty: "",
+            manufacturerId: "",
+            supplierId: "",
+            inventoryValue: "",
+            userId: "",
+            labCode: "",
+          })
+          setIsLoading(false);
+          onClose();
+        }
+        console.log(error);
       }
-    } catch (error) {
-      if (error && error.response.status == 400) {
-        setError(error.response.data.Data);
-        setIsLoading(false);
-        onClose();
-      }
-      console.log(error);
+    }else {
+      setIsLoading(false);
+      setData({
+        itemcode: "",
+        stock_qty: "",
+        manufacturerId: "",
+        supplierId: "",
+        inventoryValue: "",
+        userId: "",
+        labCode: "",
+      })
+      onClose();
     }
   };
 
@@ -95,7 +136,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoadi
        className="flex flex-col">
         <div
           style={{ height: "80%" }}
-          className="bg-white w-full px-14 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
+          className="bg-white w-full px-14 py-5 animate1 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
         >
           <button
             className="text-black rounded-full border-black border-2 px-2 text-3xl place-self-end"
@@ -130,7 +171,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoadi
                     className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                   >
-                    {itemResult && itemResult.length > 0 ?(
+                    {itemResult && itemResult.length > 0 ? (
                       itemResult.slice(0, 4).map((result) => {
                         return (
                           <div
@@ -142,9 +183,9 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoadi
                             {result.item_code}-{result.item_name}
                           </div>
                         );
-                      })):(
-                        <div>No Match</div>
-                      )}
+                      })) : (
+                      <div>No Match</div>
+                    )}
                   </div>
                 )}
               </div>

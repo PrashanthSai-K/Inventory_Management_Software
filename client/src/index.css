@@ -10,7 +10,17 @@
 
 * {
   font-family: "Poppins";
+  
 }
+
+.animate1{
+  animation: reloadAnimation 1s ease;
+}
+.animate2{
+  animation: reloadAnimation 2s ease;
+}
+
+
 
 ::-webkit-scrollbar {
   width: 5px;
@@ -188,6 +198,79 @@ input::-webkit-inner-spin-button {
   }
 }
 
+@media (max-width:1000px) {
+  .twochart{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .icon{
+    display: none;
+  }
+  .pie{
+    width: 80% !important;
+    
+  }
+  .bar{
+    width: 80% !important;
+    padding-bottom: 6%;
+  }
+
+}
+
+
+@media (max-width:1000px) {
+
+
+  .area{
+    padding-left: 50px;
+  }
+
+  .barh
+  {
+    height: 400px;
+  }
+
+  .pieh{
+    height: 400px;
+  }
+
+}
+
+@media (max-width:800px) {
+
+
+  .area{
+    transform: scale(0.9);
+  }
+  .bar{
+    transform: scale(0.9);
+  }
+  .pie{
+    transform: scale(0.9);
+  }
+
+
+}
+@media (max-width:600px) {
+
+
+  .area{
+    padding: 0;
+    width: 100% !important;
+  }
+  .bar{
+    padding: 0;
+    width: 100% !important;
+  }
+  .pie{
+    padding: 0;
+    width: 100% !important;
+  }
+
+
+}
+
 .loader {
   transform: rotateZ(45deg);
   perspective: 1000px;
@@ -314,4 +397,22 @@ input::-webkit-inner-spin-button {
 button:hover {
   transform: scale(.9);
   transition: all .2s ease-in-out;
+}
+
+@keyframes reloadAnimation {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+tbody tr:nth-child(even) {
+  background-color: #cddff7;
 }

@@ -47,7 +47,7 @@ function Piechart({labitem}) {
     };
 
     const innerRadius = isItemFullScreen ? 230 : 100;
-    const outerRadius = isItemFullScreen ? 300 : 130;
+    const outerRadius = isItemFullScreen ? 280 : 130;
 
     const renderActiveShape = (props) => {
         const RADIAN = Math.PI / 180;
@@ -134,14 +134,14 @@ function Piechart({labitem}) {
 
     return (
         <>
-            <div style={{ backgroundColor: "#F4F4F4" , width:"570px"}}>
+            <div className="pie animate2" style={{ backgroundColor: "#F4F4F4" ,width:"40%"}}>
                 <div>
                     <div
-                        className={` shadow-2xl p-10 bg-white rounded-2xl shadow ${isItemFullScreen ? 'fixed top-0 left-0 max-w z-50 full-screen' : 'max-w-xl'
+                        className={` pieh shadow-2xl p-10 bg-white rounded-2xl shadow ${isItemFullScreen ? 'fixed top-0 left-0 max-w z-50 full-screen' : ''
                             }`}
-                        style={{ width: isItemFullScreen ? '100%' : '100%', height: isItemFullScreen ? '100%' : '530px' }}
+                        style={{ width: isItemFullScreen ? '100%' : '100%', height: isItemFullScreen ? '100%' : '500px' }}
                     >
-                        <h4 style={{ fontFamily: 'Iceland', fontWeight: "bold", borderBottom: "1px solid gray", display: "flex", justifyContent: "space-between" }} className="text-start text-3xl pb-2">Item Analysis <button onClick={toggleItemFullScreen}><i class={`bi bi-arrows-${isItemFullScreen ? 'collapse' : 'fullscreen'}`}></i></button></h4>
+                        <h4 style={{ fontFamily: 'Iceland', fontWeight: "bold", borderBottom: "1px solid gray", display: "flex", justifyContent: "space-between" }} className="text-start text-3xl pb-2">Item Analysis <button className="icon" onClick={toggleItemFullScreen}><i class={`bi bi-arrows-${isItemFullScreen ? 'collapse' : 'fullscreen'}`}></i></button></h4>
 
                         <ResponsiveContainer width="100%" height="100%">
                             <PieChart width={400} height={400}>

@@ -65,7 +65,7 @@ const TransferCard = ({ data, user, setMessage, setError }) => {
           <span class="loader"></span>
         </div >
       ) : (
-        <div className="card">
+        <div className="card animate2">
           <div className="p-3 flex items-center justify-between">
             <div>
               <div className="lg:text-lg">Requested By : {toSentenceCase(data.username)}</div>

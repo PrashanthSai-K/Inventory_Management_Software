@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import TransferPopup from "./TransferPopup";
 import TransferCard from "./TransferCard";
-import TrackTransfer from "./TrackTransfer";
+import TrackTransfer from "./Track/TrackTransfer.js";
 
 
 const Transfer = () => {
@@ -101,11 +101,7 @@ const Transfer = () => {
       {isLoading ? (
         <div className="flex justify-center items-center h-full"><span class="loader"></span></div>
       ) : (
-        <div className="bg-white  overflow-x-auto overflow-y-auto border-gray-700 rounded-lg w-full">
-          <div className="flex justify-between w-full">
-            <div>{user.user_id}</div>
-            <div>{user.dept_code}</div>
-          </div>
+        <div style={{ backgroundColor: "#F4F4F4" }} className="bg-white h-full  animate overflow-x-auto overflow-y-auto border-gray-700 rounded-lg w-full">
           <div className="p-8">
             {message ? (
               <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded  fixed z-50 top-0 message" role="alert">
@@ -118,23 +114,23 @@ const Transfer = () => {
               </div>
             ) : null}
             <div className="flex flex-wrap gap-5 items-center justify-between	pt-4">
-              <div className="text-2xl whitespace-nowrap">Transfer Items :</div>
+              <div className="text-2xl whitespace-nowrap animate1">Transfer Items :</div>
               <div className="flex flex-wrap gap-5">
                 <div
-                  className="bg-blue-500 whitespace-nowrap hover:bg-blue-700 text-white text-sm h-10 py-2 px-4 rounded w-42"
+                  className="bg-blue-500 animate1 whitespace-nowrap hover:bg-blue-700 text-white text-sm h-10 py-2 px-4 rounded w-42"
                   onClick={() => setTrackTransfer(true)}
                 >
                   Track Your Request
                 </div>
                 <div
-                  className="bg-blue-500 whitespace-nowrap hover:bg-blue-700 text-white h-10 text-sm  py-2 px-6 rounded w-42"
+                  className="bg-blue-500 animate1  whitespace-nowrap hover:bg-blue-700 text-white h-10 text-sm  py-2 px-6 rounded w-42"
                   onClick={() => setTransferPopup(true)}
                 >
                   Request Transfer
                 </div>
               </div>
             </div>
-            <div className="pt-8 flex flex-col gap-10">
+            <div className="pt-8 flex flex-col gap-10 animate1">
               Pending request:
               {noData ? <div>No Data</div> : (
                 transferData && transferData.map((data) =>

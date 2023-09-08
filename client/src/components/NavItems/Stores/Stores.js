@@ -31,6 +31,7 @@ function Stores() {
       .catch((error) => console.log(error));
     setGetStock(response.data);
   }
+  
   useEffect(() => {
     fetchGetStock();
     fetchItemData();
@@ -61,7 +62,8 @@ function Stores() {
         </div >
       ) : (
         <div
-          className={`overflow-x-hidden gap-6 justify-center  duration-300 `}
+          className={`overflow-x-hidden gap-6 h-full justify-center  duration-300 `}
+          style={{ backgroundColor: "#F4F4F4" }}
         >
           {/* <--------------Message & Error Showing function -------------> */}
 

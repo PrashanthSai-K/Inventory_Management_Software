@@ -18,8 +18,7 @@ import {
 
 
 
-function Barchart({categories ,open , setOpen }) {
-
+function Barchart({ open , setOpen ,categories}) {
 
 
 
@@ -36,14 +35,13 @@ function Barchart({categories ,open , setOpen }) {
 
     return (
         <>
-            <div style={{ backgroundColor: "#F4F4F4" , width: !open ? "650px" : "550px"}} >
-                <div>
+            <div className="bar animate2" style={{ backgroundColor: "#F4F4F4" , width:"44%"}} >
                     <div
-                        className={`shadow-2xl p-10 bg-white rounded-2xl shadow ${isStockFullScreen ? 'fixed top-0 left-0 max-w z-50 full-screen  ' : 'max-w-2xl'
+                        className={` barh shadow-2xl p-10 bg-white rounded-2xl  shadow ${isStockFullScreen ? 'fixed top-0 left-0  z-50 full-screen  ' : ''
                             }`}
                         style={{
                             width: isStockFullScreen ? '100%' : '100%',
-                            height: isStockFullScreen ? '100%' : '530px',
+                            height: isStockFullScreen ? '100%' : '500px',
 
                         }}
                     >
@@ -57,8 +55,8 @@ function Barchart({categories ,open , setOpen }) {
                             }}
                             className="text-start text-3xl pb-2"
                         >
-                            Stock Analysis{' '}
-                            <button onClick={toggleStockFullScreen}>
+                            Stock Analysis
+                            <button className="icon " onClick={toggleStockFullScreen}>
                                 <i
                                     className={`bi bi-arrows-${isStockFullScreen ? 'collapse' : 'fullscreen'
                                         }`}
@@ -106,7 +104,6 @@ function Barchart({categories ,open , setOpen }) {
                         </ResponsiveContainer>
                     </div>
                 </div>
-            </div>
     </>
   )
 }
