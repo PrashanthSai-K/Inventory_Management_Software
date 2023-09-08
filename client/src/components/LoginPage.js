@@ -56,7 +56,7 @@ function LoginPage() {
                 <input
                   type="text"
                   className="peer text-lg block min-h-[auto] w-full border-b-2 border-black border-0  bg-transparent px-1 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-black [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                  required
+                 
                   id="exampleFormControlInput2"
                   placeholder="Email address"
                 />
@@ -72,7 +72,7 @@ function LoginPage() {
                 <input
                   type="password"
                   className="peer block min-h-[auto] text-lg w-full border-0  border-b-2 border-black  bg-transparent px-1 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-black [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                  required
+                 
                   id="exampleFormControlInput22"
                   placeholder="Password"
                 />

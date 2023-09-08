@@ -21,7 +21,7 @@ function StockEdit({ data, onClose, onSubmit }) {
     }
   }, [data]);
 
-  console.log(formData);
+  // console.log(formData);
 
   const handleChange = (e) => {
     e.preventDefault();

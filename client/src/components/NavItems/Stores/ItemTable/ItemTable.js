@@ -3,13 +3,12 @@ import ItemPopup from "./ItemPopup";
 import { useState, useEffect } from "react";
 import ItemEdit from "./ItemEdit";
 
-function ItemTable({itemData , fetchItemData}) {
+function ItemTable({ itemData, fetchItemData }) {
   //For open popup
 
   // console.log(itemData);
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
-  
 
   const handleOpenPopup = (data) => {
     setSelectedData(data);
@@ -46,6 +45,7 @@ function ItemTable({itemData , fetchItemData}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [click, setClick] = useState(false);
+ 
 
   useEffect(() => {
     if (click || searchQuery == "") {
@@ -75,87 +75,87 @@ function ItemTable({itemData , fetchItemData}) {
   }, [click, itemData, searchQuery]);
 
   //sort by functionality
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortOrders, setSortOrders] = useState({
+    item_code: "asc",
+    item_type: "asc",
+    item_name: "asc",
+    item_subname: "asc",
+    item_description: "asc",
+    manufacturer_id: "asc",
+    quantity_units: "asc",
+    supplier_id: "asc",
+    cost_per_item: "asc",
+  });
+  
   const [sortedColumn, setSortedColumn] = useState("");
 
-  const sortData = (column) => {
-    let newSortOrder = "asc";
-    if (column === sortedColumn) {
-      newSortOrder = sortOrder === "asc" ? "desc" : "asc";
-    }
-    setSortOrder(newSortOrder);
+  const handleSort = (column) => {
+    setSortOrders((prevSortOrders) => ({
+      ...prevSortOrders,
+      [column]: prevSortOrders[column] === "asc" ? "desc" : "asc",
+    }));
+
     setSortedColumn(column);
 
-    filteredData.sort((a, b) => { 
-      console.log(sortOrder);
+    filteredData.sort((a, b) => {
       const valueA =
         typeof a[column] === "string" ? a[column].toLowerCase() : a[column];
       const valueB =
         typeof b[column] === "string" ? b[column].toLowerCase() : b[column];
 
       if (valueA < valueB) {
-        console.log(sortOrder);
-        return newSortOrder === "asc" ? -1 : 1;
+        return sortOrders[column] === "asc" ? -1 : 1;
       }
       if (valueA > valueB) {
-        console.log(sortOrder); 
-        return newSortOrder === "asc" ? 1 : -1;
+        return sortOrders[column] === "asc" ? 1 : -1;
       }
       return 0;
     });
+
+    setFilteredData(filteredData);
   };
 
   // <-------------------------------search bar enter function---------------------------->
 
   const handleKeyEnter = (e) => {
-    if(e.key === "Enter") {
+    if (e.key === "Enter") {
       setClick(true);
     }
   };
 
-  // async function HandleDelete(item_code){
-  //   // e.preventDefault();
-  //   // console.log(item_code)
-  //   try {
-  //     const response = await axios.post("http://localhost:4000/itemdelete", {item_code:item_code});
-  //     // console.log();
-
-  //   } catch (error) {
-  //     console.log(error);
-  //     console.log("Error deleting item.");
-  //   }
-  //   // window.location.reload();
-  // };
-// console.log(click);
   return (
     <div>
       <div className="titles text-3xl font-semibold py-4 pl-10">
         Item & Stock Management
       </div>
-        <div style={{width:"90%"}} className="flex ml-20 h-auto mt-5 mb-5 justify-between font-semibold">
-          <div className="sub-titles text-2xl font-semibold">Item Edit</div>
-          <div className="flex input-field">
-            <div className="h-auto">
-              <input
-                name="inputQuery"
-                type="text"
-                value={searchQuery}
-                onKeyDown={handleKeyEnter}
-                onChange={(e) => {
-                  setClick(false);
-                  setSearchQuery(e.target.value)}}
-                placeholder="Search..."
-                className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black"
-              />
-            </div>
-            <div  
-              onClick={() => setClick(true)}
-              className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
-            >
-              <i className="bi bi-search"></i>
-            </div>
+      <div
+        style={{ width: "90%" }}
+        className="flex ml-20 h-auto mt-5 mb-5 justify-between font-semibold"
+      >
+        <div className="sub-titles text-2xl font-semibold">Item Edit</div>
+        <div className="flex input-field">
+          <div className="h-auto">
+            <input
+              name="inputQuery"
+              type="text"
+              value={searchQuery}
+              onKeyDown={handleKeyEnter}
+              onChange={(e) => {
+                setClick(false);
+                setSearchQuery(e.target.value);
+              }}
+              placeholder="Search..."
+              className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black"
+            />
+          </div>
+          <div
+            onClick={() => setClick(true)}
+            className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
+          >
+            <i className="bi bi-search"></i>
           </div>
         </div>
+      </div>
       <div className=" justify-center items-center flex flex-col ">
         <div
           style={{ width: "90%", height: "50%", maxHeight: "300px" }}
@@ -171,57 +171,138 @@ function ItemTable({itemData , fetchItemData}) {
                   S.No
                 </th>
                 <th
+                  onClick={() => handleSort("item_code")}
                   scope="col"
                   className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                 >
                   <div className="flex">
-                    <div onClick={() => sortData("item_code")}>Item Code</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
+                    <div>Item Code</div>
+                    {sortedColumn === "item_code" && (
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrders.item_code === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                   </div>
                 </th>
                 <th
+                  onClick={() => handleSort("item_type")}
                   scope="col"
                   className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                 >
                   <div className="flex">
-                    <div onClick={() => sortData("item_type")}>Item Type</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
+                    <div>Item Type</div>
+                    {sortedColumn === "item_type" && (
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrders.item_type === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                   </div>
                 </th>
                 <th
+                  onClick={() => handleSort("item_name")}
                   scope="col"
                   className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                 >
                   <div className="flex">
-                    <div onClick={() => sortData("item_name")}>Item Name</div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
+                    <div>Item Name</div>
+                    {sortedColumn === "item_name" && (
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrders.item_name === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                   </div>
                 </th>
                 <th
+                  onClick={() => handleSort("item_subname")}
                   scope="col"
                   className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                 >
                   <div className="flex">
-                    <div onClick={() => sortData("item_subname")}>
-                      Item Subname
+                    <div>Item Subname</div>
+                    {sortedColumn === "item_subname" && (
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrders.item_subname === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
+                  </div>
+                </th>
+                <th
+                  onClick={() => handleSort("item_description")}
+                  scope="col"
+                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                >
+                  <div className="flex">
+                    <div>Item Description</div>
+
+                    <div>
+                      {sortedColumn === "item_description" && (
+                        <i
+                          className={`bi bi-arrow-${
+                            sortOrders.item_description === "asc"
+                              ? "up"
+                              : "down"
+                          } ml-2`}
+                        ></i>
+                      )}
                     </div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
+                  </div>
+                </th>
+                <th
+                  onClick={() => handleSort("manufacturer_id")}
+                  scope="col"
+                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                >
+                  <div className="flex">
+                    <div>Manufacturer Id</div>
+                    {sortedColumn === "manufacturer_id" && (
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrders.manufacturer_id === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
+                  </div>
+                </th>
+                <th
+                  onClick={() => handleSort("quantity_units")}
+                  scope="col"
+                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                >
+                  <div className="flex">
+                    <div>Quantity Units</div>
+                    {sortedColumn === "quantity_units" && (
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrders.quantity_units === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
+                  </div>
+                </th>
+                <th
+                  onClick={() => {
+                    handleSort("supplier_id");
+                  }}
+                  scope="col"
+                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                >
+                  <div className="flex">
+                    <div>Supplier Id</div>
+                    {sortedColumn === "supplier_id" && (
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrders.supplier_id === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                   </div>
                 </th>
                 <th
@@ -229,74 +310,20 @@ function ItemTable({itemData , fetchItemData}) {
                   className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                 >
                   <div className="flex">
-                    <div onClick={() => sortData("item_description")}>
-                      Item Description
-                    </div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div onClick={() => sortData("manufacturer_id")}>
-                      Manufacturer Id
-                    </div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div onClick={() => sortData("quantity_units")}>
-                      Quantity Units
-                    </div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div onClick={() => sortData("supplier_id")}>
-                      Supplier Id
-                    </div>
-                    <span
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    />
-                  </div>
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                >
-                  <div className="flex">
-                    <div onClick={() => sortData("cost_per_item")}>
+                    <div
+                      onClick={() => {
+                        handleSort("cost_per_item");
+                      }}
+                    >
                       Cost Per Item
                     </div>
-                    <div
-                      className={`bi bi-arrow-${
-                        sortOrder === "asc" ? "up" : "down"
-                      } ml-2`}
-                    ></div>
+                    {sortedColumn === "cost_per_item" && (
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrders.cost_per_item === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                   </div>
                 </th>
                 <th

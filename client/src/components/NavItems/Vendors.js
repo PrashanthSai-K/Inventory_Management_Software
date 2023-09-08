@@ -34,11 +34,11 @@ function Vendors({ open }) {
     fetchSupplier();
   }, []);
 
-  useEffect(()=>{
-    if(supplier.length > 0 && manufacturer.length > 0){
+  useEffect(() => {
+    if (supplier.length > 0 && manufacturer.length > 0) {
       setIsLoading(false);
     }
-  }, [supplier, manufacturer])
+  }, [supplier, manufacturer]);
   //<------------------- Search functionality for manufacturer table--------------------------->
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -117,15 +117,21 @@ function Vendors({ open }) {
 
   //<--------------------sort by functionality for supplier table-------------------->
 
-  const [supplierSortOrder, setSupplierSortOrder] = useState("asc");
+   //sort by functionality
+   const [supplierSortOrder, setSupplierSortOrder] = useState({
+    name : "asc",
+    contact : "asc",
+    address : "asc",
+  });
+  
   const [supplierSortedColumn, setSupplierSortedColumn] = useState("");
 
-  const supplierSortData = (column) => {
-    var newSupplierSortOrder = "asc";
-    if (column === supplierSortedColumn) {
-      newSupplierSortOrder = supplierSortOrder === "asc" ? "desc" : "asc";
-    }
-    setSupplierSortOrder(newSupplierSortOrder);
+  const handleSort = (column) => {
+    setSupplierSortOrder((prevSortOrders) => ({
+      ...prevSortOrders,
+      [column]: prevSortOrders[column] === "asc" ? "desc" : "asc",
+    }));
+
     setSupplierSortedColumn(column);
 
     supplierFilteredData.sort((a, b) => {
@@ -135,15 +141,18 @@ function Vendors({ open }) {
         typeof b[column] === "string" ? b[column].toLowerCase() : b[column];
 
       if (valueA < valueB) {
-        return newSupplierSortOrder === "asc" ? -1 : 1;
+        return supplierSortOrder[column] === "asc" ? -1 : 1;
       }
       if (valueA > valueB) {
-        return newSupplierSortOrder === "asc" ? 1 : -1;
+        return supplierSortOrder[column] === "asc" ? 1 : -1;
       }
       return 0;
     });
+
+    setSupplierFilteredData(supplierFilteredData);
   };
 
+  
   //<------End of fetching data from api for the page ------->
 
   //<---------Authentication of user for the page----------->
@@ -160,16 +169,14 @@ function Vendors({ open }) {
     }
   }, [Cookies.get("token")]);
 
-
   //<--------End of authentication of user for the page--------->
 
-  const handleKeyEnter= (e)=>{
-    if(e.key==="Enter"){
+  const handleKeyEnter = (e) => {
+    if (e.key === "Enter") {
       setClick(true);
       setButtonClick(true);
     }
-  }
-
+  };
 
   return (
     <>
@@ -306,45 +313,51 @@ function Vendors({ open }) {
                             s.no
                           </th>
                           <th
-                            onClick={() => supplierSortData("name")}
+                            onClick={() => handleSort("name")}
                             scope="col"
                             class="px-6 py-3 cursor-pointer"
                           >
                             <div className="flex">
                               <div>Name</div>
-                              <span
-                                className={`bi bi-arrow-${
-                                  supplierSortOrder === "asc" ? "up" : "down"
-                                } ml-2`}
-                              />
+                              {supplierSortedColumn === "name" && (
+                                <i
+                                  className={`bi bi-arrow-${
+                                    supplierSortOrder.name === "asc" ? "up" : "down"
+                                  } ml-2`}
+                                ></i>
+                              )}
                             </div>
                           </th>
                           <th
-                            onClick={() => supplierSortData("address")}
+                            onClick={() => handleSort("address")}
                             scope="col"
                             class="px-6 py-3 cursor-pointer"
                           >
                             <div className="flex">
                               <div>Address</div>
-                              <span
-                                className={`bi bi-arrow-${
-                                  supplierSortOrder === "asc" ? "up" : "down"
-                                } ml-2`}
-                              />
+                              {supplierSortedColumn === "address"  && (
+                                <i
+                                  className={`bi bi-arrow-${
+                                    supplierSortOrder.address === "asc" ? "up" : "down"
+                                  } ml-2`}
+                                ></i>
+                              )}
                             </div>
                           </th>
                           <th
-                            onClick={() => supplierSortData("contact")}
+                            onClick={() => handleSort("contact")}
                             scope="col"
                             class="px-6 py-3 cursor-pointer"
                           >
                             <div className="flex">
                               <div>Contact</div>
-                              <span
-                                className={`bi bi-arrow-${
-                                  supplierSortOrder === "asc" ? "up" : "down"
-                                } ml-2`}
-                              />
+                              {supplierSortedColumn === "contact" && (
+                                <i
+                                  className={`bi bi-arrow-${
+                                    supplierSortOrder.contact === "asc" ? "up" : "down"
+                                  } ml-2`}
+                                ></i>
+                              )}
                             </div>
                           </th>
                         </tr>
