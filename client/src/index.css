@@ -9,6 +9,7 @@
 }
 *{
     font-family: "Poppins";
+    
 }
 
 ::-webkit-scrollbar {
@@ -152,6 +153,78 @@
   }
 }
 
+@media (max-width:1000px) {
+  .twochart{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .icon{
+    display: none;
+  }
+  .pie{
+    width: 80% !important;
+    
+  }
+  .bar{
+    width: 80% !important;
+    padding-bottom: 6%;
+  }
+
+}
+
+
+@media (max-width:1000px) {
+
+
+  .area{
+    padding-left: 50px;
+  }
+
+  .barh
+  {
+    height: 400px;
+  }
+
+  .pieh{
+    height: 400px;
+  }
+
+}
+
+@media (max-width:800px) {
+
+
+  .area{
+    transform: scale(0.9);
+  }
+  .bar{
+    transform: scale(0.9);
+  }
+  .pie{
+    transform: scale(0.9);
+  }
+
+
+}
+@media (max-width:600px) {
+
+
+  .area{
+    padding: 0;
+    width: 100% !important;
+  }
+  .bar{
+    padding: 0;
+    width: 100% !important;
+  }
+  .pie{
+    padding: 0;
+    width: 100% !important;
+  }
+
+
+}
 
 .loader {
   transform: rotateZ(45deg);
