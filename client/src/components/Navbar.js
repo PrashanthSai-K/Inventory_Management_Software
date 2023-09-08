@@ -38,7 +38,7 @@ const Navbar = ({ location, open, setOpen, navItems, user }) => {
                 onClick={() => setOpen(!open)}
               />
 
-              <div className="flex gap-x-4  items-center ml-2 mt-10 font">
+              <div className="flex gap-x-4 items-center ml-2 mt-10 font">
                 <img
                   src="/images/bit1.png"
                   alt=""
@@ -47,7 +47,7 @@ const Navbar = ({ location, open, setOpen, navItems, user }) => {
                 <h1
                   className={`ml-2 mb-2.5 text-3xl pt-1 ${!open && "hidden"}`}
                 >
-                  Stores {navUsed()}
+                  Stores Bit{navUsed()}
                 </h1>
               </div>
               <div className="mt-10 mr-2 h-screen" style={{ fontSize: "21px" }}>

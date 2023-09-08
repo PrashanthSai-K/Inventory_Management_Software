@@ -76,9 +76,6 @@ input::-webkit-inner-spin-button {
   align-items: center;
   flex-direction: column;
   min-width: 500px;
-  margin-right: 20px;
-  margin-left: 20px;
-
 }
 
 
@@ -158,6 +155,12 @@ input::-webkit-inner-spin-button {
 
   .popup-responsive-small {
     max-width: 450px;
+  }
+}
+
+@media (max-width:650px) {
+  .popup-responsive{
+    max-width: 500px;
   }
 }
 
