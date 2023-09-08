@@ -117,13 +117,13 @@ function Vendors({ open }) {
 
   //<--------------------sort by functionality for supplier table-------------------->
 
-   //sort by functionality
-   const [supplierSortOrder, setSupplierSortOrder] = useState({
-    name : "asc",
-    contact : "asc",
-    address : "asc",
+  //sort by functionality
+  const [supplierSortOrder, setSupplierSortOrder] = useState({
+    name: "asc",
+    contact: "asc",
+    address: "asc",
   });
-  
+
   const [supplierSortedColumn, setSupplierSortedColumn] = useState("");
 
   const handleSort = (column) => {
@@ -152,7 +152,6 @@ function Vendors({ open }) {
     setSupplierFilteredData(supplierFilteredData);
   };
 
-  
   //<------End of fetching data from api for the page ------->
 
   //<---------Authentication of user for the page----------->
@@ -180,213 +179,232 @@ function Vendors({ open }) {
 
   return (
     <>
-      <div className="overflow-x-hidden">
-        <div className={` flex-1 duration-300`}>
-          <h1 className="text-2xl font-semibold ">Vendors</h1>
-          <div className="flex flex-col justify-center items-center ">
-            <Cards />
-          </div>
+      {isLoading ? (
+        <div className="flex flex-col justify-center items-center h-full duration-800 ">
+          <span class="loader animate-bounce duration-800"></span>
+          Loading
         </div>
-        <div
-          className={` flex justify-center w-full items-center duration-300 mt-10`}
-        >
+      ) : (
+        <div className="overflow-x-hidden">
+          <div className={` flex-1 duration-300`}>
+            <h1 className="text-2xl font-semibold ">Vendors</h1>
+            <div className="flex flex-col justify-center items-center ">
+              <Cards />
+            </div>
+          </div>
           <div
-            className={`flex ${
-              open ? "gap-24" : "gap-36"
-            } gap-change  flex-wrap items-center justify-center duration-500`}
+            className={` flex justify-center w-full duration-300 mt-10`}
           >
-            <div className="duration-500 rounded-lg">
-              <h1 className="text-center text-xl font-bold">Manufacturer</h1>
-              <div className="input-field">
-                <div className="flex my-5">
-                  <div className="h-auto">
-                    <input
-                      name="inputQuery"
-                      type="text"
-                      onKeyDown={handleKeyEnter}
-                      value={searchQuery}
-                      onChange={(e) => {
-                        setClick(false);
-                        setSearchQuery(e.target.value);
-                      }}
-                      placeholder="Search..."
-                      className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black "
-                    />
+            <div
+              className={`flex ${
+                open ? "gap-24" : "gap-36"
+              } gap-change  flex-wrap justify-center duration-500`}
+            >
+              <div className="duration-500 rounded-lg">
+                <h1 className="text-center text-xl font-bold">Manufacturer</h1>
+                <div className="input-field">
+                  <div className="flex my-5">
+                    <div className="h-auto">
+                      <input
+                        name="inputQuery"
+                        type="text"
+                        onKeyDown={handleKeyEnter}
+                        value={searchQuery}
+                        onChange={(e) => {
+                          setClick(false);
+                          setSearchQuery(e.target.value);
+                        }}
+                        placeholder="Search..."
+                        className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black "
+                      />
+                    </div>
+                    <div
+                      onClick={() => setClick(true)}
+                      className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full flex justify-center items-center h-8 pb-1 w-8 ml-2 bg-white"
+                    >
+                      <i className="text-black bi bi-search"></i>
+                    </div>
                   </div>
-                  <div
-                    onClick={() => setClick(true)}
-                    className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full flex justify-center items-center h-8 pb-1 w-8 ml-2 bg-white"
-                  >
-                    <i className="text-black bi bi-search"></i>
+                </div>
+                <div
+                  class="vendor-responsive sm:-mx-6  lg:-mx-8  overflow-y-auto rounded-2xl overflow-x-auto border-gray-700  duration-500"
+                  style={{
+                    width: open ? "420px" : "420px",
+                    maxHeight: "400px",
+                  }}
+                >
+                  <div class=" align-middle inline-block min-w-full ">
+                    <div class="shadow overflow-hidden sm:rounded-lg    ">
+                      <table class="min-w-full text-sm text-gray-400 rounded-lg">
+                        <thead class="bg-gray-800 text-xs uppercase font-medium">
+                          <tr>
+                            <th scope="col" class="px-6 py-3">
+                              s.no
+                            </th>
+                            <th
+                              onClick={() => sortData("name")}
+                              scope="col"
+                              class="px-6 py-3 cursor-pointer"
+                            >
+                              <div className="flex">
+                                <div>Manufacturer Name</div>
+                                <span
+                                  className={`bi bi-arrow-${
+                                    sortOrder === "asc" ? "up" : "down"
+                                  } ml-2`}
+                                />
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {filteredData.map((data, index) => {
+                            return (
+                              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td scope="row" class="px-6 py-4 ">
+                                  {index + 1}
+                                </td>
+                                <td class="px-6 py-4  text-gray-900 whitespace-nowrap dark:text-white">
+                                  {data.name}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div
-                class="vendor-responsive sm:-mx-6  lg:-mx-8  overflow-y-auto rounded-2xl overflow-x-auto border-gray-700  duration-500"
-                style={{ width: open ? "420px" : "420px", maxHeight: "400px" }}
-              >
-                <div class=" align-middle inline-block min-w-full ">
-                  <div class="shadow overflow-hidden sm:rounded-lg    ">
-                    <table class="min-w-full text-sm text-gray-400 rounded-lg">
-                      <thead class="bg-gray-800 text-xs uppercase font-medium">
-                        <tr>
-                          <th scope="col" class="px-6 py-3">
-                            s.no
-                          </th>
-                          <th
-                            onClick={() => sortData("name")}
-                            scope="col"
-                            class="px-6 py-3 cursor-pointer"
-                          >
-                            <div className="flex">
-                              <div>Manufacturer Name</div>
-                              <span
-                                className={`bi bi-arrow-${
-                                  sortOrder === "asc" ? "up" : "down"
-                                } ml-2`}
-                              />
-                            </div>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredData.map((data, index) => {
-                          return (
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                              <td scope="row" class="px-6 py-4 ">
-                                {index + 1}
-                              </td>
-                              <td class="px-6 py-4  text-gray-900 whitespace-nowrap dark:text-white">
-                                {data.name}
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div className="duration-500">
-              <h1 className="text-center text-xl font-bold">Supplier</h1>
-              <div className="input-field">
-                <div className="flex my-5">
-                  <div className="h-auto">
-                    <input
-                      name="inputQuery"
-                      type="text"
-                      onKeyDown={handleKeyEnter}
-                      value={supplierSearchQuery}
-                      onChange={(e) => {
-                        setButtonClick(false);
-                        setSupplierSearchQuery(e.target.value);
-                      }}
-                      placeholder="Search..."
-                      className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black "
-                    />
+              <div className="duration-500">
+                <h1 className="text-center text-xl font-bold">Supplier</h1>
+                <div className="input-field">
+                  <div className="flex my-5">
+                    <div className="h-auto">
+                      <input
+                        name="inputQuery"
+                        type="text"
+                        onKeyDown={handleKeyEnter}
+                        value={supplierSearchQuery}
+                        onChange={(e) => {
+                          setButtonClick(false);
+                          setSupplierSearchQuery(e.target.value);
+                        }}
+                        placeholder="Search..."
+                        className="text-black indent-2 font-medium w-80 h-8 rounded-xl border-2 border-black "
+                      />
+                    </div>
+                    <div
+                      onClick={() => setButtonClick(true)}
+                      className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full flex justify-center items-center h-8 w-8 pb-1 ml-2 bg-white"
+                    >
+                      <i className="text-black bi bi-search"></i>
+                    </div>
                   </div>
-                  <div
-                    onClick={() => setButtonClick(true)}
-                    className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full flex justify-center items-center h-8 w-8 pb-1 ml-2 bg-white"
-                  >
-                    <i className="text-black bi bi-search"></i>
-                  </div>
+                  <th scope="col" class=""></th>
+                  <th scope="col" class=""></th>
                 </div>
                 <th scope="col" class=""></th>
                 <th scope="col" class=""></th>
-              </div>
-              <div
-                class="vendor-responsive sm:-mx-6 lg:-mx-8 overflow-hidden overflow-y-auto overflow-x-auto border-gray-700 rounded-2xl duration-500"
-                style={{
-                  width: `${open ? "420px" : "420px"}`,
-                  maxHeight: "400px",
-                }}
-              >
-                <div class=" align-middle inline-block min-w-full  ">
-                  <div class="shadow overflow-hidden sm:rounded-lg">
-                    <table class="min-w-full text-sm text-gray-400 ">
-                      <thead class="bg-gray-800 text-xs uppercase font-medium">
-                        <tr>
-                          <th scope="col" class="px-6 py-3">
-                            s.no
-                          </th>
-                          <th
-                            onClick={() => handleSort("name")}
-                            scope="col"
-                            class="px-6 py-3 cursor-pointer"
-                          >
-                            <div className="flex">
-                              <div>Name</div>
-                              {supplierSortedColumn === "name" && (
-                                <i
-                                  className={`bi bi-arrow-${
-                                    supplierSortOrder.name === "asc" ? "up" : "down"
-                                  } ml-2`}
-                                ></i>
-                              )}
-                            </div>
-                          </th>
-                          <th
-                            onClick={() => handleSort("address")}
-                            scope="col"
-                            class="px-6 py-3 cursor-pointer"
-                          >
-                            <div className="flex">
-                              <div>Address</div>
-                              {supplierSortedColumn === "address"  && (
-                                <i
-                                  className={`bi bi-arrow-${
-                                    supplierSortOrder.address === "asc" ? "up" : "down"
-                                  } ml-2`}
-                                ></i>
-                              )}
-                            </div>
-                          </th>
-                          <th
-                            onClick={() => handleSort("contact")}
-                            scope="col"
-                            class="px-6 py-3 cursor-pointer"
-                          >
-                            <div className="flex">
-                              <div>Contact</div>
-                              {supplierSortedColumn === "contact" && (
-                                <i
-                                  className={`bi bi-arrow-${
-                                    supplierSortOrder.contact === "asc" ? "up" : "down"
-                                  } ml-2`}
-                                ></i>
-                              )}
-                            </div>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {supplierFilteredData.map((data, index) => {
-                          return (
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                              <td class="px-6 py-4">{index + 1}</td>
-                              <td
-                                scope="row"
-                                class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                              >
-                                {data.name}
-                              </td>
-                              <td class="px-6 py-4">{data.address}</td>
-                              <td class="px-6 py-4">{data.contact}</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+
+                <div
+                  class="vendor-responsive sm:-mx-6 lg:-mx-8 overflow-hidden overflow-y-auto overflow-x-auto border-gray-700 rounded-2xl duration-500"
+                  style={{
+                    width: `${open ? "420px" : "420px"}`,
+                    maxHeight: "400px",
+                  }}
+                >
+                  <div class=" align-middle inline-block min-w-full  ">
+                    <div class="shadow overflow-hidden sm:rounded-lg">
+                      <table class="min-w-full text-sm text-gray-400 ">
+                        <thead class="bg-gray-800 text-xs uppercase font-medium">
+                          <tr>
+                            <th scope="col" class="px-6 py-3">
+                              s.no
+                            </th>
+                            <th
+                              onClick={() => handleSort("name")}
+                              scope="col"
+                              class="px-6 py-3 cursor-pointer"
+                            >
+                              <div className="flex">
+                                <div>Name</div>
+                                {supplierSortedColumn === "name" && (
+                                  <i
+                                    className={`bi bi-arrow-${
+                                      supplierSortOrder.name === "asc"
+                                        ? "up"
+                                        : "down"
+                                    } ml-2`}
+                                  ></i>
+                                )}
+                              </div>
+                            </th>
+                            <th
+                              onClick={() => handleSort("address")}
+                              scope="col"
+                              class="px-6 py-3 cursor-pointer"
+                            >
+                              <div className="flex">
+                                <div>Address</div>
+                                {supplierSortedColumn === "address" && (
+                                  <i
+                                    className={`bi bi-arrow-${
+                                      supplierSortOrder.address === "asc"
+                                        ? "up"
+                                        : "down"
+                                    } ml-2`}
+                                  ></i>
+                                )}
+                              </div>
+                            </th>
+                            <th
+                              onClick={() => handleSort("contact")}
+                              scope="col"
+                              class="px-6 py-3 cursor-pointer"
+                            >
+                              <div className="flex">
+                                <div>Contact</div>
+                                {supplierSortedColumn === "contact" && (
+                                  <i
+                                    className={`bi bi-arrow-${
+                                      supplierSortOrder.contact === "asc"
+                                        ? "up"
+                                        : "down"
+                                    } ml-2`}
+                                  ></i>
+                                )}
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {supplierFilteredData.map((data, index) => {
+                            return (
+                              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td class="px-6 py-4">{index + 1}</td>
+                                <td
+                                  scope="row"
+                                  class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                                >
+                                  {data.name}
+                                </td>
+                                <td class="px-6 py-4">{data.address}</td>
+                                <td class="px-6 py-4">{data.contact}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

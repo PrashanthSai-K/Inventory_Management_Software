@@ -11,6 +11,8 @@ import axios from "axios";
 
 function Entries() {
 
+  const navigate = useNavigate();
+
   const { getUser, user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -42,7 +44,6 @@ function Entries() {
     setQuantityUnits(response.data);
   }
 
-  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -140,8 +141,8 @@ function Entries() {
               setIsLoading={setIsLoading}
               item={item}
             />
-            {user.role === "slbincharge" && (
-              <>
+            {/* {user.role === "slbincharge" && (
+              <> */}
                 <div
                   onClick={() => {
                     setShowItem(true)
@@ -162,8 +163,8 @@ function Entries() {
                   supplier={supplier}
                   quantityUnits={quantityUnits}
                 />
-              </>
-            )}
+              {/* </>
+            )} */}
           </div>
         </div>
       )}

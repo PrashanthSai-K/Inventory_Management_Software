@@ -60,7 +60,7 @@ function Dashboard({open , setOpen}) {
     <>
       {isLoading ? (
         <div className="flex flex-col justify-center items-center h-full duration-800 ">
-          <span class="loader"></span>
+          <span class="loader animate-bounce duration-800"></span>
           Loading
         </div >
       ) : (

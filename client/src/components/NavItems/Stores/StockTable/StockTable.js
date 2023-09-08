@@ -1,10 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import StockPopup from "./StockPopup";
 import StockEdit from "./StockEdit";
 
-function StockTable({getStock,fetchGetStock, setMessage, setError, setIsLoading, isLoading}) {
+function StockTable({getStock , fetchGetStock, setMessage, setError, setIsLoading, isLoading}) {
 
   //For open popup
   const [stockOpenPopup, setStockOpenPopup] = useState(false);

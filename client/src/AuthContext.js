@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
           token: token,
         }).catch((error) => console.log(error));
         setUser(result.data);
-        resolve (result.data);
+        resolve(result.data);
       } catch (error) {
         setIsLoggedIn(false);
         reject(error);
@@ -63,14 +63,6 @@ export function AuthProvider({ children }) {
     }
   };
 
-  function checkRole({path, element, userRole,  allowedRole, redirecTo}){
-    if(userRole == allowedRole){
-      return <Route path={path} element={element} />
-    }else{
-      navigate(redirecTo);
-    }
-  }
-
 
   const value = {
     isLoggedIn,
@@ -81,4 +73,14 @@ export function AuthProvider({ children }) {
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
+
+export function CheckRole({ path, element, userRole, allowedRole, redirecTo }) {
+  const navigate = useNavigate();
+  if (userRole == allowedRole) {
+    return <Route path={path} element={element} />
+  } else {
+    navigate(redirecTo);
+    return null;
+  }
 }

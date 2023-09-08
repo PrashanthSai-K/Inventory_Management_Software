@@ -56,6 +56,9 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
       }
     }
   };
+  useEffect(()=>{
+    console.log(data);
+  })
 
   return (
     <>
@@ -65,14 +68,13 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
         </div>
       ) : (
         <div className="relative track-card w-11/12 rounded-xl overflow-hidden p-10">
-          {/* <div class="pl-4">{index + 1}</div> */}
-          <div className="flex flex-wrap items-center justify-evenly">
-            <div class="px-4 py-4 bg-indigo-100 rounded-lg flex gap-2">
+          <div className="flex flex-wrap items-center justify-evenly gap-3">
+          <div class="px-4 py-4 bg-indigo-100 rounded-lg flex gap-2">
               <i class="bi bi-person-circle pl-3 pr-3 pt-2 pb-3 bg-indigo-300 rounded-lg"></i>
               <div className="flex flex-col ">
-                <div className="text-sm ">Item Code</div>
+                <div className="text-sm ">Item Type</div>
                 <div className="font-bold text-indigo-700">
-                  {data.item_code}
+                  {data.item_type}
                 </div>
               </div>
             </div>
@@ -90,9 +92,9 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
             <div class="px-4 py-4 bg-indigo-100 rounded-lg flex gap-2">
               <i class="bi bi-person-circle pl-3 pr-3 pt-2 pb-3 bg-indigo-300 rounded-lg"></i>
               <div className="flex flex-col ">
-                <div className="text-sm ">Item Code</div>
+                <div className="text-sm ">Item Name</div>
                 <div className="font-bold text-indigo-700">
-                  {data.item_code}
+                  {data.item_name}
                 </div>
               </div>
             </div>
@@ -100,9 +102,9 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
             <div class="px-4 py-4 bg-indigo-100 rounded-lg flex gap-2">
               <i class="bi bi-person-circle pl-3 pr-3 pt-2 pb-3 bg-indigo-300 rounded-lg"></i>
               <div className="flex flex-col ">
-                <div className="text-sm ">Item Code</div>
+                <div className="text-sm ">Item Subname</div>
                 <div className="font-bold text-indigo-700">
-                  {data.item_code}
+                  {data.item_subname}
                 </div>
               </div>
             </div>
@@ -110,9 +112,9 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
             <div class="px-4 py-4 bg-indigo-100 rounded-lg flex gap-2">
               <i class="bi bi-person-circle pl-3 pr-3 pt-2 pb-3 bg-indigo-300 rounded-lg"></i>
               <div className="flex flex-col ">
-                <div className="text-sm ">Item Code</div>
+                <div className="text-sm ">Item Description</div>
                 <div className="font-bold text-indigo-700">
-                  {data.item_code}
+                  {data.item_description}
                 </div>
               </div>
             </div>
@@ -120,9 +122,9 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
             <div class="px-4 py-4 bg-indigo-100 rounded-lg flex gap-2">
               <i class="bi bi-person-circle pl-3 pr-3 pt-2 pb-3 bg-indigo-300 rounded-lg"></i>
               <div className="flex flex-col ">
-                <div className="text-sm ">Item Code</div>
+                <div className="text-sm ">Transfered From</div>
                 <div className="font-bold text-indigo-700">
-                  {data.item_code}
+                  {data.transfered_from}
                 </div>
               </div>
             </div>
@@ -130,9 +132,9 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
             <div class="px-4 py-4 bg-indigo-100 rounded-lg flex gap-2">
               <i class="bi bi-person-circle pl-3 pr-3 pt-2 pb-3 bg-indigo-300 rounded-lg"></i>
               <div className="flex flex-col ">
-                <div className="text-sm ">Item Code</div>
+                <div className="text-sm ">Cost Per Item</div>
                 <div className="font-bold text-indigo-700">
-                  {data.item_code}
+                  {data.cost_per_item}
                 </div>
               </div>
             </div>
@@ -140,29 +142,9 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
             <div class="px-4 py-4 bg-indigo-100 rounded-lg flex gap-2">
               <i class="bi bi-person-circle pl-3 pr-3 pt-2 pb-3 bg-indigo-300 rounded-lg"></i>
               <div className="flex flex-col ">
-                <div className="text-sm ">Item Code</div>
+                <div className="text-sm ">Status</div>
                 <div className="font-bold text-indigo-700">
-                  {data.item_code}
-                </div>
-              </div>
-            </div>
-
-            <div class="px-4 py-4 bg-indigo-100 rounded-lg flex gap-2">
-              <i class="bi bi-person-circle pl-3 pr-3 pt-2 pb-3 bg-indigo-300 rounded-lg"></i>
-              <div className="flex flex-col ">
-                <div className="text-sm ">Item Code</div>
-                <div className="font-bold text-indigo-700">
-                  {data.item_code}
-                </div>
-              </div>
-            </div>
-
-            <div class="px-4 py-4 bg-indigo-100 rounded-lg flex gap-2">
-              <i class="bi bi-person-circle pl-3 pr-3 pt-2 pb-3 bg-indigo-300 rounded-lg"></i>
-              <div className="flex flex-col ">
-                <div className="text-sm ">Item Code</div>
-                <div className="font-bold text-indigo-700">
-                  {data.item_code}
+                  {data.status}
                 </div>
               </div>
             </div>
