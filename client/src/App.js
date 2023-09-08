@@ -1,6 +1,5 @@
 import "./App.css";
 
-// import ManufacturerEntry from "./CommonPages/ManufacturerEntry";
 import {
   Routes,
   Route,
@@ -8,6 +7,7 @@ import {
   useNavigate,
   Navigate,
 } from "react-router-dom";
+
 import Vendors from "./components/NavItems/Vendors";
 import Entries from "./components/NavItems/Entries/Entries";
 import Master from "./components/NavItems/Master";
@@ -16,19 +16,17 @@ import { React, useState, useEffect } from "react";
 
 import Dashboard from "./components/NavItems/Dashboard/Dashboard";
 import Error404 from "./components/ErrorPages/Error404";
-// import Hover from "./components/Hover";
+
 import LoginPage from "./components/LoginPage";
 // import RegisterPage from "./components/RegisterPage";
 // import PrivateRoute from "./PrivateRoute";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Cookies from "js-cookie";
-import axios from "axios";
 import Navbar from "./components/Navbar";
-import { AuthProvider } from "./AuthContext";
 import Stores from "./components/NavItems/Stores/Stores";
-// import Transfer from "./components/CommonPages/Transfer";
 import Unauthorized from "./components/ErrorPages/Unauthorized";
-import Transfer from "./components/NavItems/Transfer/Transfer.js"
+import Transfer from "./components/NavItems/Transfer/Transfer.js";
+import { useAuth } from "./AuthContext";
 
 
 
@@ -36,8 +34,19 @@ import Transfer from "./components/NavItems/Transfer/Transfer.js"
 function App() {
 
   const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if (!Cookies.get('token')) {
+      navigate("/");
+    } else {
+      getUser();
+    }
+  }, []);
+
+  const { user, getUser } = useAuth();
+
 
   const navItems = [
 
@@ -46,16 +55,10 @@ function App() {
     // { Name: "Supplier", iconName: "bi-archive-fill", src: "/supplier" },
     { Name: "Vendors", iconName: "bi-building", src: "/vendors" },
     { Name: "Entries", iconName: "bi-list-check", src: "/entries" },
-    { Name: "Stores", iconName: "bi-shop", src: "/stores" },
+    { Name: "Stores", iconName: "bi-shop", src: "/stores", role: "slsincharge" },
     { Name: "Transfer", iconName: "bi-arrow-left-right", src: "/transfer" },
     { Name: "Logout", iconName: "bi-box-arrow-right" },
   ];
-
-
-
-  const [user, setUser] = useState([]);
-
-  const navigate = useNavigate();
 
   function navUsed() {
     return navItems.some((item) => item.src === location.pathname);
@@ -91,36 +94,36 @@ function App() {
               path="/dashboard"
               element={<Dashboard open={open}
                 setOpen={setOpen} />}
-            />
-            {/* <Route path="/registerpage" element={<RegisterPage />} /> */}
+              />
+              {/* <Route path="/registerpage" element={<RegisterPage />} /> */}
+              <Route
+                path="/master"
+                element={<Master />}
+              />
+              <Route
+                path="/supplier"
+                element={<Supplier />}
+              />
+              <Route
+                path="/vendors"
+                element={<Vendors  />}
+              />
+              <Route
+                path="/transfer"
+                element={<Transfer  />}
+              />
+              <Route
+                path="/stores"
+                element={<Stores />}
+              />
+              <Route
+                path="/entries"
+                element={<Entries />}
+              />
             <Route
-              path="/master"
-              element={<Master />}
+              path="/unauthorized"
+              element={<Unauthorized />}
             />
-            <Route
-              path="/supplier"
-              element={<Supplier />}
-            />
-            <Route
-              path="/vendors"
-              element={<Vendors />}
-            />
-            <Route
-              path="/transfer"
-              element={<Transfer />}
-            />
-            <Route
-              path="/stores"
-              element={<Stores />}
-            />
-            <Route
-              path="/entries"
-              element={<Entries />}
-            />
-
-
-
-
           </Routes>
 
         </GoogleOAuthProvider>

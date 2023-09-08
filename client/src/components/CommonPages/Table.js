@@ -81,10 +81,10 @@ function Table({ stockData}) {
   return (
     <div className=" w-9/12">
       <div className="flex  w-full mb-5 h-auto  justify-between font-semibold">
-        <div className="sub-titles2 text-center text-2xl font-semibold">
+        <div className="sub-titles2 animate1 text-center text-2xl font-semibold">
           Master Table
         </div>
-        <div className="input-field2 flex">
+        <div className="input-field2 animate1 flex">
           <div className="h-auto">
             <input
               name="inputQuery"
@@ -107,11 +107,11 @@ function Table({ stockData}) {
           </div>
         </div>
       </div>
-      <div class="sm:-mx-6 lg:-mx-8 overflow-y-auto overflow-x-auto border-gray-700 rounded-lg">
+      <div class="sm:-mx-6 lg:-mx-8 overflow-y-auto overflow-x-auto animate2 border-gray-700 rounded-lg">
         <div class=" align-middle inline-block min-w-full ">
           <div
             style={{ width: "90%", height: "50%", maxHeight: "360px" }}
-            class="shadow sm:rounded-lg h-96"
+            class="shadow sm:rounded-lg  h-96"
           >
             <table class="min-w-full text-sm text-gray-400 ">
               <thead class="bg-gray-800 text-xs uppercase font-medium">

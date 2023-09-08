@@ -107,6 +107,12 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
         }
       );
       if (response.status == 200) {
+        setData({
+          itemcode: "",
+          showStock: "",
+          stockReq: "",
+          fromLabId: "",
+        })
         console.log(response.data);
         setMessage(response.data.Data);
         onClose();
@@ -115,6 +121,12 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
     } catch (error) {
 
       if (error) {
+        setData({
+          itemcode: "",
+          showStock: "",
+          stockReq: "",
+          fromLabId: "",
+        })
         console.log(error);
         setError(error.response.data.Data);
         onClose();
@@ -134,7 +146,7 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
           <div className="flex flex-col">
           <div
           style={{ height: "600px" }}
-          className="popup-responsive popup-responsive-small bg-white w-full px-14 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
+          className="popup-responsive animate popup-responsive-small bg-white w-full px-14 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
         >
             <button
               className="text-black rounded-full border-black px-2 border-2 text-3xl place-self-end"

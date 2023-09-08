@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 
-const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
+const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoading, item }) => {
 
   const [data, setData] = useState({
     itemcode: "",
@@ -9,43 +9,49 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
     manufacturerId: "",
     supplierId: "",
     inventoryValue: "",
-    userId: "12345",
+    userId: "",
     labCode: "",
   });
 
   const [autoForm, setAutoForm] = useState({});
-
-  const [item, setItem] = useState([]);
-
-  async function fetchItems() {
-    const response = await axios.get("http://localhost:4000/api/getItems");
-    setItem(response.data);
-  }
-
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
 
   const handleChange = (e) => {
     setData(e.target.value);
   };
 
   const HandleSubmit = async (e) => {
-    e.preventDefault();
-    const result = item.filter((items) => {
-      if (items.item_code == data.itemcode) return items;
-    });
-    // console.log(result);
-    data.manufacturerId = result[0].manufacturer_id;
-    data.supplierId = result[0].supplier_id;
-    data.inventoryValue = result[0].cost_per_item * data.stock_qty;
-    const response = await axios
-      .post("http://localhost:4000/stockadd", data)
-      .catch((error) => console.log(error));
-    // .then(()=>navigate('/'));
-  };
+    try {
+      setIsLoading(true);
+      e.preventDefault();
+      const result = item.filter((items) => {
+        if (items.item_code == data.itemcode) return items;
+      });
+      if (result.length > 0) {
+        data.manufacturerId = result[0].manufacturer_id;
+        data.supplierId = result[0].supplier_id;
+        data.inventoryValue = result[0].cost_per_item * data.stock_qty;
 
+        const response = await axios.post("http://localhost:4000/api/stockAdd", data);
+        console.log("response : ", response)
+        if (response && response.status == 201) {
+          setMessage(response.data.Data);
+          setIsLoading(false);
+          onClose();
+        }
+      } else {
+        setError("Enter Valid item name");
+        setIsLoading(false);
+        onClose();
+      }
+    } catch (error) {
+      if (error && error.response.status == 400) {
+        setError(error.response.data.Data);
+        setIsLoading(false);
+        onClose();
+      }
+      console.log(error);
+    }
+  };
 
   const [itemResult, setItemResult] = useState(item);
   const [suggestion, setSuggestion] = useState(false);
@@ -72,7 +78,6 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage }) => {
         return items;
       }
     });
-
     setAutoForm(result[0]);
     setSuggestion(false);
     setIsTyping(false);

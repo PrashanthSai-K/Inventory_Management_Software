@@ -134,7 +134,7 @@ function Piechart({labitem}) {
 
     return (
         <>
-            <div className="pie" style={{ backgroundColor: "#F4F4F4" ,width:"40%"}}>
+            <div className="pie animate2" style={{ backgroundColor: "#F4F4F4" ,width:"40%"}}>
                 <div>
                     <div
                         className={` pieh shadow-2xl p-10 bg-white rounded-2xl shadow ${isItemFullScreen ? 'fixed top-0 left-0 max-w z-50 full-screen' : ''

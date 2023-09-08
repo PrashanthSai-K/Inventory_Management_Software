@@ -10,7 +10,7 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
         try {
             setIsLoading(true);
             e.preventDefault();
-            const response = await axios.post("http://localhost:4000/api/deleteTransferrequest",
+            const response = await axios.post("http://localhost:4000/api/cancelTransferRequest",
                 {
                     transfer_id: data.id,
                     dept_id: user.dept_code
@@ -62,7 +62,7 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
             {isLoading ? (
                 <div className="flex justify-center items-center h-full"><span class="loader"></span></div>
             ) : (
-                <div className="relative track-card w-11/12 rounded-xl overflow-hidden">
+                <div className="relative animate track-card w-11/12 rounded-xl overflow-hidden">
                     {/* <div class="pl-4">{index + 1}</div> */}
                     <div className="flex flex-wrap">
                         <div class="px-6 py-4 whitespace-nowrap">Item Code:{data.item_code}</div>

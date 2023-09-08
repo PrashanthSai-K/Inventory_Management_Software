@@ -171,13 +171,15 @@ function Vendors({ open }) {
   }
 
 
+
   return (
     <>
-      <div className="overflow-x-hidden">
+
+      <div className="overflow-x-hidden h-full" style={{ backgroundColor: "#F4F4F4" }}>
         <div className={` flex-1 duration-300`}>
           <h1 className="text-2xl font-semibold ">Vendors</h1>
           <div className="flex flex-col justify-center items-center ">
-            <Cards />
+            <Cards  />
           </div>
         </div>
         <div
@@ -188,7 +190,7 @@ function Vendors({ open }) {
               open ? "gap-24" : "gap-36"
             } gap-change  flex-wrap items-center justify-center duration-500`}
           >
-            <div className="duration-500 rounded-lg">
+            <div className="duration-500 rounded-lg animate">
               <h1 className="text-center text-xl font-bold">Manufacturer</h1>
               <div className="input-field">
                 <div className="flex my-5">
@@ -262,7 +264,7 @@ function Vendors({ open }) {
               </div>
             </div>
 
-            <div className="duration-500">
+            <div className="duration-500 animate">
               <h1 className="text-center text-xl font-bold">Supplier</h1>
               <div className="input-field">
                 <div className="flex my-5">

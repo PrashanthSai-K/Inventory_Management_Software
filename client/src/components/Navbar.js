@@ -1,35 +1,40 @@
-import { React} from "react";
+import { React, useEffect } from "react";
 import { useAuth } from "../AuthContext";
+import Cookies from "js-cookie";
 
-const Navbar = ({ location, open, setOpen, navItems }) => {
+
+const Navbar = ({ location, open, setOpen, navItems, user }) => {
+
+
+
 
   const setNavState = () => {
     setOpen(open);
   };
 
-  const {logout} = useAuth();
+  const { logout } = useAuth();
 
   function navUsed() {
     return navItems.some((item) => item.src === location);
   }
-  
+
 
   return (
     <>
+    
       {navItems.map(
         (navItem) =>
           navItem.src === location && (
             <div
-              className={`${
-                open ? "w-64" : "w-20"
-              } h-full bg-blue-800 w-1/6 fixed left-0 right-0 navbar duration-300`}
+              className={`${open ? "w-64" : "w-20"
+                } h-full w-1/6 fixed left-0 right-0 navbar duration-300`}
+                style={{backgroundColor:"#0f6af2"}}
             >
               <img
                 src="/images/control.png"
                 alt=""
-                className={`absolute -right-3 phone:hidden lg:block  w-8 border-blue-800 border-2  rounded-full ${
-                  !open && "rotate-180"
-                } `}
+                className={`absolute -right-3 phone:hidden lg:block  w-8 border-blue-800 border-2  rounded-full ${!open && "rotate-180"
+                  } `}
                 style={{ top: "88px" }}
                 onClick={() => setOpen(!open)}
               />
@@ -53,20 +58,17 @@ const Navbar = ({ location, open, setOpen, navItems }) => {
                       return (
                         <>
                           <div
-                            className={`flex gap-x-4 mb-4 cursor-pointer ${
-                                location.split("/")[1] ===
+                            className={`flex gap-x-4 mb-4 cursor-pointer ${location.split("/")[1] ===
                                 nav.Name.toLocaleLowerCase()
-                                ? (nav.color = "bg-gray-700")
+                                ? (nav.color = "bg-white bg-opacity-40")
                                 : ""
-                            }  rounded-full  ${
-                              nav.color
-                            } hover:bg-gray-700 pl-5 pt-1 pr-2 pb-2`}
+                              }  rounded-full  ${nav.color
+                              } hover:bg-white hover:bg-opacity-40 pl-5 pt-1 pr-2 pb-2`}
                             onClick={logout}
                           >
                             <i
-                              className={`bi ${nav.iconName} ${
-                                !open && "text-2xl text-center"
-                              } duration-300 `}
+                              className={`bi ${nav.iconName} ${!open && "text-2xl text-center"
+                                } duration-300 `}
                             ></i>
                             <button
                               className={` duration-300 ${!open && "hidden"}`}
@@ -76,23 +78,21 @@ const Navbar = ({ location, open, setOpen, navItems }) => {
                           </div>
                         </>
                       );
-                    } else {
+                    }else{
                       return (
-                        <a onClick={setNavState} href={nav.src}>
+                        (!nav.role || user.role == nav.role) && 
+                        (<a onClick={setNavState} href={nav.src}>
                           <li
-                            className={`flex gap-x-4 mb-4 cursor-pointer ${
-                                location.split("/")[1] ===
+                            className={`flex gap-x-4 mb-4 cursor-pointer ${location.split("/")[1] ===
                                 nav.Name.toLocaleLowerCase()
-                                ? (nav.color = "bg-gray-700")
+                                ? (nav.color = "bg-white bg-opacity-40")
                                 : ""
-                            }  rounded-full  ${
-                              nav.color
-                            } hover:bg-gray-700 pl-5 pt-1 pr-2 pb-2`}
+                              }  rounded-full  ${nav.color
+                              } hover:bg-white hover:bg-opacity-40 pl-5 pt-1 pr-2 pb-2`}
                           >
                             <i
-                              className={`bi ${nav.iconName} ${
-                                !open && "text-2xl text-center"
-                              } duration-300 `}
+                              className={`bi ${nav.iconName} ${!open && "text-2xl text-center"
+                                } duration-300 `}
                             ></i>
                             <span
                               className={` duration-300 ${!open && "hidden"}`}
@@ -100,7 +100,7 @@ const Navbar = ({ location, open, setOpen, navItems }) => {
                               {nav.Name}
                             </span>
                           </li>
-                        </a>
+                        </a>)
                       );
                     }
                   })}

@@ -4,7 +4,8 @@ import axios from "axios";
 import StockPopup from "./StockPopup";
 import StockEdit from "./StockEdit";
 
-function StockTable({getStock,fetchGetStock}) {
+function StockTable({getStock,fetchGetStock, setMessage, setError, setIsLoading, isLoading}) {
+
   //For open popup
   const [stockOpenPopup, setStockOpenPopup] = useState(false);
   const [stockSelectedData, setStockSelectedData] = useState(null);
@@ -153,7 +154,7 @@ function StockTable({getStock,fetchGetStock}) {
       <div className="flex justify-center items-center flex-col">
         <div
           style={{ width: "90%", height: "30%", maxHeight: "300px" }}
-          class="relative rounded-2xl overflow-x-auto overflow-y-auto scrollbar-none"
+          class="relative rounded-2xl animate overflow-x-auto overflow-y-auto scrollbar-none"
         >
          
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
@@ -355,6 +356,10 @@ function StockTable({getStock,fetchGetStock}) {
             data={editData}
             onClose={handleCloseEdit}
             onSubmit={onSubmit}
+            setMessage={setMessage}
+            setError={setError}
+            setIsLoading ={setIsLoading}
+            isLoading = {isLoading}
           />
         </div>
       )}

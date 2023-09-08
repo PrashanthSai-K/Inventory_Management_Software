@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function ItemEdit({ data, onClose , onSubmit}) {
-  const [message, setMessage] = useState(null);
+function ItemEdit({ data, onClose , onSubmit, setMessage, setError}) {
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     item_code: "",
@@ -17,21 +18,12 @@ function ItemEdit({ data, onClose , onSubmit}) {
   });
 
 
-  const clearMessage =()=>{
-    setMessage(null);
-}
-
-useEffect(()=>{
-    setTimeout(clearMessage, 3000);
-},[message])
-
-
-useEffect(() => {
-  if (data) {
-    setFormData(data);
-  }
-  // onSubmit();
-}, [data]);
+  useEffect(() => {
+    if (data) {
+      setFormData(data);
+    }
+    // onSubmit();
+  }, [data]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -39,20 +31,28 @@ useEffect(() => {
   };
 
 const HandleSubmit = async (e) => {
+  if(window.confirm("Are you sure want to update ?")){
+  setIsLoading(true);
   e.preventDefault();
     try {
       const response = await axios.post("http://localhost:4000/api/itemEdit", formData);
-      
-      if(response.status==200){
+        console.log(response);
+      if( response && response.status==201){
+        setMessage(response.data.Data)
         onClose();
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
-      setMessage("Error updating item."); 
+      setIsLoading(false);
+      setError(error.response.data.Data);
+      onClose();
     }
+  }else{
+    onClose();
+  }
 };
 
-  // console.log(formData);  
 
   return (
     <>

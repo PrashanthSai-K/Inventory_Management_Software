@@ -11,12 +11,10 @@ function Dashboard({ open, setOpen }) {
   };
 
 
-
   const [isLoading, setIsLoading] = useState(true);
   const [inventory, setInventory] = useState([]);
   const [categories, setCategories] = useState([]);
   const [labitem, setLabitem] = useState([]);
-
 
 
   const fetchInventory = async () => {
@@ -53,7 +51,7 @@ function Dashboard({ open, setOpen }) {
 
   useEffect(() => {
     if (categories.length > 0 && inventory.length > 0 && labitem.length > 0) {
-      setTimeout(() => setIsLoading(false), 2000)
+      setTimeout(() => setIsLoading(), 2000)
 
     }
   }, [categories, inventory, labitem])
@@ -62,14 +60,14 @@ function Dashboard({ open, setOpen }) {
     <>
       {isLoading ? (
         <div className="flex flex-col justify-center items-center h-full duration-800 ">
-          <span class="loader animate-bounce duration-800"></span>
+          <span class="loader"></span>
           Loading
         </div >
       ) : (
         <>
-          <div style={{ backgroundColor: "#F4F4F4" }}>
+          <div  style={{ backgroundColor: "#F4F4F4" }}>
             <h1 style={{ fontFamily: 'Iceland', fontWeight: "bold", fontSize: "40px", paddingLeft:"7%" }} class={`text-start pt-10`}>Dashboard</h1>
-            <div  className= "w-11/12 pl-24 area">
+            <div  className= "w-11/12 pl-24 area animate1">
               <Areachart inventory={inventory} />
             </div>
             <br /><br />
@@ -85,7 +83,6 @@ function Dashboard({ open, setOpen }) {
     </>
   )
 }
-
 
 
 export default Dashboard

@@ -3,7 +3,7 @@ import ItemPopup from "./ItemPopup";
 import { useState, useEffect } from "react";
 import ItemEdit from "./ItemEdit";
 
-function ItemTable({itemData , fetchItemData}) {
+function ItemTable({itemData , fetchItemData, setMessage, setError}) {
   //For open popup
 
   // console.log(itemData);
@@ -154,7 +154,7 @@ function ItemTable({itemData , fetchItemData}) {
             </div>
           </div>
         </div>
-      <div className=" justify-center items-center flex flex-col ">
+      <div className=" justify-center animate items-center flex flex-col ">
         <div
           style={{ width: "90%", height: "50%", maxHeight: "300px" }}
           className="table-design relative overflow-x-auto rounded-3xl overflow-y-auto scrollbar-thin scrollbar-none scrollbar-thumb-gray-400 scrollbar-track-gray-200"
@@ -377,6 +377,8 @@ function ItemTable({itemData , fetchItemData}) {
             data={editData}
             onClose={handleCloseEdit}
             onSubmit={onSubmit}
+            setMessage={setMessage}
+            setError={setError}
           />
         </div>
       )}

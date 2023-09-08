@@ -35,7 +35,7 @@ function Barchart({ open , setOpen ,categories}) {
 
     return (
         <>
-            <div className="bar " style={{ backgroundColor: "#F4F4F4" , width:"44%"}} >
+            <div className="bar animate2" style={{ backgroundColor: "#F4F4F4" , width:"44%"}} >
                     <div
                         className={` barh shadow-2xl p-10 bg-white rounded-2xl  shadow ${isStockFullScreen ? 'fixed top-0 left-0  z-50 full-screen  ' : ''
                             }`}

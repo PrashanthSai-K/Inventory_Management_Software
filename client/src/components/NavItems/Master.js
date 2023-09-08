@@ -54,8 +54,8 @@ function Master() {
        Loading
     </div >
       ) : (
-        <div>
-          <h1 className="text-2xl font-semibold ">Master Page</h1>
+        <div className='h-full' style={{ backgroundColor: "#F4F4F4"  }}>
+          <h1 className="text-2xl font-semibold animate1">Master Page</h1>
           <div className="flex flex-col justify-center items-center gap-10 ">
             <center> <Cards /></center>
             <Table stockData={stockData} fetchStockData = {fetchStockData}/>
