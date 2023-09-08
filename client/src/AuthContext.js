@@ -36,6 +36,7 @@ export function AuthProvider({ children }) {
 
   async function login(response) {
     try {
+      console.log("hiiii.....")
       const result = await axios.post("http://localhost:4000/api/loginUser", { res: response });
       Cookies.set("token", result.data)
       setIsLoggedIn(true)

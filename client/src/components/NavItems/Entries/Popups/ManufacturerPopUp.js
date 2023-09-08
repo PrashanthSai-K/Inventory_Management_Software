@@ -39,8 +39,10 @@ const ManufacturerPopUp = ({ isVisible, onClose, setMessage, setError,setIsLoadi
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-      <div className="flex flex-col ">
-        <div className="popup-responsive bg-white px-10 py-5 overflow-x-auto overflow-y-auto border-gray-700 rounded-lg">
+      <div
+      style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"center",margin:"15px"}}
+      className="flex flex-col ">
+        <div className="bg-white px-10 py-5 overflow-x-auto overflow-y-auto border-gray-700 rounded-lg">
           <div className="w-full text-end">
             <button
               className="text-black rounded-full border-2 border-black px-2 text-3xl"
@@ -51,7 +53,7 @@ const ManufacturerPopUp = ({ isVisible, onClose, setMessage, setError,setIsLoadi
           </div>
           <div className="flex flex-col justify-center items-center">
             <div class="py-1 flex  pb-8 ">
-              <span class="px-1 text-black font-medium text-2xl">
+              <span class="px-1 text-black font-medium text-2xl whitespace-nowrap">
                 Manufacturer Entry
               </span>
             </div>

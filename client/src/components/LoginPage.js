@@ -27,8 +27,12 @@ function LoginPage() {
 
   const loginCall = useGoogleLogin({
     onSuccess: (tokenResponse) => {
+      console.log("hello");
       login(tokenResponse)
       setIsLoading(true);
+    },
+    onFailure :(error)=>{
+      console.log(error);
     }
   });
 

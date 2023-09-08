@@ -45,6 +45,8 @@ function Entries() {
     setQuantityUnits(response.data);
   }
 
+
+
   useEffect(() => {
     if (!Cookies.get("token")) {
       navigate("/");
