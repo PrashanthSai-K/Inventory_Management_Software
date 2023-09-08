@@ -4,32 +4,31 @@ import axios from "axios";
 const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleCancel = async (e) => {
-    try {
-      setIsLoading(true);
-      e.preventDefault();
-      const response = await axios.post(
-        "http://localhost:4000/api/deleteTransferrequest",
-        {
-          transfer_id: data.id,
-          dept_id: user.dept_code,
+    const handleCancel = async (e) => {
+        try {
+            setIsLoading(true);
+            e.preventDefault();
+            const response = await axios.post("http://localhost:4000/api/cancelTransferRequest",
+                {
+                    transfer_id: data.id,
+                    dept_id: user.dept_code
+                })
+            if (response) {
+                setIsLoading(false);
+                setMessage(response.data.Data);
+                console.log(response.data)
+                onClose();
+            }
+        } catch (error) {
+            if (error) {
+                setIsLoading(false);
+                setError(error.response.data.Data)
+                console.error(error);
+                onClose();
+            }
         }
-      );
-      if (response) {
-        setIsLoading(false);
-        setMessage(response.data.Data);
-        console.log(response.data);
-        onClose();
-      }
-    } catch (error) {
-      if (error) {
-        setIsLoading(false);
-        setError(error.response.data.Data);
-        console.error(error);
-        onClose();
-      }
     }
-  };
+  
 
   const handleDelete = async (e) => {
     try {
@@ -214,6 +213,6 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
       )}
     </>
   );
-};
+          }
 
 export default TrackCard;

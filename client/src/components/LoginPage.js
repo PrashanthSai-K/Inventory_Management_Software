@@ -27,8 +27,12 @@ function LoginPage() {
 
   const loginCall = useGoogleLogin({
     onSuccess: (tokenResponse) => {
+      console.log("hello");
       login(tokenResponse)
       setIsLoading(true);
+    },
+    onFailure :(error)=>{
+      console.log(error);
     }
   });
 
@@ -88,7 +92,7 @@ function LoginPage() {
                   Log in!!!
                 </button>
                 <div id="my-signin2" className="pt-3">
-                  <button class="flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                  <button type="button" class="flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                     onClick={() => loginCall()}
                   >
                     <svg

@@ -18,7 +18,8 @@ import {
 
 
 
-function Barchart({categories}) {
+function Barchart({categories ,open , setOpen }) {
+
 
 
 
@@ -35,7 +36,7 @@ function Barchart({categories}) {
 
     return (
         <>
-            <div style={{ backgroundColor: "#F4F4F4" , width:"650px"}} >
+            <div style={{ backgroundColor: "#F4F4F4" , width: !open ? "650px" : "550px"}} >
                 <div>
                     <div
                         className={`shadow-2xl p-10 bg-white rounded-2xl shadow ${isStockFullScreen ? 'fixed top-0 left-0 max-w z-50 full-screen  ' : 'max-w-2xl'

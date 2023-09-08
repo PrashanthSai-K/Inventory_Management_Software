@@ -4,12 +4,17 @@ import Barchart from "./Graphs/Barchart";
 import Piechart from "./Graphs/Piechart";
 import axios from 'axios'
 
-function Dashboard() {
+function Dashboard({open , setOpen}) {
 
+  const setNavState = () => {
+    setOpen(open);
+  };
+ 
   const [isLoading, setIsLoading] = useState(true);
   const [inventory, setInventory] = useState([]);
   const [categories, setCategories] = useState([]);
   const [labitem, setLabitem] = useState([]);
+
 
 
   const fetchInventory = async () => {
@@ -43,11 +48,10 @@ function Dashboard() {
     fetchCategories();
     fetchLabitem();
   }, []);
-
-
+  
   useEffect(() => {
     if (categories.length > 0 && inventory.length > 0 && labitem.length > 0) {
-      setTimeout(() => setIsLoading(false), 2000)
+      setTimeout(() => setIsLoading(), 2000)
 
     }
   },[categories,inventory,labitem])
@@ -56,18 +60,24 @@ function Dashboard() {
     <>
       {isLoading ? (
         <div className="flex flex-col justify-center items-center h-full duration-800 ">
-          <span class="loader animate-bounce duration-800"></span>
+          <span class="loader"></span>
           Loading
         </div >
       ) : (
         <>
           <div style={{ backgroundColor: "#F4F4F4" }}>
-            <h1 style={{ fontFamily: 'Iceland', fontWeight: "bold", fontSize: "40px" }} class="text-start pl-24 pt-10">Dashboard</h1>
+            <h1 style={{ fontFamily: 'Iceland', fontWeight: "bold", fontSize: "40px" , paddingLeft : open ? "5%" : "6%" }} class={`text-start pt-10`}>Dashboard</h1>
+            <div className={`${ !open ? "max-w-8xl" : "max-w-6xl ml-16"}`}>
             <Areachart inventory={inventory}/>
+            </div>
             <br /><br />
-            <div style={{ display: 'flex', gap:"4%",justifyContent: "center" , flexWrap:"wrap" }}>
-              <Barchart categories={categories}/>
-              <Piechart labitem={labitem}/>
+            <div style={{ display:"flex", gap: !open  ?"4%" : "3%",justifyContent: "center" , flexWrap:"wrap" }}>
+             <div>
+              <Barchart categories={categories} open={open} setOpen={setOpen} />
+              </div>
+              <div>
+              <Piechart labitem={labitem} />
+              </div>
             </div>
           </div>
 

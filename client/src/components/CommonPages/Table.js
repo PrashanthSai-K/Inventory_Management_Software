@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 function Table({ stockData}) {
+
+  
   
   // Search functionality
 

@@ -21,7 +21,7 @@ const Lotties = ({ height, width, animationData, click, clickData}) => {
         setStopped(false);
       }}
       onMouseLeave={() => {
-        setStopped(true);
+        setStopped(true); 
       }}
       onClick={()=>click(clickData)}
     >

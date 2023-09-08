@@ -163,7 +163,7 @@ function Vendors({ open }) {
 
   useEffect(() => {
     if (!Cookies.get("token")) {
-      // navigate("/");
+      navigate("/");
     } else {
       getUser();
     }

@@ -2,8 +2,8 @@ const db = require("./database/db.js");
 
 
 const getTransferData = function (req, res, next) {
-    const user_dept = req.body.dept_code
-    // console.log(req.body.role);
+
+    const user_dept = req.body.dept_code;
     if (req.body.role == 'slbincharge') {
         db.query("SELECT * FROM transfer_request_merged_view WHERE transfered_from = ? AND status = ?", [user_dept, "PENDING"])
             .catch((error) => res.status(500).json({ error: "There was some Error" }))
@@ -45,38 +45,32 @@ const transferRequest = async function (req, res, next) {
         const user_id = req.body.resData.user_id;
 
         const transferResult = await new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM admin_stock_view WHERE item_code = ? AND dept_id = ? ", [item_code, transfer_from], (error, result) => {
-                if (error)
+            connection.query("SELECT * FROM admin_stock_view WHERE item_code = ? AND dept_id = ? ", [item_code, transfer_from], async (error, result) => {
+                if (error) {
+                    await connection.rollback();
+                    res.status(500).json({ "Data": "Some internal error" });
+                    return;
                     reject(error);
-                else
+                } else
                     resolve(result);
             });
         })
 
-        if (transferResult instanceof Error) {
-            await connection.rollback();
-            res.status(500).json({ "Data": "Some internal error" });
-            return;
-        }
-        console.log(transferResult);
-
         if (transferResult.length > 0 && transferResult[0].stock_qty >= transfer_qty) {
             const insertResult = await new Promise((resolve, reject) => {
                 connection.query("INSERT INTO transfertable (item_code, manufacturer_id, supplier_id, transfer_qty, transfer_to, transfered_from, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    [item_code, manufacturer_id, supplier_id, transfer_qty, transfer_to, transfer_from, user_id], (error, result) => {
-                        if (error)
+                    [item_code, manufacturer_id, supplier_id, transfer_qty, transfer_to, transfer_from, user_id], async (error, result) => {
+                        if (error) {
+                            await connection.rollback();
+                            console.log(error);
+                            res.status(400).json({ "Data": "Stock quantity not available" });
+                            return;
                             reject(error);
-                        else
+                        } else
                             resolve(result);
                     })
             })
 
-            if (insertResult instanceof Error) {
-                await connection.rollback();
-                console.log(error);
-                res.status(400).json({ "Data": "Stock quantity not available" });
-                return;
-            }
         } else {
             console.log("Error")
             res.status(400).json({ "Data": "Stock quantity not available" });
@@ -85,18 +79,18 @@ const transferRequest = async function (req, res, next) {
         await connection.commit();
         res.status(200).json({ "Data": "Request raised sucessfully" });
         return;
+
     } catch (error) {
         if (connection)
             await connection.rollback()
     } finally {
-
         if (connection)
             connection.release();
     }
 }
 
 const cancelTransferRequest = async function (req, res, next) {
-    console.log(req.body.transfer_id, req.body.dept_id)
+
     let connection;
     try {
 
@@ -104,29 +98,23 @@ const cancelTransferRequest = async function (req, res, next) {
         await connection.beginTransaction();
 
         const selectResult = await new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM transfertable WHERE id = ? AND transfer_to = ?", [req.body.transfer_id, req.body.dept_id], (error, result) => {
-                if (error)
+            connection.query("SELECT * FROM transfertable WHERE id = ? AND transfer_to = ?", [req.body.transfer_id, req.body.dept_id], async (error, result) => {
+                if (error) {
+                    await connection.rollback();
+                    res.status(400).json({ "Data": "Seome internal error" });
+                    return;
                     reject(error);
-                else
+                } else
                     resolve(result);
             })
         })
 
-        if (selectResult instanceof Error) {
-            console.log(error);
-            await connection.rollback();
-            res.status(400).json({ "Data": "Seome internal error" });
-            return;
-        }
-        console.log(selectResult);
         if (selectResult.length > 0 && selectResult[0].transfer_to == req.body.dept_id) {
-
             const updateResult = await new Promise((resolve, reject) => {
                 connection.query("UPDATE transfertable SET status = ? WHERE id = ? AND transfer_to = ? ",
                     ["CANCELED", req.body.transfer_id, req.body.dept_id],
                     async (error, result) => {
                         if (error) {
-                            console.log(error)
                             await connection.rollback();
                             res.status(400).json({ "Data": "Some Internal error" });
                             reject(error)
@@ -139,7 +127,6 @@ const cancelTransferRequest = async function (req, res, next) {
             res.status(200).json({ "Data": "Canceled sucessfully" });
 
         } else {
-            console.log("error");
             res.status(400).json({ "Data": "Some Internal Error" });
             return;
         }
@@ -155,7 +142,6 @@ const cancelTransferRequest = async function (req, res, next) {
 }
 
 const deleteTransferRequest = async function (req, res, next) {
-    console.log(req.body.transfer_id, req.body.dept_id)
     let connection;
     try {
 
@@ -163,23 +149,18 @@ const deleteTransferRequest = async function (req, res, next) {
         await connection.beginTransaction();
 
         const selectResult = await new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM transfertable WHERE id = ? AND transfer_to = ?", [req.body.transfer_id, req.body.dept_id], (error, result) => {
-                if (error)
+            connection.query("SELECT * FROM transfertable WHERE id = ? AND transfer_to = ?", [req.body.transfer_id, req.body.dept_id], async(error, result) => {
+                if (error) {
+                    await connection.rollback();
+                    res.status(400).json({ "Data": "Seome internal error" });
+                    return;
                     reject(error);
-                else
+                } else
                     resolve(result);
             })
         })
 
-        if (selectResult instanceof Error) {
-            console.log(error);
-            await connection.rollback();
-            res.status(400).json({ "Data": "Seome internal error" });
-            return;
-        }
-        console.log(selectResult);
         if (selectResult.length > 0 && selectResult[0].transfer_to == req.body.dept_id && selectResult[0].status == "CANCELED") {
-
             const deleteResult = await new Promise((resolve, reject) => {
                 connection.query("DELETE FROM transfertable WHERE id = ? AND transfer_to = ? AND status = ?",
                     [req.body.transfer_id, req.body.dept_id, "CANCELED"],
@@ -221,8 +202,6 @@ const acceptRequest = async function (req, res, next) {
         connection = await db.getConnection();
         await connection.beginTransaction();
 
-        console.log(req.body);
-
         if (req.body.role == 'slbincharge') {
             const result1 = await new Promise((resolve, reject) => {
                 connection.query("UPDATE transfertable SET status = ? WHERE id = ?", ["LABAPPROVED", req.body.id], async (error, result) => {
@@ -253,7 +232,6 @@ const acceptRequest = async function (req, res, next) {
                 });
             });
 
-            console.log(fromDataResult);
             if (fromDataResult.length > 0 && fromDataResult[0].stock_qty >= req.body.transfer_qty) {
                 const stockMinus = fromDataResult[0].stock_qty - req.body.transfer_qty;
                 const inventoryMinus = fromDataResult[0].inventory_value - req.body.cost_per_item * req.body.transfer_qty;
@@ -272,10 +250,7 @@ const acceptRequest = async function (req, res, next) {
                             }
                         });
                 });
-
-
             } else {
-                console.log("Stock qty mismatch");
                 res.status(500).json({ "Data": "Stock Quantity not available" })
                 return;
             }
@@ -293,12 +268,9 @@ const acceptRequest = async function (req, res, next) {
                 });
             });
 
-
             if (toDataResult.length > 0) {
-                console.log(toDataResult[0]);
                 const stockAdd = req.body.transfer_qty + toDataResult[0].stock_qty;
                 const inventoryAdd = toDataResult[0].inventory_value + req.body.transfer_qty * req.body.cost_per_item;
-                console.log(stockAdd, inventoryAdd);
 
                 const toUpdateResult = await new Promise((resolve, reject) => {
                     connection.query("UPDATE stocktable SET stock_qty = ?, inventory_value = ? WHERE dept_id = ? AND item_code = ? ",
@@ -313,9 +285,7 @@ const acceptRequest = async function (req, res, next) {
                             }
                         });
                 });
-
             } else {
-
                 const item_code = req.body.item_code;
                 const manufacturer_id = req.body.manufacturer_id;
                 const supplier_id = req.body.supplier_id;
@@ -323,10 +293,11 @@ const acceptRequest = async function (req, res, next) {
                 const inventoryAdd = req.body.transfer_qty * req.body.cost_per_item;
                 const user_id = req.body.user_id;
                 const dept_id = req.body.transfer_to;
+                const currDate = new Date();
 
                 const toInsertResult = await new Promise((resolve, reject) => {
-                    connection.query("INSERT INTO  stocktable  (item_code,manufacturer_id, supplier_id,  stock_qty , inventory_value, user_id, dept_id ) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                        [item_code, manufacturer_id, supplier_id, stockAdd, inventoryAdd, user_id, dept_id], async (error, result) => {
+                    connection.query("INSERT INTO  stocktable  (item_code, manufacturer_id, supplier_id,  stock_qty , inventory_value, user_id, dept_id, created_at ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                        [item_code, manufacturer_id, supplier_id, stockAdd, inventoryAdd, user_id, dept_id, currDate.toISOString().split("T")[0] ], async (error, result) => {
                             if (error) {
                                 await connection.rollback()
                                 res.status(400).json({ "data": "Some error" });
@@ -337,7 +308,6 @@ const acceptRequest = async function (req, res, next) {
                             }
                         });
                 });
-
             }
 
             const transferUpdateResult = await new Promise((resolve, reject) => {
@@ -351,7 +321,6 @@ const acceptRequest = async function (req, res, next) {
                         resolve(result);
                 })
             })
-
         }
 
         res.status(201).send({ "Data": "AcceptedSucessfully" });
@@ -373,7 +342,6 @@ const acceptRequest = async function (req, res, next) {
 const rejectRequest = async function (req, res, next) {
     let connection;
     try {
-        console.log(req.body);
         connection = await db.getConnection();
         await connection.beginTransaction();
 
@@ -403,10 +371,10 @@ const rejectRequest = async function (req, res, next) {
 
 
 module.exports = {
-    getTransferData      : getTransferData,
-    transferRequest      : transferRequest,
-    acceptRequest        : acceptRequest,
-    rejectRequest        : rejectRequest,
+    getTransferData: getTransferData,
+    transferRequest: transferRequest,
+    acceptRequest: acceptRequest,
+    rejectRequest: rejectRequest,
     cancelTransferRequest: cancelTransferRequest,
     deleteTransferRequest: deleteTransferRequest
 }
