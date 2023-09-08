@@ -3,7 +3,7 @@ import React from "react";
 function ItemPopup({ data, onClose }) {
   return (
     <div className=" popup-overlay">
-      <div className=" popup-responsive popup-content">
+      <div className=" popup-responsive animate1 popup-content">
         <div className="w-full text-end">
           <button
             className="rounded-full border-2 border-black px-2"

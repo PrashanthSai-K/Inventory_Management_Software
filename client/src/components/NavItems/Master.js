@@ -26,18 +26,18 @@ function Master() {
     }
   };
 
-  
+
   useEffect(() => {
     if (!Cookies.get("token")) {
       navigate("/");
     } else {
       getUser();
       fetchStockData();
-    }  
+    }
   }, [Cookies.get("token")])
 
-  useEffect(()=>{
-    if(stockData.length > 0){
+  useEffect(() => {
+    if (stockData.length > 0) {
       setIsLoading(false);
     }
   }, [stockData]);
@@ -49,17 +49,17 @@ function Master() {
   return (
     <>
       {isLoading ? (
-      <div className="flex flex-col justify-center items-center h-full duration-800 ">
-      <span class="loader animate-bounce duration-800"></span>
-       Loading
-    </div >
+        <div className="flex flex-col justify-center items-center h-full duration-800 ">
+          <span class="loader animate-bounce duration-800"></span>
+          Loading
+        </div >
       ) : (
         <div className='h-full' style={{ backgroundColor: "#F4F4F4"  }}>
-          <h1 className="text-2xl font-semibold animate1">Master Page</h1>
+          <h1 className="text-2xl font-semibold animate1 pt-12 pl-20">Master Page</h1>
           <div className="flex flex-col justify-center items-center gap-10 ">
             <center> <Cards /></center>
-            <Table stockData={stockData} fetchStockData = {fetchStockData}/>
-          </div>
+            <Table stockData={stockData} fetchStockData={fetchStockData} />
+          </div>  
         </div>
       )}
     </>

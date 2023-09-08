@@ -11,6 +11,8 @@ import axios from "axios";
 
 function Entries() {
 
+  const navigate = useNavigate();
+
   const { getUser, user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,7 +46,7 @@ function Entries() {
 
   useEffect(() => {
     if (!Cookies.get("token")) {
-      // navigate("/");
+      navigate("/");
     } else {
       getUser();
       fetchItems();
@@ -92,12 +94,19 @@ function Entries() {
             </div>
           ) : null}
 
-          <div className="entries-gap-adjust flex mt-10 gap-36 w-full flex-wrap justify-center items-center ">
+          <div className="entries-gap-adjust animate1 flex mt-10 gap-36 w-full flex-wrap justify-center items-center ">
             <div
               onClick={() => setShowManufacturer(true)}
               className="w-96 h-52 mx-4 shadow-2xl bg-white rounded-3xl text-2xl animate hover:cursor-pointer text-black flex justify-center items-center"
             >
-              <div>Manufacturer Entry</div>
+
+              <img className="w-40" src="/images/manu.png" alt="" />
+              <div className="flex gap-2 flex-col">
+                <div className="text-lg font-bold">Manufacturer Entry</div>
+                <div style={{ color: "#5e9ff2" }} className="text-sm w-44 break-words ">Streamline Manufacturer Data Entry Process.</div>
+
+
+              </div>
             </div>
             <ManufacturerPopUp
               isVisible={showManufacturer}
@@ -108,9 +117,13 @@ function Entries() {
             />
             <div
               onClick={() => setShowSupplier(true)}
-              className="w-96 h-52 mx-4 shadow-2xl bg-white rounded-3xl text-2xl  hover:cursor-pointer animate flex text-black justify-center items-center"
+              className="w-96 h-52 mx-4 shadow-2xl animate1 bg-white rounded-3xl text-2xl  hover:cursor-pointer animate flex text-black justify-center items-center"
             >
-              <div>Supplier Entry</div>
+              <img className="w-40" src="/images/supplierentry.png" alt="" />
+              <div className="flex gap-2 flex-col">
+                <div className="text-lg font-bold">Supplier Entry</div>
+                <div style={{ color: "#5e9ff2" }} className="text-sm w-44 break-words ">Efficient Supplier Data Entry Process.</div>
+              </div>
             </div>
             <SupplierPopUp
               isVisible={showSupplier}
@@ -119,11 +132,45 @@ function Entries() {
               setError={setError}
               setIsLoading={setIsLoading}
             />
+
+            {/* {user.role === "slbincharge" && (
+              <> */}
+            <div
+              onClick={() => {
+                setShowItem(true)
+              }}
+              className="w-96 h-52 mx-4 shadow-2xl bg-white animate2 rounded-3xl flex text-2xl animate hover:cursor-pointer text-black justify-center items-center "
+            >
+              <img className="w-36" src="/images/item.png" alt="" />
+              <div className="pl-2 flex gap-2 flex-col">
+                <div className="text-lg font-bold">Item Entry</div>
+                <div style={{ color: "#5e9ff2" }} className="text-sm w-40 break-words ">Optimize Item Data Entry Process. </div>
+              </div>
+            </div>
+            <ItemPopUp
+              isVisible={showItem}
+              user={user}
+              setMessage={setMessage}
+              setError={setError}
+              onClose={() => setShowItem(false)}
+              setIsLoading={setIsLoading}
+              manufacturer={manufacturer}
+              supplier={supplier}
+              quantityUnits={quantityUnits}
+            />
+            {/* </>
+            )} */}
+
+
             <div
               onClick={() => setShowStock(true)}
-              className="w-96 h-52 mx-4  shadow-2xl bg-white rounded-3xl text-2xl animate hover:cursor-pointer flex text-black justify-center items-center"
+              className="w-96 h-52 mx-4  shadow-2xl bg-white  animate2 rounded-3xl text-2xl animate hover:cursor-pointer flex text-black justify-center items-center"
             >
-              <div> Stock Entry</div>
+              <img className="w-40" src="/images/stockentry.png" alt="" />
+              <div className="flex gap-2 flex-col pl-2">
+                <div className="text-lg font-bold">Stock Entry</div>
+                <div style={{ color: "#5e9ff2" }} className="text-sm w-40 break-words ">Simplify Stock Data Entry Process. </div>
+              </div>
             </div>
             <StockPopUp
               isVisible={showStock}
@@ -134,29 +181,6 @@ function Entries() {
               setIsLoading={setIsLoading}
               item={item}
             />
-            {user.role === "slbincharge" && (
-              <>
-                <div
-                  onClick={() => {
-                    setShowItem(true)
-                  }}
-                  className="w-96 h-52 mx-4 shadow-2xl bg-white  rounded-3xl flex text-2xl animate hover:cursor-pointer text-black justify-center items-center "
-                >
-                  <div>Item Entry</div>
-                </div>
-                <ItemPopUp
-                  isVisible={showItem}
-                  user={user}
-                  setMessage={setMessage}
-                  setError={setError}
-                  onClose={() => setShowItem(false)}
-                  setIsLoading={setIsLoading}
-                  manufacturer={manufacturer}
-                  supplier={supplier}
-                  quantityUnits={quantityUnits}
-                />
-              </>
-            )}
           </div>
         </div>
       )}

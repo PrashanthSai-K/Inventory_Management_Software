@@ -91,7 +91,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoadi
       <div className="flex flex-col">
         <div
           style={{ height: "600px" }}
-          className="popup-responsive bg-white w-full px-14 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
+          className="popup-responsive bg-white animate1 w-full px-14 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
         >
           <button
             className="text-black rounded-full border-black border-2 px-2 text-3xl place-self-end"

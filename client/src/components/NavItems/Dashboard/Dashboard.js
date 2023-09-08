@@ -3,6 +3,7 @@ import Areachart from "./Graphs/Areachart";
 import Barchart from "./Graphs/Barchart";
 import Piechart from "./Graphs/Piechart";
 import axios from 'axios'
+import Cards from "../../CommonPages/Cards";
 
 function Dashboard({ open, setOpen }) {
 
@@ -60,20 +61,24 @@ function Dashboard({ open, setOpen }) {
     <>
       {isLoading ? (
         <div className="flex flex-col justify-center items-center h-full duration-800 ">
-          <span class="loader"></span>
+          <span class="loader animate-bounce duration-800"></span>
           Loading
         </div >
       ) : (
         <>
-          <div  style={{ backgroundColor: "#F4F4F4" }}>
-            <h1 style={{ fontFamily: 'Iceland', fontWeight: "bold", fontSize: "40px", paddingLeft:"7%" }} class={`text-start pt-10`}>Dashboard</h1>
-            <div  className= "w-11/12 pl-24 area animate1">
+          <div style={{ backgroundColor: "#F4F4F4" }}>
+            <h1 style={{ fontWeight: "bolder", fontSize: "30px", paddingLeft: "7%" }} class={`text-start pt-4`}>Dashboard</h1>
+            <div style={{ paddingBottom: "2%" }}>
+              <Cards />
+            </div>
+
+            <div className="w-11/12 pl-24 area animate1">
               <Areachart inventory={inventory} />
             </div>
             <br /><br />
-            <div className="twochart" style={{ display:"flex" , width:"100%" ,gap:"2%", justifyContent:"center" }}>
-                <Barchart categories={categories} open={open} setOpen={setOpen} />
-                <Piechart labitem={labitem} />
+            <div className="twochart" style={{ display: "flex", width: "100%", gap: "2%", justifyContent: "center" }}>
+              <Barchart categories={categories} open={open} setOpen={setOpen} />
+              <Piechart labitem={labitem} />
             </div>
           </div>
 

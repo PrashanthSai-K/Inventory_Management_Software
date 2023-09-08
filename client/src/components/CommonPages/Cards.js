@@ -49,11 +49,11 @@ function Cards() {
 
 
   return (
-    <div className='w-full justify-center items-center animate2'>
+    <div className='w-full justify-center items-center '>
          <div className="items-center justify-center flex w-full gap-20 mt-8 scale-90 flex-wrap tablet:scale-100">
             {cards.map((items) => (
               <div
-                className={`w-80 h-36 shadow-2xl bg-white rounded-3xl  flex tablet:h-40`}
+                className={`w-80 h-36 shadow-2xl bg-white rounded-3xl  flex tablet:h-40 animate1`}
               >
                  <div className="flex w-1/2 items-center justify-around">
                   <img

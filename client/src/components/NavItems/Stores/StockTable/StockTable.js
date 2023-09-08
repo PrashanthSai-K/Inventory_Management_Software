@@ -126,9 +126,9 @@ function StockTable({getStock,fetchGetStock, setMessage, setError, setIsLoading,
   return (
     <div>
       <div style={{width:"90%"}} className=" flex ml-20 h-auto mt-5 mb-5 justify-between  font-semibold" >
-        <div className="sub-titles text-2xl font-semibold">Stock Edit</div>
+        <div className="sub-titles text-2xl font-semibold animate1">Stock Edit</div>
         <div className="flex input-field">
-            <div className="h-auto">
+            <div className="h-auto animate1">
               <input
                 name="inputQuery"
                 type="text"
@@ -143,7 +143,7 @@ function StockTable({getStock,fetchGetStock, setMessage, setError, setIsLoading,
             </div>
             <div
               onClick={() => setClick(true)}
-              className="focus:ring-4 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
+              className="focus:ring-4 shadow-lg animate1 transform active:scale-75 transition-transform cursor-pointer border-2 border-black rounded-full w-full ml-5 px-2 mr-16"
             >
               <i className="bi bi-search"></i>
             </div>
@@ -151,14 +151,14 @@ function StockTable({getStock,fetchGetStock, setMessage, setError, setIsLoading,
       </div>
 
 
-      <div className="flex justify-center items-center flex-col">
+      <div className="flex justify-center items-center flex-col animate2">
         <div
           style={{ width: "90%", height: "30%", maxHeight: "300px" }}
           class="relative rounded-2xl animate overflow-x-auto overflow-y-auto scrollbar-none"
         >
          
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
-            <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <thead style={{backgroundColor:"#0f6af2" , color:"white"}} class="text-sm uppercase">
               <tr>
                 <th
                   scope="col"
@@ -286,12 +286,12 @@ function StockTable({getStock,fetchGetStock, setMessage, setError, setIsLoading,
                 ></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{backgroundColor:"white" , fontWeight:"bold" ,color:"black"}}>
               {filteredData.map((data, index) => {
                 return (
                   <tr
                     key={data.id}
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                    class="bg-white"
                   >
                     <td scope="row" class="px-6 text-center py-4 ">
                       {index + 1}

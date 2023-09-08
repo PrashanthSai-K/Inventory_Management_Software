@@ -79,7 +79,7 @@ function Table({ stockData}) {
   };
 
   return (
-    <div className=" w-9/12">
+    <div className=" w-9/12 h-full">
       <div className="flex  w-full mb-5 h-auto  justify-between font-semibold">
         <div className="sub-titles2 animate1 text-center text-2xl font-semibold">
           Master Table
@@ -113,8 +113,8 @@ function Table({ stockData}) {
             style={{ width: "90%", height: "50%", maxHeight: "360px" }}
             class="shadow sm:rounded-lg  h-96"
           >
-            <table class="min-w-full text-sm text-gray-400 ">
-              <thead class="bg-gray-800 text-xs uppercase font-medium">
+            <table class="min-w-full text-sm">
+              <thead  style={{backgroundColor:"#0f6af2" , color:"white"}} class=" text-xs uppercase font-medium">
                 <tr>
                   <th className="px-6 py-3">s.no</th>
                   <th
@@ -321,10 +321,10 @@ function Table({ stockData}) {
                   </th>
                 </tr>
               </thead>
-              <tbody class="bg-gray-800">
+              <tbody style={{backgroundColor:"white" , fontWeight:"bold"}}>
                 {filteredData.map((data, index) => {
                   return (
-                    <tr class="bg-black bg-opacity-20">
+                    <tr className="shadow-md rounded-xl">
                       <td class="pl-4">{index + 1}</td>
                       <td class="flex px-6 py-4 whitespace-nowrap">
                         {data.item_code}

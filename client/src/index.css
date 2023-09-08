@@ -401,3 +401,10 @@ button:hover {
     opacity: 1;
   }
 }
+
+tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+tbody tr:nth-child(even) {
+  background-color: #cddff7;
+}
