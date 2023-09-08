@@ -170,7 +170,6 @@ function Vendors({ open }) {
     }
   }
 
-
   return (
     <>
       {isLoading ? (

@@ -89,7 +89,6 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
   };
 
   const handleSubmit = async (e) => {
-
     try {
       setIsLoading(true);
       e.preventDefault();

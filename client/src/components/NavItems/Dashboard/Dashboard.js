@@ -19,7 +19,7 @@ function Dashboard({open , setOpen}) {
 
   const fetchInventory = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/getInventory'); // Replace '/api/data' with your API endpoint    
+      const response = await axios.get('http://localhost:4000/api/getInventory'); // Replace '/api/data' with your API endpoint    
       setInventory(response.data);
     } catch (error) {
       console.error(error);
@@ -28,7 +28,7 @@ function Dashboard({open , setOpen}) {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/getCategories'); // Replace '/api/data' with your API endpoint
+      const response = await axios.get('http://localhost:4000/api/getCategories'); // Replace '/api/data' with your API endpoint
       setCategories(response.data);
     } catch (error) {
       console.error(error);
@@ -37,7 +37,7 @@ function Dashboard({open , setOpen}) {
 
   const fetchLabitem = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/getLabItem'); // Replace '/api/data' with your API endpoint
+      const response = await axios.get('http://localhost:4000/api/getLabItem'); // Replace '/api/data' with your API endpoint
       setLabitem(response.data);
     } catch (error) {
       console.error(error);

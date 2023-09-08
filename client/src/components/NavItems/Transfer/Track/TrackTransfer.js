@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../../AuthContext";
-import TrackCard from "./TrackCard";
+import { useAuth } from "../../../../AuthContext";
+import TrackCard from "./TrackCard.js";
 
 const TrackTransfer = ({ isVisible, onClose, trackTransferData, user , setMessage, setError}) => {
 

@@ -18,7 +18,6 @@ const Navbar = ({ location, open, setOpen, navItems, user }) => {
     return navItems.some((item) => item.src === location);
   }
 
-
   return (
     <>
     

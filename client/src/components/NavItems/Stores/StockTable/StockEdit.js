@@ -55,7 +55,6 @@ function StockEdit({ data, onClose, onSubmit, setMessage, setError, setIsLoading
 
   };
 
-
   return (
     <>
         <div className="fixed inset-0 z-40 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">

@@ -25,6 +25,7 @@ function Entries() {
   const [manufacturer, setManufacturer] = useState([]);
   const [supplier, setSupplier] = useState([]);
   const [quantityUnits, setQuantityUnits] = useState([]);
+  
 
   async function fetchItems() {
     const response = await axios.get("http://localhost:4000/api/getItems");
