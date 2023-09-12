@@ -257,7 +257,7 @@ function Table({ stockData }) {
                       {sortedColumn === "quantity_units" && (
                       <i
                         className={`bi bi-arrow-${
-                          sortOrder.quantity_units === "asc" ? "up" : "down"
+                          sortOrder.quantity_units === "asc" ? "up" : "down"  
                         } ml-2`}
                       ></i>
                     )}
@@ -269,7 +269,7 @@ function Table({ stockData }) {
                   >
                     <div className="flex">
                       <div onClick={() => sortData("manufacturer_name")}>
-                        Manufacturer Name
+                      Manufacturer Name
                       </div>
                       {sortedColumn === "manufacturer_name" && (
                       <i
@@ -286,7 +286,7 @@ function Table({ stockData }) {
                   >
                     <div className="flex">
                       <div onClick={() => sortData("supplier_name")}>
-                        Supplier Name
+                      supplier_name
                       </div>
                       {sortedColumn === "supplier_name" && (
                       <i

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import ItemEdit from "./ItemEdit";
 
 function ItemTable({itemData , fetchItemData, setMessage, setError}) {
-  //For open popup
+  //<---------------------For view open popup window------------------------->
 
   // console.log(itemData);
   const [openPopup, setOpenPopup] = useState(false);
@@ -19,7 +19,7 @@ function ItemTable({itemData , fetchItemData, setMessage, setError}) {
     setOpenPopup(false);
     setSelectedData(null);
   };
-  //For edit popup
+   //<---------------------For edit popup window------------------------->
 
   const [openEdit, setOpenEdit] = useState(false);
   const [editData, setEditData] = useState(null);
@@ -40,7 +40,7 @@ function ItemTable({itemData , fetchItemData, setMessage, setError}) {
     handleCloseEdit();
   };
 
-  // Search functionality
+  //<---------------------search functionality------------------------->
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -74,7 +74,7 @@ function ItemTable({itemData , fetchItemData, setMessage, setError}) {
     }
   }, [click, itemData, searchQuery]);
 
-  //sort by functionality
+   //<---------------------For sort functionality------------------------->
   const [sortOrders, setSortOrders] = useState({
     item_code: "asc",
     item_type: "asc",

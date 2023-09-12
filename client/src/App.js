@@ -27,6 +27,7 @@ import Stores from "./components/NavItems/Stores/Stores";
 import Unauthorized from "./components/ErrorPages/Unauthorized";
 import Transfer from "./components/NavItems/Transfer/Transfer.js";
 import { useAuth } from "./AuthContext";
+import Report from "./components/CommonPages/Report";
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
     { Name: "Entries", iconName: "bi-list-check", src: "/entries" },
     { Name: "Stores", iconName: "bi-shop", src: "/stores", role: "slbincharge" },
     { Name: "Transfer", iconName: "bi-arrow-left-right", src: "/transfer" },
+    { Name: "Report", iconName: "bi-arrow-left-right", src: "/report" },
     { Name: "Logout", iconName: "bi-box-arrow-right" },
   ];
 
@@ -122,6 +124,10 @@ function App() {
                 <Route
                   path="/master"
                   element={<Master />}
+                />
+                 <Route
+                  path="/report"
+                  element={<Report />}
                 />
                 <Route
                   path="/supplier"

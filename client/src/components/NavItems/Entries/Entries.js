@@ -46,6 +46,14 @@ function Entries() {
   }
 
 
+  const noDataOpenManufacturer = () => {
+    setShowItem(false)
+    setShowManufacturer(true)
+  }
+  const noDataOpenSupplier = () => {
+    setShowItem(false)
+    setShowSupplier(true)
+  }
 
   useEffect(() => {
     if (!Cookies.get("token")) {
@@ -151,6 +159,8 @@ function Entries() {
               </div>
             </div>
             <ItemPopUp
+            noDataOpenSupplier={noDataOpenSupplier}
+              noDataOpenManufacturer={noDataOpenManufacturer}
               isVisible={showItem}
               user={user}
               setMessage={setMessage}
@@ -161,9 +171,6 @@ function Entries() {
               supplier={supplier}
               quantityUnits={quantityUnits}
             />
-            {/* </>
-            )} */}
-
 
             <div
               onClick={() => setShowStock(true)}

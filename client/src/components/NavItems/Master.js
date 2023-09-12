@@ -55,6 +55,7 @@ function Master() {
           <div className="flex flex-col justify-center items-center gap-10 ">
             <center> <Cards /></center>
             <Table stockData={stockData} fetchStockData={fetchStockData} />
+            
           </div>  
         </div>
       )}
