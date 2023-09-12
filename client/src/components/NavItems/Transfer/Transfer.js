@@ -99,7 +99,10 @@ const Transfer = () => {
   return (
     <>
       {isLoading ? (
-        <div className="flex justify-center items-center h-full"><span class="loader"></span></div>
+        <div className="flex flex-col justify-center items-center h-full duration-800 ">
+        <span class="loader animate-bounce duration-800"></span>
+        Loading
+      </div >
       ) : (
         <div style={{ backgroundColor: "#F4F4F4" }} className="bg-white h-full  animate overflow-x-auto overflow-y-auto border-gray-700 rounded-lg w-full">
           <div className="p-8">

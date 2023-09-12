@@ -55,7 +55,6 @@ app.get("/api/getManufacturer", (req, res) => {
 
 app.get("/api/getCategories", (req, res) => {
     db.query("SELECT * FROM categories_view", (error, result) => {
-        console.log(result);
         res.send(result);
     });
 });
@@ -150,6 +149,38 @@ app.get("/api/getTotalInventoryValueData", (req, res) => {
         }
     })
 })
+
+
+app.get("/api/getInventoryData", (req, res) => {
+    db.query("SELECT * FROM lab_inventory_view", (error, result) => {
+        if (error) console.log(error);
+        res.send(result);
+    });
+});
+
+app.get("/api/getLabDetails", (req, res) => {
+    db.query("SELECT * FROM labdetails", (error, result) => {
+        if (error) console.log(error);
+        res.send(result);
+    });
+});
+
+app.get("/api/getLabsStock", (req, res) => {
+    db.query("SELECT * FROM labs_stock_view", (error, result) => {
+        if (error) console.log(error);
+        res.send(result);
+    });
+});
+
+app.get("/api/getOverallLabsStock", (req, res) => {
+    db.query("SELECT * FROM overall_stock_view", (error, result) => {
+        if (error) console.log(error);
+        res.send(result);
+    });
+});
+
+
+
 
 
 
