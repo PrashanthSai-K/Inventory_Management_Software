@@ -8,6 +8,8 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 
+import { Doughnut } from 'react-chartjs-2';
+
 
 function Piechart({ labitem }) {
 
@@ -134,7 +136,15 @@ function Piechart({ labitem }) {
             </g>
         );
     };
-
+    const data = {
+        labels: labitem.map(item => item.name),
+        datasets: [
+            {
+                data: labitem.map(item => item.value),
+                backgroundColor: labitem.map(() => getRandomColor()), // You can use your getRandomColor function here
+            },
+        ],
+    };
     return (
         <>
             <div className="pie animate2" style={{ backgroundColor: "#F4F4F4", width: "40%" }}>
@@ -165,6 +175,7 @@ function Piechart({ labitem }) {
                     </div>
                 </div>
             </div>
+
         </>
     )
 }

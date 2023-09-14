@@ -7,7 +7,7 @@ import axios from "axios";
 const TransferCard = ({ data, user, setMessage, setError }) => {
 
   const [isLoading, setIsLoading] = useState(false)
-
+;console.log(data);
   const handleAccept = async (id) => {
 
     try {
@@ -65,7 +65,7 @@ const TransferCard = ({ data, user, setMessage, setError }) => {
           <span class="loader"></span>
         </div >
       ) : (
-        <div className="card animate2">
+        <div className="card ">
           <div className="p-3 flex items-center justify-between">
             <div>
               <div className="lg:text-lg">Requested By : {toSentenceCase(data.username)}</div>

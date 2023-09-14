@@ -179,6 +179,13 @@ app.get("/api/getOverallLabsStock", (req, res) => {
     });
 });
 
+app.get("/api/getOverallTransferedData", (req, res) => {
+    db.query("SELECT * FROM transfer_request_merged_view", (error, result) => {
+        if (error) console.log(error);
+        res.send(result);
+    });
+});
+
 
 
 
