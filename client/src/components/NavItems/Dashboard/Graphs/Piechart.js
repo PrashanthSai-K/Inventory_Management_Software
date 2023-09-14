@@ -9,7 +9,7 @@ import {
 } from 'recharts';
 
 
-function Piechart({labitem}) {
+function Piechart({ labitem }) {
 
 
     const getRandomColor = () => {
@@ -20,6 +20,7 @@ function Piechart({labitem}) {
         }
         return color;
     };
+
 
 
     const [activeIndex, setActiveIndex] = useState(0);
@@ -58,7 +59,7 @@ function Piechart({labitem}) {
         const sy = cy + (outerRadius + 10) * sin;
         const mx = cx + (outerRadius + 30) * cos;
         const my = cy + (outerRadius + 30) * sin;
-        const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+        const ex = mx + (cos >= 0 ? 1 : -1);
         const ey = my;
         const textAnchor = cos >= 0 ? 'start' : 'end';
         const sectorFill = props.activeIndex === props.index ? payload.color : fill;
@@ -124,17 +125,19 @@ function Piechart({labitem}) {
                     outerRadius={outerRadius + 10}
                     fill={sectorFill}
                 />
-                <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-                <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
                 <label></label>
-                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`Items : ${value}`}</text>
+                <g transform={`translate(${ex + (cos >= 0 ? 1 : -1)}, ${ey})`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <text textAnchor={textAnchor}  fill="#333">Items :</text>
+                    <text textAnchor={textAnchor} dy={20} fill="#333">{`${value} nos`}</text>
+                </g>
+
             </g>
         );
     };
 
     return (
         <>
-            <div className="pie animate2" style={{ backgroundColor: "#F4F4F4" ,width:"40%"}}>
+            <div className="pie animate2" style={{ backgroundColor: "#F4F4F4", width: "40%" }}>
                 <div>
                     <div
                         className={` pieh shadow-2xl p-10 bg-white rounded-2xl shadow ${isItemFullScreen ? 'fixed top-0 left-0 max-w z-50 full-screen' : ''

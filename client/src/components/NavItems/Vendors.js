@@ -177,6 +177,8 @@ function Vendors({ open }) {
     }
   }
 
+  console.log(supplier)
+
   return (
     <>
       {isLoading ? (
@@ -239,6 +241,20 @@ function Vendors({ open }) {
                               s.no
                             </th>
                             <th
+                              onClick={() => sortData("id")}
+                              scope="col"
+                              class="px-6 py-3 cursor-pointer whitespace-nowrap"
+                            >
+                              <div className="flex">
+                                <div>Manufacturer ID</div>
+                                <span
+                                  className={`bi bi-arrow-${
+                                    sortOrder === "asc" ? "up" : "down"
+                                  } ml-2`}
+                                />
+                              </div>
+                            </th>
+                            <th
                               onClick={() => sortData("name")}
                               scope="col"
                               class="px-6 py-3 cursor-pointer"
@@ -260,6 +276,9 @@ function Vendors({ open }) {
                               <tr class="bg-white">
                                 <td scope="row" class="px-6 py-4 ">
                                   {index + 1}
+                                </td>
+                                <td class="px-6 py-4  text-gray-900 whitespace-nowrap">
+                                  {data.id}
                                 </td>
                                 <td class="px-6 py-4  text-gray-900 whitespace-nowrap">
                                   {data.name}
@@ -319,6 +338,24 @@ function Vendors({ open }) {
                           <tr>
                             <th scope="col" class="px-6 py-3">
                               s.no
+                            </th>
+                            <th
+                              onClick={() => handleSort("id")}
+                              scope="col"
+                              class="px-6 py-3 cursor-pointer"
+                            >
+                              <div className="flex">
+                                <div>Supplier ID</div>
+                                {supplierSortedColumn === "id" && (
+                                  <i
+                                    className={`bi bi-arrow-${
+                                      supplierSortOrder.id === "asc"
+                                        ? "up"
+                                        : "down"
+                                    } ml-2`}
+                                  ></i>
+                                )}
+                              </div>
                             </th>
                             <th
                               onClick={() => handleSort("name")}
@@ -381,6 +418,7 @@ function Vendors({ open }) {
                             return (
                               <tr class="bg-white">
                                 <td class="px-6 py-4">{index + 1}</td>
+                                <td class="px-6 py-4">{data.id}</td>
                                 <td
                                   scope="row"
                                   class="px-6 py-4 text-gray-900 whitespace-nowrap"
