@@ -6,7 +6,7 @@ import axios from "axios";
 import RejectPopup from './RejectPopup';
 
 
-const TransferCard = ({ data, user, setMessage, setError }) => {
+const TransferCard = ({ data, user, setMessage, setError, onClose }) => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [showManufacturer, setShowManufacturer] = useState(false);
@@ -48,12 +48,14 @@ const TransferCard = ({ data, user, setMessage, setError }) => {
               setIsLoading(false);
               if (response && response.status == 201) {
                 setMessage(response.data.Data);
+                onClose();
               }
             })
         } catch (error) {
           setIsLoading(false);
           if (error && error.response.status == 500) {
             setError(error.response.data.Data);
+            onClose();
           }
           console.log(error);
         }
@@ -79,7 +81,7 @@ const TransferCard = ({ data, user, setMessage, setError }) => {
           <span class="loader"></span>
         </div >
       ) : (
-        <div className="card animate2 h-auto " key={data.id}>
+        <div className="card ">
           <div className="p-3 flex items-center justify-between">
             <div>
               <div className="lg:text-lg">Requested By : {toSentenceCase(data.username)}</div>

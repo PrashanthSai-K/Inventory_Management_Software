@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import MasterTablePopup from "./MasterTablePopup";
 
-function Table({ scrapData }) {
+function Table({ stockData }) {
 //For open popup
 
   // console.log(itemData);
@@ -27,22 +27,18 @@ function Table({ scrapData }) {
 
   useEffect(() => {
     if (click || searchQuery == "") {
-      const filteredResults = scrapData.filter((item) => {
+      const filteredResults = stockData.filter((item) => {
         const propertiesToSearch = [
-          "item_code",
-          "item_type",
-          "item_name",
-          "item_subname",
-          "item_description",
-          "cost_per_item",
-          "quantity_units",
-          "manufacturer_name",
-          "supplier_name",
-          "contact",
-          "stock_qty",
-          "inventory_value",
-          "user_id",
-          "dept_id",
+          "item_code", 
+          "item_type", 
+          "item_name", 
+          "item_subname" ,
+          "from_labname" ,
+          "request_labname",       
+          "transfer_qty", 
+          "reject_description",
+          "status",
+          "date"
         ];
         return propertiesToSearch.some((property) =>
           typeof item[property] === "string"
@@ -55,24 +51,21 @@ function Table({ scrapData }) {
 
       setFilteredData(filteredResults);
     }
-  }, [click, scrapData, searchQuery]);
+  }, [click, stockData, searchQuery]);
 
   //sort by functionality
   const [sortOrder, setSortOrder] = useState({
-    item_code : "asc",
+          item_code : "asc",
           item_type : "asc",
           item_name : "asc",
           item_subname : "asc",
-          item_description : "asc",
-          cost_per_item : "asc",
-          quantity_units : "asc",
-          manufacturer_name :"asc",
-          supplier_name : "asc",
-          contact :"asc",
-          stock_qty : "asc",
-          inventory_value : "asc",
-          user_id : "asc",
-        dept_id : "asc",
+          from_labname : "asc",
+          request_labname:"asc",
+          transfer_qty : "asc",
+          reject_description:"asc",
+          status : "asc",
+          date:"asc",
+          
   });
   const [sortedColumn, setSortedColumn] = useState("");
 
@@ -108,11 +101,13 @@ function Table({ scrapData }) {
     }
   };
 
+  
+
   return (
     <div className=" w-9/12 h-full">
       <div className="flex  w-full mb-5 h-auto  justify-between font-semibold">
         <div className="sub-titles2 animate1 text-center text-2xl font-semibold">
-          Master Table
+          Transfer Table
         </div>
         <div className="input-field2 animate1 flex">
           <div className="h-auto">
@@ -217,13 +212,13 @@ function Table({ scrapData }) {
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div onClick={() => sortData("item_description")}>
-                        Item Description
+                      <div onClick={() => sortData("from_labname")}>
+                        From Lab Name
                       </div>
-                      {sortedColumn === "item_description" && (
+                      {sortedColumn === "from_labname" && (
                       <i
                         className={`bi bi-arrow-${
-                          sortOrder.item_description === "asc" ? "up" : "down"
+                          sortOrder.from_labname === "asc" ? "up" : "down"
                         } ml-2`}
                       ></i>
                     )}
@@ -234,13 +229,31 @@ function Table({ scrapData }) {
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div onClick={() => sortData("cost_per_item")}>
-                        Cost Per Item
+                      <div onClick={() => sortData("request_labname")}>
+                      To Lab Name
                       </div>
-                      {sortedColumn === "cost_per_item" && (
+                      {sortedColumn === "request_labname" && (
                       <i
                         className={`bi bi-arrow-${
-                          sortOrder.cost_per_item === "asc" ? "up" : "down"
+                          sortOrder.request_labname === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
+                    </div>
+                  </th>
+                  
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                  >
+                    <div className="flex">
+                      <div onClick={() => sortData("transfer_qty")}>
+                        Transfer Quantity
+                      </div>
+                      {sortedColumn === "transfer_qty" && (
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.transfer_qty === "asc" ? "up" : "down"
                         } ml-2`}
                       ></i>
                     )}
@@ -251,13 +264,13 @@ function Table({ scrapData }) {
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div onClick={() => sortData("quantity_units")}>
-                        Quantity Units
+                      <div onClick={() => sortData("reject_description")}>
+                        Description
                       </div>
-                      {sortedColumn === "quantity_units" && (
+                      {sortedColumn === "reject_description" && (
                       <i
                         className={`bi bi-arrow-${
-                          sortOrder.quantity_units === "asc" ? "up" : "down"
+                          sortOrder.reject_description === "asc" ? "up" : "down"
                         } ml-2`}
                       ></i>
                     )}
@@ -268,13 +281,13 @@ function Table({ scrapData }) {
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div onClick={() => sortData("manufacturer_name")}>
-                        Manufacturer Name
+                      <div onClick={() => sortData("status")}>
+                        Status
                       </div>
-                      {sortedColumn === "manufacturer_name" && (
+                      {sortedColumn === "status" && (
                       <i
                         className={`bi bi-arrow-${
-                          sortOrder.manufacturer_name === "asc" ? "up" : "down"
+                          sortOrder.status === "asc" ? "up" : "down"
                         } ml-2`}
                       ></i>
                     )}
@@ -285,105 +298,18 @@ function Table({ scrapData }) {
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
-                      <div onClick={() => sortData("supplier_name")}>
-                        Supplier Name
+                      <div onClick={() => sortData("date")}>
+                        Date
                       </div>
-                      {sortedColumn === "supplier_name" && (
+                      {sortedColumn === "date" && (
                       <i
                         className={`bi bi-arrow-${
-                          sortOrder.supplier_name === "asc" ? "up" : "down"
+                          sortOrder.date === "asc" ? "up" : "down"
                         } ml-2`}
                       ></i>
                     )}
                     </div>
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                  >
-                    <div className="flex">
-                      <div onClick={() => sortData("contact")}>
-                        Supplier Contact
-                      </div>
-                      {sortedColumn === "contact" && (
-                      <i
-                        className={`bi bi-arrow-${
-                          sortOrder.contact === "asc" ? "up" : "down"
-                        } ml-2`}
-                      ></i>
-                    )}
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                  >
-                    <div className="flex">
-                      <div onClick={() => sortData("stock_qty")}>Stock Qty</div>
-                      {sortedColumn === "stock_qty" && (
-                      <i
-                        className={`bi bi-arrow-${
-                          sortOrder.stock_qty === "asc" ? "up" : "down"
-                        } ml-2`}
-                      ></i>
-                    )}
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                  >
-                    <div className="flex">
-                      <div onClick={() => sortData("inventory_value")}>
-                        Inventory Value
-                      </div>
-                      {sortedColumn === "inventory_value" && (
-                      <i
-                        className={`bi bi-arrow-${
-                          sortOrder.inventory_value === "asc" ? "up" : "down"
-                        } ml-2`}
-                      ></i>
-                    )}
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                  >
-                    <div className="flex">
-                      <div onClick={() => sortData("user_id")}>
-                        Purchased By
-                      </div>
-                      {sortedColumn === "user_id" && (
-                      <i
-                        className={`bi bi-arrow-${
-                          sortOrder.user_id === "asc" ? "up" : "down"
-                        } ml-2`}
-                      ></i>
-                    )}
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                  >
-                    <div className="flex">
-                      <div onClick={() => sortData("dept_id")}>
-                        Department Id
-                      </div>
-                      {sortedColumn === "dept_id" && (
-                      <i
-                        className={`bi bi-arrow-${
-                          sortOrder.dept_id === "asc" ? "up" : "down"
-                        } ml-2`}
-                      ></i>
-                    )}
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                  ></th>
                 </tr>
               </thead>
               <tbody style={{backgroundColor:"white" , fontWeight:"bold"}}>
@@ -404,41 +330,23 @@ function Table({ scrapData }) {
                         {data.item_subname}
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
-                        {data.item_description}
+                        {data.from_labname}
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
-                        {data.cost_per_item}
+                        {data.request_labname}
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
-                        {data.quantity_units}
+                        {data.transfer_qty}
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
-                        {data.manufacturer_name}
+                        {data.reject_description ? data.reject_description : "-"}
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
-                        {data.supplier_name}
+                        {data.status}
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
-                        {data.contact}
+                        {data.date.split("T")[0]}
                       </td>
-                      <td class=" px-6 py-4 whitespace-nowrap">
-                        {data.stock_qty}
-                      </td>
-                      <td class=" px-6 py-4 whitespace-nowrap">
-                        {data.inventory_value}
-                      </td>
-                      <td class=" px-6 py-4 whitespace-nowrap">
-                        {data.user_id}
-                      </td>
-                      <td class=" px-6 py-4 whitespace-nowrap">
-                        {data.dept_id}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                    <i
-                      onClick={() => handleOpenPopup(data)}
-                      className="bi bi-eye cursor-pointer"
-                    ></i>
-                  </td>
                     </tr>
                   );
                 })}
@@ -447,11 +355,11 @@ function Table({ scrapData }) {
           </div>
         </div>
       </div>
-      {openPopup && selectedData && (
+      {/* {openPopup && selectedData && (
         <div className="blur-background">
-          {/* <MasterTablePopup data={selectedData} onClose={handleClosePopup} /> */}
+          <MasterTablePopup data={selectedData} onClose={handleClosePopup} />
         </div>
-      )}
+      )} */}
     </div>
   );
 }

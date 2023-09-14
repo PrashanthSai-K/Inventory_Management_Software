@@ -147,6 +147,14 @@ app.get("/api/getTotalItemValueData", (req, res) => {
         }
     })
 })
+app.get("/api/getOverallTransferedData", (req, res) => {
+    db.query("SELECT * FROM transfer_request_merged_view", (error, result) => {
+        if (error) console.log(error);
+        else {
+            res.send(result);
+        }
+    })
+})
 
 app.get("/api/getTotalInventoryValueData", (req, res) => {
     db.query("SELECT SUM(Cost) AS cost FROM inventory_view", (error, result) => {

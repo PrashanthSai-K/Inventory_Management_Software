@@ -15,7 +15,9 @@ function Dashboard({ open, setOpen }) {
   const [isLoading, setIsLoading] = useState(true);
   const [inventory, setInventory] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [labname, setLabname] = useState([]);
   const [labitem, setLabitem] = useState([]);
+  const [labsStock, setLabsStock] = useState([]);
 
 
   const fetchInventory = async () => {
@@ -44,18 +46,43 @@ function Dashboard({ open, setOpen }) {
       console.error(error);
     }
   }
+
+  const fetchLabname = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/getLabDetails'); // Replace '/api/data' with your API endpoint
+      setLabname(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const fetchLabsStock = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/getLabsStock'); // Replace '/api/data' with your API endpoint
+      setLabsStock(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
   useEffect(() => {
     fetchInventory();
     fetchCategories();
     fetchLabitem();
+    fetchLabname();
+    fetchLabsStock();
   }, []);
 
   useEffect(() => {
-    if (categories.length > 0 && inventory.length > 0 && labitem.length > 0) {
+    if (categories.length > 0 && inventory.length > 0 && labitem.length > 0 && labname.length > 0) {
       setTimeout(() => setIsLoading(), 2000)
 
     }
   }, [categories, inventory, labitem])
+
+
+
 
   return (
     <>
@@ -77,7 +104,7 @@ function Dashboard({ open, setOpen }) {
             </div>
             <br /><br />
             <div className="twochart" style={{ display: "flex", width: "100%", gap: "2%", justifyContent: "center" }}>
-              <Barchart categories={categories} open={open} setOpen={setOpen} />
+              <Barchart categories={categories} open={open} setOpen={setOpen} labname={labname} labsStock={labsStock}/>
               <Piechart labitem={labitem} />
             </div>
           </div>
