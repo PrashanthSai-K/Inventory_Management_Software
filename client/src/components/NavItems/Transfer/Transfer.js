@@ -50,10 +50,8 @@ const Transfer = () => {
   })
 
 
-
   async function fetchTransferData(data) {
     try {
-
       const result = await axios.post("http://localhost:4000/api/getTransferData", data)
       if (result.status == 200) {
         if (result.data.data == "No Data") {
@@ -68,8 +66,6 @@ const Transfer = () => {
     }
   }
 
-
-
   const clearMessage = () => {
     setMessage(null);
     setError(null);
@@ -80,14 +76,11 @@ const Transfer = () => {
   }, [message, error]);
 
   async function fetchTrackTransferData(data) {
-
     try {
-      // console.log(data)
       const response = await axios.post(
         "http://localhost:4000/api/getTrackTransfer", data
       );
       if (response.status == 200) {
-        // console.log(response.data)
         setTrackTransferData(response.data.data)
       }
     } catch (error) {
@@ -95,11 +88,10 @@ const Transfer = () => {
     }
   }
 
-
   return (
     <>
       {isLoading ? (
-        <div className="flex justify-center items-center h-full"><span class="loader"></span></div>
+        <div className="flex justify-center items-center h-full"><span className="loader"></span></div>
       ) : (
         <div style={{ backgroundColor: "#F4F4F4" }} className="bg-white h-full  animate overflow-x-auto overflow-y-auto border-gray-700 rounded-lg w-full">
           <div className="p-8">
@@ -134,7 +126,7 @@ const Transfer = () => {
               Pending request:
               {noData ? <div>No Data</div> : (
                 transferData && transferData.map((data) =>
-                  <TransferCard setMessage={setMessage} setError={setError} data={data} user={user} />
+                  <TransferCard key={data.id} setMessage={setMessage} setError={setError} data={data} user={user} />
                 )
               )}
             </div>

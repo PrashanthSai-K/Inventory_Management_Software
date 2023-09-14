@@ -78,6 +78,7 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
       (res) => res.item_code.toLowerCase() == data.itemcode.toLowerCase()
     );
   };
+  
   const checkAvailability = (e) => {
     e.preventDefault();
     const foundElement = result.find(

@@ -7,6 +7,7 @@ const manufacturerAdd = async function (req, res, next) {
         .then((response) => {
             res.status(201).json({ Data: "Manufacturer created sucessfully" })
         }).catch((error) => {
+            console.log(error);
             res.status(400).json({ Data: "Some internal error" });
         })
 }
@@ -41,6 +42,7 @@ const itemAdd = async function (req, res, next) {
 
     const selectResult1 = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM manufacturer").catch((error) => {
+            console.log(error);
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -49,6 +51,7 @@ const itemAdd = async function (req, res, next) {
 
     const selectResult2 = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM supplier").catch((error) => {
+            console.log(error);
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -57,6 +60,7 @@ const itemAdd = async function (req, res, next) {
 
     const selectResult3 = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM quantity_units").catch((error) => {
+            console.log(error);
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -65,6 +69,7 @@ const itemAdd = async function (req, res, next) {
 
     const selectResult4 = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM itemtable").catch((error) => {
+            console.log(error);
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -88,6 +93,7 @@ const itemAdd = async function (req, res, next) {
             ).then((response) => {
                 res.status(201).json({ Data: "Item added sucessfully" });
             }).catch((error) => {
+                console.log(error);
                 res.status(400).json({ Data: "Some internal error" });
             });
         }

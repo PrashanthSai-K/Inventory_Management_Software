@@ -56,9 +56,6 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
       }
     }
   };
-  useEffect(()=>{
-    console.log(data);
-  })
 
   return (
     <>
@@ -145,6 +142,16 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
                 <div className="text-sm ">Status</div>
                 <div className="font-bold text-indigo-700">
                   {data.status}
+                </div>
+              </div>
+            </div>
+
+            <div class="px-4 py-4 bg-indigo-100 rounded-lg flex gap-2">
+              <i class="bi bi-person-circle pl-3 pr-3 pt-2 pb-3 bg-indigo-300 rounded-lg"></i>
+              <div className="flex flex-col ">
+                <div className="text-sm ">Description</div>
+                <div className="font-bold text-indigo-700">
+                  {data.reject_description}
                 </div>
               </div>
             </div>
