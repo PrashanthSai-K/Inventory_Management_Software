@@ -15,6 +15,13 @@ function MasterTablePopup({ onClose, data }) {
         <div className=" text-lg gap-6">
           <div className="w-full flex">
             <div className="w-36 flex justify-end font-bold mr-5 whitespace-nowrap">
+              Apex No:
+            </div>
+            :<div className="pl-5"> {data.apex_no}</div>
+          </div>
+          <div className="w-full flex">
+
+            <div className="w-36 flex justify-end font-bold mr-5 whitespace-nowrap">
               Item Code
             </div>
             :<div className="pl-5"> {data.item_code}</div>

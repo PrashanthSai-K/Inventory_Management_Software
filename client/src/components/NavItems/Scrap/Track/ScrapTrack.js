@@ -1,36 +1,67 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import TrackCard from './TrackCard';
+import { useAuth } from '../../../../AuthContext';
 
-const ScrapTrack = ({onClose, isVisible}) => {
+const ScrapTrack = (props) => {
 
+  const { onClose, isVisible, noTrackData, isLoading, setIsLoading,
+    setScrapTrackData, scrapTrackData, fetchScrapTrackData, setMesaage, setError } = props
 
+  const { user, getUser } = useAuth();
 
-  if(!isVisible) return null;
-   
+  useEffect(() => {
+    getUser().then((response) => fetchScrapTrackData(response.dept_code));
+  }, [])
+
+  if (!isVisible) return null;
+
   return (
     <>
-    <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-        <div className="flex flex-col">
-            <div
-                style={{ height: "600px" }}
-                className="popup-responsive animate1 popup-responsive-small bg-white w-full px-14 py-5 overflow-x-auto overflow-y-auto flex flex-col items-center border-gray-700 rounded-lg"
+      <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center lg:w-full ">
+        <div className="bg-white w-5/6 h-5/6 animate1  overflow-y-auto rounded-2xl p-4">
+          <div className="flex items-center justify-between px-6">
+            <div className="text-lg pt-2 mt-2">Your Pending Scrap Requests: </div>
+            <button
+              className="text-black text-lg border-2 border-black px-2 place-self-end"
+              style={{ borderRadius: "50%" }}
+              onClick={() => onClose()}
             >
-                <button
-                    className="text-black rounded-full border-black px-2 border-2 text-3xl place-self-end"
-                    onClick={() => onClose()}
-                >
-                    X
-                </button>
-                <div className="flex flex-col justify-center items-center bg-white p-8 rounded-2xl">
-                    Scrap Track
-                </div>
+              X
+            </button>
+          </div>
+          <div>
+            <div className="mt-6 flex flex-col justify-center items-center gap-10">
+
+              {noTrackData ? (
+                <div>No data</div>
+              ) : scrapTrackData.length > 0 ? (
+                scrapTrackData.map((data) => {
+                  return (
+                    <TrackCard
+                      data={data}
+                      user={user}
+                      setMessage={setMesaage}
+                      setError={setError}
+                      onClose={onClose}
+                      setIsLoading={setIsLoading}
+                      fetchScrapTrackData={fetchScrapTrackData}
+                      getUser={getUser}
+                    />
+                  )
+                })
+              ) : (
+                <div>No Pending Data</div>
+              )}
             </div>
+          </div>
 
         </div>
 
-    </div>
+      </div>
 
 
-</>
+    </>
   )
 }
 

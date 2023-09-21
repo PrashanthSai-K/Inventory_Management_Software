@@ -15,6 +15,7 @@ const db = require("./database/db.js");
 const { getTransferData, transferRequest, acceptRequest, rejectRequest, cancelTransferRequest, deleteTransferRequest } = require("./transfer.js");
 const { itemEdit, stockEdit } = require("./edit.js");
 const { manufacturerAdd, supplierAdd, itemAdd, stockAdd } = require("./vendor.js");
+const { scrapRequest, getScrapData, getAllScrapData, rejectScrapRequest ,acceptScrapRequest, cancelScrapRequest, deleteScrapRequest, getTableScrapData} = require("./scrap.js");
 
 
 const app = express();
@@ -165,6 +166,33 @@ app.get("/api/getTotalInventoryValueData", (req, res) => {
     })
 })
 
+app.get("/api/getInventoryData", (req, res) => {
+    db.query("SELECT * FROM lab_inventory_view", (error, result) => {
+        if (error) console.log(error);
+        res.send(result);
+    });
+});
+
+app.get("/api/getLabDetails", (req, res) => {
+    db.query("SELECT * FROM labdetails", (error, result) => {
+        if (error) console.log(error);
+        res.send(result);
+    });
+});
+
+app.get("/api/getLabsStock", (req, res) => {
+    db.query("SELECT * FROM labs_stock_view", (error, result) => {
+        if (error) console.log(error);
+        res.send(result);
+    });
+});
+
+app.get("/api/getOverallLabsStock", (req, res) => {
+    db.query("SELECT * FROM overall_stock_view", (error, result) => {
+        if (error) console.log(error);
+        res.send(result);
+    });
+});
 
 app.post("/api/getTransferData", getTransferData)
 
@@ -177,7 +205,7 @@ app.post("/api/deleteTransferrequest", deleteTransferRequest);
 app.post("/api/getTrackTransfer", (req, res) => {
     try {
         const user_dept = req.body.dept_code;
-        db.query("Select * FROM transfer_request_merged_view WHERE transfer_to = ?", [user_dept])
+        db.query("Select * FROM transfer_request_merged_view WHERE transfer_to = ? ORDER BY date DESC", [user_dept])
             .catch((error) => res.status(500).json({ error: "There was some Error" }))
             .then((response) => {
                 res.status(200).json({ data: response })
@@ -194,6 +222,22 @@ app.post("/api/rejectRequest", rejectRequest);
 app.post("/api/importItems", importItems);
 
 app.post("/api/importStocks", importStocks);
+
+app.post("/api/scrapRequest", scrapRequest);
+
+app.get("/api/getScrap", getAllScrapData);
+
+app.get("/api/getScrapData/:id", getScrapData);
+
+app.post("/api/rejectScrapRequest", rejectScrapRequest);
+
+app.post("/api/acceptScrapRequest", acceptScrapRequest);
+
+app.post("/api/cancelScrapRequest", cancelScrapRequest);
+
+app.post("/api/deleteScrapRequest", deleteScrapRequest);
+
+app.get("/api/getTableScrapData", getTableScrapData);
 
 const server = https.createServer()
 

@@ -5,7 +5,7 @@ const getTransferData = function (req, res, next) {
 
     const user_dept = req.body.dept_code;
     if (req.body.role == 'slbincharge') {
-        db.query("SELECT * FROM transfer_request_merged_view WHERE transfered_from = ? AND status = ?", [user_dept, "PENDING"])
+        db.query("SELECT * FROM transfer_request_merged_view WHERE transfered_from = ? AND status = ? ", [user_dept, "PENDING"])
             .catch((error) => res.status(500).json({ error: "There was some Error" }))
             .then((response) => {
                 if (response.length > 0) {
@@ -44,6 +44,11 @@ const transferRequest = async function (req, res, next) {
         const transfer_from = req.body.resData.fromLabId;
         const user_id = req.body.resData.user_id;
 
+        if(transfer_to.toUpperCase() == transfer_from.toUpperCase()){
+            res.status(500).json({Data: "Requested lab cannot be your lab"});
+            return;
+        }
+
         const transferResult = await new Promise((resolve, reject) => {
             connection.query("SELECT * FROM admin_stock_view WHERE item_code = ? AND dept_id = ? ", [item_code, transfer_from], async (error, result) => {
                 if (error) {
@@ -62,7 +67,7 @@ const transferRequest = async function (req, res, next) {
                     [item_code, manufacturer_id, supplier_id, transfer_qty, transfer_to, transfer_from, user_id], async (error, result) => {
                         if (error) {
                             await connection.rollback();
-                            console.log(error);
+
                             res.status(400).json({ "Data": "Stock quantity not available" });
                             return;
                             reject(error);
@@ -72,7 +77,6 @@ const transferRequest = async function (req, res, next) {
             })
 
         } else {
-            console.log("Error")
             res.status(400).json({ "Data": "Stock quantity not available" });
             return;
         }
@@ -166,7 +170,6 @@ const deleteTransferRequest = async function (req, res, next) {
                     [req.body.transfer_id, req.body.dept_id, "CANCELED"],
                     async (error, result) => {
                         if (error) {
-                            console.log(error)
                             await connection.rollback();
                             res.status(400).json({ "Data": "Some Internal error" });
                             reject(error)
@@ -179,7 +182,6 @@ const deleteTransferRequest = async function (req, res, next) {
             res.status(200).json({ "Data": "Deleted sucessfully" });
 
         } else {
-            console.log("error");
             res.status(400).json({ "Data": "Some Internal Error" });
             return;
         }
@@ -218,7 +220,6 @@ const acceptRequest = async function (req, res, next) {
 
 
         } else if (req.body.role == "slsincharge") {
-            console.log("from slsincharge");
             const fromDataResult = await new Promise((resolve, reject) => {
                 connection.query("SELECT * FROM admin_stock_view WHERE dept_id = ? AND item_code = ?", [req.body.transfered_from, req.body.item_code], async (error, result) => {
                     if (error) {
@@ -285,7 +286,7 @@ const acceptRequest = async function (req, res, next) {
                             }
                         });
                 });
-            } else {
+            }else {
                 const item_code = req.body.item_code;
                 const manufacturer_id = req.body.manufacturer_id;
                 const supplier_id = req.body.supplier_id;
@@ -294,10 +295,11 @@ const acceptRequest = async function (req, res, next) {
                 const user_id = req.body.user_id;
                 const dept_id = req.body.transfer_to;
                 const currDate = new Date();
+                const apex_no = fromDataResult[0].apex_no;
 
                 const toInsertResult = await new Promise((resolve, reject) => {
-                    connection.query("INSERT INTO  stocktable  (item_code, manufacturer_id, supplier_id,  stock_qty , inventory_value, user_id, dept_id, created_at ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                        [item_code, manufacturer_id, supplier_id, stockAdd, inventoryAdd, user_id, dept_id, currDate.toISOString().split("T")[0] ], async (error, result) => {
+                    connection.query("INSERT INTO  stocktable  (apex_no, item_code, manufacturer_id, supplier_id,  stock_qty , inventory_value, user_id, dept_id, created_at ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        [apex_no, item_code, manufacturer_id, supplier_id, stockAdd, inventoryAdd, user_id, dept_id, currDate.toISOString().split("T")[0] ], async (error, result) => {
                             if (error) {
                                 await connection.rollback()
                                 res.status(400).json({ "data": "Some error" });
@@ -330,7 +332,6 @@ const acceptRequest = async function (req, res, next) {
         if (connection) {
             await connection.rollback();
         }
-        console.log(error);
     } finally {
         if (connection) {
             connection.release();
@@ -349,7 +350,7 @@ const rejectRequest = async function (req, res, next) {
             connection.query("UPDATE transfertable SET status = ?, reject_description = ?   WHERE id = ?", ["REJECTED", req.body.rejectDesc, req.body.id], async (error, result) => {
                 if (error) {
                     await connection.rollback();
-                    res.status(500).json({ "Data": "Some Internal Error" });
+                    res.status(500).json({ "Data": "Some Internal Error" });    
                     return;
                     reject(error);
                 } else

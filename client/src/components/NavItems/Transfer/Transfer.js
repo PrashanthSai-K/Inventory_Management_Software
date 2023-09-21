@@ -188,6 +188,7 @@ const Transfer = () => {
             setError={setError}
             setMessage={setMessage}
           />
+          
           <ApprovalPopup
             user={user}
             transferData={transferData}

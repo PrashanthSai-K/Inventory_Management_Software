@@ -151,6 +151,9 @@ input::-webkit-inner-spin-button {
   .card-amount-adjust {
     font-size: 25px;
   }
+  .entry-card {
+    height: auto;
+  }
 
   .entries-gap-adjust {
     gap: 50px;
@@ -168,7 +171,11 @@ input::-webkit-inner-spin-button {
 
   .entry-card {
     height: auto;
+    justify-content: center;
+    width: 70% !important;
+    flex-wrap: wrap;
   }
+
 
   .button-container {
     flex-wrap: wrap;
@@ -187,6 +194,13 @@ input::-webkit-inner-spin-button {
   .popup-responsive {
     max-width: 500px;
   }
+
+  .entry-card {
+    height: auto;
+    justify-content: center;
+    width: 70% !important;
+    flex-wrap: wrap;
+  }
 }
 
 @media (max-width:450px) {
@@ -197,6 +211,7 @@ input::-webkit-inner-spin-button {
   .popup-content {
     min-width: 450px;
   }
+
 }
 
 @media (max-width:900px) {

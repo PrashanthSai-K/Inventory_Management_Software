@@ -183,7 +183,7 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
                       className="text-md block px-3 py-2 rounded-b-lg w-full border-t-0
                 bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
                     >
-                      {itemResult &&
+                      {itemResult && itemResult.length > 0 ? (
                         itemResult.slice(0, 2).map((result) => {
                           return (
                             <div
@@ -196,7 +196,10 @@ const TransferPopup = ({ isVisible, onClose, user, setMessage, setError }) => {
                               {result.item_code}-{result.item_name}
                             </div>
                           );
-                        })}
+                        }) )
+                        : (
+                          <div>No Match</div>
+                        )}
                     </div>
                   )}
                 </div>
