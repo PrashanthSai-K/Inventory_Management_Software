@@ -3,6 +3,7 @@ const https = require('https');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const {importItems, importStocks} = require("./excel_import.js");
 
 const {
     verifyToken,
@@ -14,6 +15,7 @@ const db = require("./database/db.js");
 const { getTransferData, transferRequest, acceptRequest, rejectRequest, cancelTransferRequest, deleteTransferRequest } = require("./transfer.js");
 const { itemEdit, stockEdit } = require("./edit.js");
 const { manufacturerAdd, supplierAdd, itemAdd, stockAdd } = require("./vendor.js");
+const { scrapRequest, getScrapData, getAllScrapData, rejectScrapRequest ,acceptScrapRequest, cancelScrapRequest, deleteScrapRequest, getTableScrapData} = require("./scrap.js");
 
 
 const app = express();
@@ -47,6 +49,7 @@ app.post("/api/itemAdd", itemAdd);
 
 app.post("/api/stockAdd", stockAdd);
 
+
 app.get("/api/getManufacturer", (req, res) => {
     db.query("SELECT * FROM manufacturer")
         .catch((error) => res.send(error))
@@ -67,7 +70,6 @@ app.get("/api/getInventory", (req, res) => {
 
 app.get("/api/getLabItem", (req, res) => {
     db.query("SELECT * FROM lab_item_view", (error, result) => {
-        
         res.send(result);
     });
 });
@@ -87,6 +89,12 @@ app.get("/api/getSupplier", (req, res) => {
         res.send(result);
     });
 });
+
+app.get("/api/getStock/:id", (req, res)=>{
+    db.query("SELECT * FROM admin_stock_view WHERE dept_id = ?", [req.params.id])
+    .then((response)=>res.send(response))
+    .catch((error)=>res.send(error));
+})
 
 app.get("/api/getItems", (req, res) => {
     db.query("SELECT * FROM itemtable", (error, result) => {
@@ -140,6 +148,14 @@ app.get("/api/getTotalScrapValueData", (req, res) => {
         }
     })
 })
+app.get("/api/getOverallTransferedData", (req, res) => {
+    db.query("SELECT * FROM transfer_request_merged_view", (error, result) => {
+        if (error) console.log(error);
+        else {
+            res.send(result);
+        }
+    })
+})
 
 app.get("/api/getTotalInventoryValueData", (req, res) => {
     db.query("SELECT SUM(Cost) AS cost FROM inventory_view", (error, result) => {
@@ -149,7 +165,6 @@ app.get("/api/getTotalInventoryValueData", (req, res) => {
         }
     })
 })
-
 
 app.get("/api/getInventoryData", (req, res) => {
     db.query("SELECT * FROM lab_inventory_view", (error, result) => {
@@ -189,19 +204,6 @@ app.get("/api/getOverallLabsStock", (req, res) => {
     });
 });
 
-app.get("/api/getOverallTransferedData", (req, res) => {
-    db.query("SELECT * FROM transfer_request_merged_view", (error, result) => {
-        if (error) console.log(error);
-        res.send(result);
-    });
-});
-
-
-
-
-
-
-
 app.post("/api/getTransferData", getTransferData)
 
 app.post("/api/transferRequest", transferRequest)
@@ -212,9 +214,8 @@ app.post("/api/deleteTransferrequest", deleteTransferRequest);
 
 app.post("/api/getTrackTransfer", (req, res) => {
     try {
-        const user_dept = req.body.dept_code
-        // console.log(user_dept);
-        db.query("Select * FROM transfer_request_merged_view WHERE transfer_to = ?", [user_dept])
+        const user_dept = req.body.dept_code;
+        db.query("Select * FROM transfer_request_merged_view WHERE transfer_to = ? ORDER BY date DESC", [user_dept])
             .catch((error) => res.status(500).json({ error: "There was some Error" }))
             .then((response) => {
                 res.status(200).json({ data: response })
@@ -227,6 +228,26 @@ app.post("/api/getTrackTransfer", (req, res) => {
 app.post("/api/acceptRequest", acceptRequest);
 
 app.post("/api/rejectRequest", rejectRequest);
+
+app.post("/api/importItems", importItems);
+
+app.post("/api/importStocks", importStocks);
+
+app.post("/api/scrapRequest", scrapRequest);
+
+app.get("/api/getScrap", getAllScrapData);
+
+app.get("/api/getScrapData/:id", getScrapData);
+
+app.post("/api/rejectScrapRequest", rejectScrapRequest);
+
+app.post("/api/acceptScrapRequest", acceptScrapRequest);
+
+app.post("/api/cancelScrapRequest", cancelScrapRequest);
+
+app.post("/api/deleteScrapRequest", deleteScrapRequest);
+
+app.get("/api/getTableScrapData", getTableScrapData);
 
 const server = https.createServer()
 

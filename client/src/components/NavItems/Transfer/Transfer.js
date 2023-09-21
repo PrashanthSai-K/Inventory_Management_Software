@@ -28,6 +28,7 @@ const Transfer = () => {
     setTrackTransfer(false);
     setApprovalRequest(false);
     fetchTransferData();
+    fetchOverallTranferedData();
   };
 
   const navigate = useNavigate();
@@ -54,10 +55,8 @@ const Transfer = () => {
   })
 
 
-
   async function fetchTransferData(data) {
     try {
-
       const result = await axios.post("http://localhost:4000/api/getTransferData", data)
       if (result.status == 200) {
         if (result.data.data == "No Data") {
@@ -82,14 +81,11 @@ const Transfer = () => {
   }, [message, error]);
 
   async function fetchTrackTransferData(data) {
-
     try {
-      // console.log(data)
       const response = await axios.post(
         "http://localhost:4000/api/getTrackTransfer", data
       );
       if (response.status == 200) {
-        // console.log(response.data)
         setTrackTransferData(response.data.data)
       }
     } catch (error) {
@@ -123,6 +119,7 @@ const Transfer = () => {
     fetchOverallTranferedData();
     fetchStockData();
   }, []);
+
 
   return (
     <>
@@ -170,7 +167,7 @@ const Transfer = () => {
             </div>
           </div>
           <div className="pl-8">Transfer History</div>
-          <br /><br /><br /><br />
+          <br /><br />
           <div className="flex items-center flex-col">
 
             <Table stockData={OverallTranferedData} />
@@ -191,6 +188,7 @@ const Transfer = () => {
             setError={setError}
             setMessage={setMessage}
           />
+          
           <ApprovalPopup
             user={user}
             transferData={transferData}

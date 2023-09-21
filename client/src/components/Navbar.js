@@ -25,6 +25,7 @@ const Navbar = ({ location, open, setOpen, navItems, user }) => {
         (navItem) =>
           navItem.src === location && (
             <div
+            key={navItem.id}
               className={`${open ? "w-64" : "w-20"
                 } h-full w-1/6 fixed left-0 right-0 navbar duration-300`}
               style={{ backgroundColor: "#0f6af2" }}
@@ -58,6 +59,7 @@ const Navbar = ({ location, open, setOpen, navItems, user }) => {
                       return (
                         <>
                           <div
+                            key={nav.id}
                             className={`flex gap-x-4 mb-4 cursor-pointer ${location.split("/")[1] ===
                               nav.Name.toLocaleLowerCase()
                               ? (nav.color = "bg-white bg-opacity-40")
@@ -81,7 +83,7 @@ const Navbar = ({ location, open, setOpen, navItems, user }) => {
                     } else {
                       return (
                         (!nav.role || user.role == nav.role) &&
-                        (<a onClick={setNavState} href={nav.src}>
+                        (<a onClick={setNavState} href={nav.src} key={nav.id}>
                           <li
                             className={`flex gap-x-4 mb-4 cursor-pointer ${location.split("/")[1] ===
                               nav.Name.toLocaleLowerCase()

@@ -101,6 +101,8 @@ function Table({ stockData }) {
     }
   };
 
+  
+
   return (
     <div className=" w-9/12 h-full">
       <div className="flex  w-full mb-5 h-auto  justify-between font-semibold">

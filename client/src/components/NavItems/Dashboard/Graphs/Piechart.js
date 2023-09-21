@@ -49,8 +49,8 @@ function Piechart({ labitem }) {
         setisItemFullScreen(!isItemFullScreen);
     };
 
-    const innerRadius = isItemFullScreen ? 230 : 100;
-    const outerRadius = isItemFullScreen ? 280 : 130;
+    const innerRadius = isItemFullScreen ? 170 : 100;
+    const outerRadius = isItemFullScreen ? 200 : 130;
 
     const renderActiveShape = (props) => {
         const RADIAN = Math.PI / 180;

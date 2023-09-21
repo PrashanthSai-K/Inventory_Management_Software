@@ -65,7 +65,6 @@ function Dashboard({ open, setOpen }) {
     }
   }
 
-
   useEffect(() => {
     fetchInventory();
     fetchCategories();
@@ -80,8 +79,6 @@ function Dashboard({ open, setOpen }) {
 
     }
   }, [categories, inventory, labitem])
-
-
 
 
   return (

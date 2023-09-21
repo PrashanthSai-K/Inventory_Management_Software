@@ -1,13 +1,18 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import TransferCard from './TransferCard';
+import RejectPopup from './RejectPopup';
 
-function ApprovalPopup({ isVisible, transferData, onClose, setError, setMessage, user, noData }) {
-    
+const ScrapApprove = ({ onClose, isVisible, user, setMesaage, setError, scrapData, noData ,fetchScrapData}) => {
 
+
+
+    // console.log(scrapData);
     if (!isVisible) return null;
+
     return (
         <>
-            <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center z-50">
+            <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center  z-40">
                 <div className="fixed inset-0 w-full flex justify-center items-center">
                     <div
                         style={{
@@ -32,7 +37,7 @@ function ApprovalPopup({ isVisible, transferData, onClose, setError, setMessage,
                             <div className="  flex flex-col items-center">
                                 <div className="py-1 flex pb-8 pt-8">
                                     <span className="px-1 text-black font-medium text-2xl whitespace-nowrap">
-                                        Pending Requests
+                                        Scrap Request
                                     </span>
                                 </div>
                                 <div
@@ -41,11 +46,10 @@ function ApprovalPopup({ isVisible, transferData, onClose, setError, setMessage,
                                 >
                                     <div className="pt-8 flex flex-col  gap-10 ">
                                         <span className=' font-bold text-xl'>Pending request:</span>
-                                        {console.log(transferData)}
                                         {noData ? <div>No Data</div> : (
-                                            transferData && transferData.map((data) =>
+                                            scrapData && scrapData.map((data) =>
                                                 <>
-                                                    <TransferCard setMessage={setMessage} setError={setError} data={data} user={user} onClose={onClose} />
+                                                    <TransferCard setMessage={setMesaage} fetchScrapData={fetchScrapData} setError={setError} data={data} user={user} onClose={onClose} />
                                                 </>
                                             )
                                         )}
@@ -57,13 +61,8 @@ function ApprovalPopup({ isVisible, transferData, onClose, setError, setMessage,
                     </div>
                 </div>
             </div>
-
-
-
         </>
-
-        
     )
 }
 
-export default ApprovalPopup
+export default ScrapApprove

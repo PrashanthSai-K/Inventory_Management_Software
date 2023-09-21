@@ -99,8 +99,7 @@ const itemAdd = async function (req, res, next) {
 
 const stockAdd = async function (req, res, next) {
 
-    console.log("hiii....");
-    console.log(req.body);
+    
     const item_code = req.body.itemcode;
     const manufacturerId = req.body.manufacturerId;
     const supplierId = req.body.supplierId;
@@ -109,10 +108,10 @@ const stockAdd = async function (req, res, next) {
     const userId = req.body.userId.toUpperCase();
     const labCode = req.body.labCode.toUpperCase();
     const currDate = new Date();
+    const apex_no = req.body.apex_no.toUpperCase();
 
     const selectResult = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM itemtable").catch((error) => {
-            console.log(error);
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -123,7 +122,7 @@ const stockAdd = async function (req, res, next) {
 
     const selectResult2 = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM stocktable").catch((error) => {
-            console.log(error);
+
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -151,9 +150,9 @@ const stockAdd = async function (req, res, next) {
                 return;
             } else {
                 db.query(
-                    `INSERT INTO stocktable (item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id, created_at, dept_id) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                    [item_code, manufacturerId, supplierId, stockQty, inventoryValue, userId, currDate.toISOString().split("T")[0], labCode])
+                    `INSERT INTO stocktable (apex_no, item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id, created_at, dept_id) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [apex_no, item_code, manufacturerId, supplierId, stockQty, inventoryValue, userId, currDate.toISOString().split("T")[0], labCode])
                     .then((response) => {
                         if (response.affectedRows > 0) {
                             res.status(201).json({ Data: "Stock Created Sucessfully" });
@@ -163,6 +162,7 @@ const stockAdd = async function (req, res, next) {
                             return;
                         }
                     }).catch((error) => {
+
                         res.status(400).json({ Data: "Some internal error" });
                         return;
                     });
@@ -175,7 +175,6 @@ const stockAdd = async function (req, res, next) {
 
 
     } else {
-        console.log("no match")
         res.status(400).json({ Data: "Check for Itemname and stock quantity" });
         return;
     }
