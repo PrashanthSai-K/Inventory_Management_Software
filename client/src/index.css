@@ -467,3 +467,55 @@ tbody tr:nth-child(even) {
   padding: 10px 20px;
   cursor: pointer;
 }
+
+@media (max-width:800px) {
+  .inventory {
+    width: 85%;
+  }
+}
+@media (max-width:650px) {
+  .inventory {
+    width: 75%;
+  }
+}
+@media (max-width:550px) {
+  .inventory {
+    width: 65%;
+  }
+}
+@media (max-width:800px) {
+  .scrap {
+    width: 85%;
+  }
+}
+@media (max-width:650px) {
+  .scrap {
+    width: 75%;
+  }
+}
+@media (max-width:550px) {
+  .scrap {
+    width: 65%;
+  }
+}
+@media (max-width:800px) {
+  .stock {
+    width: 85%;
+  }
+}
+@media (max-width:650px) {
+  .stock {
+    width: 75%;
+  }
+}
+@media (max-width:550px) {
+  .stock {
+    width: 65%;
+  }
+}
+
+@media (max-width:400px) {
+  .drop {
+    width: 150px;
+  }
+}

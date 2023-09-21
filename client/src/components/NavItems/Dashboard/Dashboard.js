@@ -76,7 +76,8 @@ function Dashboard({ open, setOpen }) {
   console.log(categories);
   useEffect(() => {
     if (categories.length > 0 && inventory.length > 0 && labitem.length > 0 && labname.length > 0) {
-      setTimeout(() => setIsLoading(), 2000)
+      setTimeout(() => setIsLoading(), 1000)
+
     }
   }, [categories, inventory, labitem])
 

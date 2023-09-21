@@ -135,7 +135,7 @@ app.get("/api/getQuantityUnits", (req, res) => {
 })
 
 app.get("/api/getTotalStockValueData", (req, res) => {
-    db.query("SELECT SUM(stock) AS stock FROM items_stock_view", (error, result) => {
+    db.query("SELECT SUM(stock) AS stock FROM overall_stock_view", (error, result) => {
         if (error) console.log(error);
         else {
             res.send(result);
@@ -143,8 +143,8 @@ app.get("/api/getTotalStockValueData", (req, res) => {
     })
 })
 
-app.get("/api/getTotalItemValueData", (req, res) => {
-    db.query("SELECT COUNT(name) AS name FROM items_stock_view", (error, result) => {
+app.get("/api/getTotalScrapValueData", (req, res) => {
+    db.query("SELECT SUM(scrap_value) AS name FROM overall_scrap_value", (error, result) => {
         if (error) console.log(error);
         else {
             res.send(result);
@@ -175,6 +175,16 @@ app.get("/api/getInventoryData", (req, res) => {
         res.send(result);
     });
 });
+
+app.get("/api/getScrapData", (req, res) => {
+    db.query("SELECT * FROM overall_scrap_value", (error, result) => {
+        if (error) console.log(error);
+        res.send(result);
+    });
+});
+
+
+
 
 app.get("/api/getLabDetails", (req, res) => {
     db.query("SELECT * FROM labdetails", (error, result) => {

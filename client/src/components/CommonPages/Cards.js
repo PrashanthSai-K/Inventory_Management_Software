@@ -2,17 +2,21 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import InventoryPopup from './commonPopups/InventoryPopup';
 import StockPopup from './commonPopups/StockPopup';
+import ScarpPopup from './commonPopups/ScarpPopup';
 
 function Cards() {
 
 
   const [TotalStockValueData, setTotalStockValueData] = useState();
-  const [TotalItemValueData, setTotalItemValueData] = useState();
+  const [TotalScrapValueData, setTotalScrapValueData] = useState();
   const [TotalInventoryValueData, setTotalInventoryValueData] = useState();
   const [InventoryData, setInventoryData] = useState(false);
   const [StockData, setStockData] = useState(false);
+  const [scrapData, setScrapData] = useState(false);
   const [getInventoryDatas, setGetInventoryDatas] = useState([]);
   const [getStockDatas, setGetStockDatas] = useState([]);
+  const [getScrapDatas, setGetScrapDatas] = useState([]);
+ 
 
   const fetchTotalStockValueData = async () => {
     try {
@@ -23,11 +27,11 @@ function Cards() {
     }
   }
 
-
-  const fetchItemValueData = async () => {
+  
+  const fetchscrapValueData = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/getTotalItemValueData');
-      setTotalItemValueData(response.data[0].name);
+      const response = await axios.get('http://localhost:4000/api/getTotalScrapValueData');
+      setTotalScrapValueData(response.data[0].name);
     } catch (error) {
       console.log(error)
     }
@@ -60,12 +64,24 @@ function Cards() {
     }
   }
 
+  const fetchgetScrapDatas = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/getScrapData');
+      setGetScrapDatas(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+ 
+
   useEffect(() => {
     fetchTotalStockValueData();
-    fetchItemValueData();
+    fetchscrapValueData();
     fetchTotalInventoryValueData();
     fetchgetInventoryDatas();
     fetchgetStockDatas();
+    fetchgetScrapDatas();
   }, [])
 
 
@@ -95,8 +111,8 @@ function Cards() {
           </div>
         </div>
         <div
-          className={`w-80 h-36 shadow-2xl bg-white rounded-3xl  flex tablet:h-40 animate1`}
-          
+          className={`w-80 h-36 shadow-2xl bg-white rounded-3xl cursor-pointer flex tablet:h-40 animate1`}
+          onClick={() => setScrapData(true)}
         >
           <div className="flex w-1/2 items-center justify-around">
             <img
@@ -107,10 +123,10 @@ function Cards() {
           </div>
           <div className="flex flex-col h-full rounded-l-3xl w-1/2  items-center pr-14 justify-center gap-8">
             <div className="font-bold  text-lg whitespace-nowrap tablet:text-xl">
-              No of item 
+              Scrap Values
             </div>
             <div style={{ color: "#5e9ff2" }}  className="card-amount-adjust text-2xl font-bold flex gap-2">
-              {TotalItemValueData} <div>nos</div>
+              Rs {TotalScrapValueData}
             </div>
           </div>
         </div>
@@ -130,7 +146,7 @@ function Cards() {
             </div>
             <div className="flex flex-col h-full rounded-l-3xl w-1/2  items-center pr-14 justify-center gap-8">
               <div className="font-bold  text-lg whitespace-nowrap tablet:text-xl">
-                Inventory value
+                Inventory values
               </div>
               <div style={{ color: "#5e9ff2" }}  className="card-amount-adjust font-bold text-2xl flex gap-2">
                 <div>Rs</div> {TotalInventoryValueData}
@@ -142,6 +158,7 @@ function Cards() {
       </div>
       <StockPopup isVisible={StockData} onClose={() => setStockData(false)} data={getStockDatas} />
       <InventoryPopup isVisible={InventoryData} onClose={() => setInventoryData(false)} data={getInventoryDatas} />
+      <ScarpPopup isVisible={scrapData} onClose={() => setScrapData(false)} data={getScrapDatas} />
     </div>
 
 
