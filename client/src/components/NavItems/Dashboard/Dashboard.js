@@ -79,7 +79,7 @@ function Dashboard({ open, setOpen }) {
       setTimeout(() => setIsLoading(), 2000)
 
     }
-  }, [categories, inventory, labitem])
+  }, [categories, inventory, labitem,labname])
 
 
 
