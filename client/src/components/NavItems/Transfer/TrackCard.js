@@ -6,6 +6,7 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+
     const handleCancel = async (e) => {
         try {
             setIsLoading(true);
@@ -87,16 +88,17 @@ const TrackCard = ({ data, onClose, user, setMessage, setError }) => {
                             </button>
                         ) : null}
                         {data.status == "CANCELED" ? (
-                                <button
-                                    onClick={handleDelete}
-                                    class="border border-red-500 h-10 bg-red-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline">
-                                    Delete
-                                </button>
-                            ) : null
+                            <button
+                                onClick={handleDelete}
+                                class="border border-red-500 h-10 bg-red-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline">
+                                Delete
+                            </button>
+                        ) : null
                         }
                     </div>
                 </div >
             )}
+            
         </>
 
     )

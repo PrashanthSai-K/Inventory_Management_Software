@@ -28,6 +28,8 @@ import Unauthorized from "./components/ErrorPages/Unauthorized";
 import Transfer from "./components/NavItems/Transfer/Transfer.js";
 import { useAuth } from "./AuthContext";
 import Report from "./components/ReportGeneration/Report";
+import Excel from "./components/CommonPages/Excel";
+import Scrap from "./components/NavItems/Scrap/Scrap";
 
 
 function App() {
@@ -55,15 +57,16 @@ function App() {
 
   const navItems = [
 
-    { Name: "Dashboard", iconName: "bi-speedometer", src: "/dashboard" },
-    { Name: "Master", iconName: "bi-file-person-fill", src: "/master" },
-    // { Name: "Supplier", iconName: "bi-archive-fill", src: "/supplier" },
-    { Name: "Vendors", iconName: "bi-building", src: "/vendors" },
-    { Name: "Entries", iconName: "bi-list-check", src: "/entries" },
-    { Name: "Stores", iconName: "bi-shop", src: "/stores", role: "slbincharge" },
-    { Name: "Transfer", iconName: "bi-arrow-left-right", src: "/transfer" },
-    { Name: "Report", iconName: "bi-printer-fill", src: "/report" },
-    { Name: "Logout", iconName: "bi-box-arrow-right" },
+    { id:1, Name: "Dashboard", iconName: "bi-speedometer",      src: "/dashboard" },
+    { id:2, Name: "Master",    iconName: "bi-file-person-fill", src: "/master" },
+    { id:3, Name: "Vendors",   iconName: "bi-building",         src: "/vendors" },
+    { id:4, Name: "Entries",   iconName: "bi-list-check",       src: "/entries" },
+    { id:5, Name: "Stores",    iconName: "bi-shop",             src: "/stores", role: "slsincharge" },
+    { id:6, Name: "Transfer",  iconName: "bi-arrow-left-right", src: "/transfer" },
+    { id:7, Name: "Report",    iconName: "bi-printer-fill",     src: "/report" },
+    { id:8, Name: "Scrap",     iconName: "bi-folder-x",         src:"/scrap"},
+    { id:9, Name: "Logout",    iconName: "bi-box-arrow-right" },
+    
   ];
 
   function navUsed() {
@@ -86,7 +89,7 @@ function App() {
     <>
       {isLoading ? (
         <div className="flex flex-col justify-center items-center h-full duration-800 ">
-          <span class="loader animate-bounce duration-800"></span>
+          <span className="loader animate-bounce duration-800"></span>
           Loading
         </div >
       ) : (
@@ -147,10 +150,14 @@ function App() {
                     <CheckRole 
                       element={<Stores />} 
                       userRole={user.role} 
-                      allowedRole={"slbincharge"}
+                      allowedRole={"slsincharge"}
                       redirectTo={"/unauthorized"}
                     />
                   }
+                />
+                <Route
+                  path="/scrap"
+                  element={<Scrap />}
                 />
                 <Route
                   path="/entries"
@@ -159,6 +166,10 @@ function App() {
                 <Route
                   path="/unauthorized"
                   element={<Unauthorized />}
+                />
+                <Route 
+                  path="/excel"
+                  element={<Excel />}
                 />
               </Routes>
 

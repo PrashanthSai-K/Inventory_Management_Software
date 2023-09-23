@@ -3,7 +3,6 @@ const https = require('https');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-// const PDFDocument = require("pdfkit");
 
 const {
     verifyToken,
@@ -22,33 +21,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.json());
-
-app.get('/api/getData', (req, res) => {
-    // Retrieve the query from the request
-    const query = req.query.query;
-  
-    // Execute the dynamic query on your database
-    // Replace this with your actual database query logic
-  
-    // Simulate data for demonstration purposes
-    const selectedData = [
-      { itemName: 'Item 1', itemCode: '123' },
-      { itemName: 'Item 2', itemCode: '456' },
-      // Add more data based on your query
-    ];
-  
-    res.json(selectedData);
-  });
-// app.get("/generate-pdf", (req, res) => {
-//     // Generate a PDF file here using pdfkit or any other library
-//     const doc = new PDFDocument();
-//     doc.pipe(fs.createWriteStream("my_report.pdf")); // Save the PDF to a file
-//     doc.text("My PDF Content");
-//     doc.end();
-  
-//     res.json({ success: true, message: "PDF generated successfully" });
-//   });
 
 app.get("/api/", (req, res) => {
     db.query("SELECT * FROM itemtable").then((res)=>console.log(res)).catch((err)=>console.log(err));
@@ -207,6 +179,13 @@ app.get("/api/getOverallLabsStock", (req, res) => {
     });
 });
 
+app.get("/api/getOverallTransferedData", (req, res) => {
+    db.query("SELECT * FROM transfer_request_merged_view", (error, result) => {
+        if (error) console.log(error);
+        res.send(result);
+    });
+});
+
 
 
 
@@ -241,4 +220,4 @@ app.post("/api/rejectRequest", rejectRequest);
 
 const server = https.createServer()
 
-app.listen(4000, () => console.log("App listening on port 4000"));
+app.listen(4000, () => console.log("App listening on port 4000"));       

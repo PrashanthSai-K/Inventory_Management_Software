@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import MasterTablePopup from "./MasterTablePopup";
+// import MasterTablePopup from "./MasterTablePopup";
 
-function Table({ stockData }) {
-  //For open popup
+function Table({ scrapData }) {
+//For open popup
 
   // console.log(itemData);
   const [openPopup, setOpenPopup] = useState(false);
@@ -17,6 +17,7 @@ function Table({ stockData }) {
     setOpenPopup(false);
     setSelectedData(null);
   };
+ 
 
   // Search functionality
 
@@ -26,7 +27,7 @@ function Table({ stockData }) {
 
   useEffect(() => {
     if (click || searchQuery == "") {
-      const filteredResults = stockData.filter((item) => {
+      const filteredResults = scrapData.filter((item) => {
         const propertiesToSearch = [
           "item_code",
           "item_type",
@@ -42,7 +43,6 @@ function Table({ stockData }) {
           "inventory_value",
           "user_id",
           "dept_id",
-          "stock_date"
         ];
         return propertiesToSearch.some((property) =>
           typeof item[property] === "string"
@@ -55,25 +55,24 @@ function Table({ stockData }) {
 
       setFilteredData(filteredResults);
     }
-  }, [click, stockData, searchQuery]);
+  }, [click, scrapData, searchQuery]);
 
   //sort by functionality
   const [sortOrder, setSortOrder] = useState({
-    item_code: "asc",
-    item_type: "asc",
-    item_name: "asc",
-    item_subname: "asc",
-    item_description: "asc",
-    cost_per_item: "asc",
-    quantity_units: "asc",
-    manufacturer_name: "asc",
-    supplier_name: "asc",
-    contact: "asc",
-    stock_qty: "asc",
-    inventory_value: "asc",
-    user_id: "asc",
-    dept_id: "asc",
-    stock_date: "asc",
+    item_code : "asc",
+          item_type : "asc",
+          item_name : "asc",
+          item_subname : "asc",
+          item_description : "asc",
+          cost_per_item : "asc",
+          quantity_units : "asc",
+          manufacturer_name :"asc",
+          supplier_name : "asc",
+          contact :"asc",
+          stock_qty : "asc",
+          inventory_value : "asc",
+          user_id : "asc",
+        dept_id : "asc",
   });
   const [sortedColumn, setSortedColumn] = useState("");
 
@@ -145,58 +144,55 @@ function Table({ stockData }) {
             class="shadow sm:rounded-lg  h-96"
           >
             <table class="min-w-full text-sm">
-              <thead
-                style={{ backgroundColor: "#0f6af2", color: "white" }}
-                class=" text-xs uppercase font-medium"
-              >
+              <thead  style={{backgroundColor:"#0f6af2" , color:"white"}} class=" text-xs uppercase font-medium">
                 <tr>
                   <th className="px-6 py-3">s.no</th>
                   <th
-                    onClick={() => sortData("item_code")}
+                   onClick={() => sortData("item_code")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
                       <div>Item Code</div>
                       {sortedColumn === "item_code" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.item_code === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.item_code === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("item_type")}
+                   onClick={() => sortData("item_type")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
                       <div>Item Type</div>
                       {sortedColumn === "item_type" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.item_type === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.item_type === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
-                    onClick={() => sortData("item_name")}
+                   onClick={() => sortData("item_name")}
                     scope="col"
                     className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
                   >
                     <div className="flex">
                       <div>Item Name</div>
                       {sortedColumn === "item_name" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.item_name === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.item_name === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -208,12 +204,12 @@ function Table({ stockData }) {
                         Item Subname
                       </div>
                       {sortedColumn === "item_subname" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.item_subname === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.item_subname === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -225,12 +221,12 @@ function Table({ stockData }) {
                         Item Description
                       </div>
                       {sortedColumn === "item_description" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.item_description === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.item_description === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -242,12 +238,12 @@ function Table({ stockData }) {
                         Cost Per Item
                       </div>
                       {sortedColumn === "cost_per_item" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.cost_per_item === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.cost_per_item === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -259,12 +255,12 @@ function Table({ stockData }) {
                         Quantity Units
                       </div>
                       {sortedColumn === "quantity_units" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.quantity_units === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.quantity_units === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -276,14 +272,12 @@ function Table({ stockData }) {
                         Manufacturer Name
                       </div>
                       {sortedColumn === "manufacturer_name" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.manufacturer_name === "asc"
-                              ? "up"
-                              : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.manufacturer_name === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -292,15 +286,15 @@ function Table({ stockData }) {
                   >
                     <div className="flex">
                       <div onClick={() => sortData("supplier_name")}>
-                        supplier_name
+                        Supplier Name
                       </div>
                       {sortedColumn === "supplier_name" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.supplier_name === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.supplier_name === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -312,12 +306,12 @@ function Table({ stockData }) {
                         Supplier Contact
                       </div>
                       {sortedColumn === "contact" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.contact === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.contact === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -327,12 +321,12 @@ function Table({ stockData }) {
                     <div className="flex">
                       <div onClick={() => sortData("stock_qty")}>Stock Qty</div>
                       {sortedColumn === "stock_qty" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.stock_qty === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.stock_qty === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -344,12 +338,12 @@ function Table({ stockData }) {
                         Inventory Value
                       </div>
                       {sortedColumn === "inventory_value" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.inventory_value === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.inventory_value === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -361,12 +355,12 @@ function Table({ stockData }) {
                         Purchased By
                       </div>
                       {sortedColumn === "user_id" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.user_id === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.user_id === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -378,27 +372,12 @@ function Table({ stockData }) {
                         Department Id
                       </div>
                       {sortedColumn === "dept_id" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.dept_id === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
-                  >
-                    <div className="flex">
-                      <div onClick={() => sortData("stock_date")}>Date</div>
-                      {sortedColumn === "stock_date" && (
-                        <i
-                          className={`bi bi-arrow-${
-                            sortOrder.stock_date === "asc" ? "up" : "down"
-                          } ml-2`}
-                        ></i>
-                      )}
+                      <i
+                        className={`bi bi-arrow-${
+                          sortOrder.dept_id === "asc" ? "up" : "down"
+                        } ml-2`}
+                      ></i>
+                    )}
                     </div>
                   </th>
                   <th
@@ -407,7 +386,7 @@ function Table({ stockData }) {
                   ></th>
                 </tr>
               </thead>
-              <tbody style={{ backgroundColor: "white", fontWeight: "bold" }}>
+              <tbody style={{backgroundColor:"white" , fontWeight:"bold"}}>
                 {filteredData.map((data, index) => {
                   return (
                     <tr className="shadow-md rounded-xl">
@@ -454,15 +433,12 @@ function Table({ stockData }) {
                       <td class=" px-6 py-4 whitespace-nowrap">
                         {data.dept_id}
                       </td>
-                      <td class=" px-6 py-4 whitespace-nowrap">
-                        {data.stock_date}
-                      </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <i
-                          onClick={() => handleOpenPopup(data)}
-                          className="bi bi-eye cursor-pointer"
-                        ></i>
-                      </td>
+                    <i
+                      onClick={() => handleOpenPopup(data)}
+                      className="bi bi-eye cursor-pointer"
+                    ></i>
+                  </td>
                     </tr>
                   );
                 })}
@@ -473,7 +449,7 @@ function Table({ stockData }) {
       </div>
       {openPopup && selectedData && (
         <div className="blur-background">
-          <MasterTablePopup data={selectedData} onClose={handleClosePopup} />
+          {/* <MasterTablePopup data={selectedData} onClose={handleClosePopup} /> */}
         </div>
       )}
     </div>

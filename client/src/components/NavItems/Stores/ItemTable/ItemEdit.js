@@ -36,7 +36,7 @@ const HandleSubmit = async (e) => {
   e.preventDefault();
     try {
       const response = await axios.post("http://localhost:4000/api/itemEdit", formData);
-        console.log(response);
+        // console.log(response);
       if( response && response.status==201){
         setMessage(response.data.Data)
         onClose();

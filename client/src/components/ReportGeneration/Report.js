@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReportGeneration from "./MasterTableReport/ReportGeneration";
 
-
 function Report() {
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [itemData, setItemData] = useState([]);
   const [requiredData, setRequiredData] = useState([]);
@@ -11,6 +12,14 @@ function Report() {
   const [selectedTable, setSelectedTable] = useState("");
   const [viewColumn, setViewColumn] = useState(false);
   const [selectedColumns, setSelectedColumns] = useState({});
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage(null);
+      setError(null);
+    }, [4000]);
+  }, [message, error]);
+
   // console.log(selectedTable);
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
@@ -20,6 +29,7 @@ function Report() {
       for (const key in selectedColumns) {
         updatedSelectedColumns[key] = checked;
       }
+
       setSelectedColumns(updatedSelectedColumns);
     } else {
       setSelectedColumns({
@@ -62,8 +72,12 @@ function Report() {
         }
         return selectedItem;
       });
-      setRequiredData(selectedData);
-      
+
+      if (Object.keys(selectedData[0]).length > 0) {
+        setRequiredData(selectedData);
+      } else {
+        setError("Please Select Column");
+      }
     }
     if (selectedTable === "itemTable") {
       const selectedData = itemData.map((item) => {
@@ -75,14 +89,17 @@ function Report() {
         }
         return selectedItem;
       });
-      setRequiredData(selectedData);
+      if (Object.keys(selectedData[0]).length > 0) {
+        setRequiredData(selectedData);
+      } else {
+        setError("Please Select Column");
+      }
     }
   };
 
-
-  const handleColumn = ()=>{
-    if(selectedTable === "masterTable"){
-      const masterData =  data.map(item => {
+  const handleColumn = () => {
+    if (selectedTable === "masterTable") {
+      const masterData = data.map((item) => {
         const updatedItem = {};
         for (const key of Object.keys(item)) {
           updatedItem[key] = false;
@@ -90,11 +107,11 @@ function Report() {
         return updatedItem;
       });
       const masterColumn = masterData[0];
-      setSelectedColumns(masterColumn)
-    }
-    if(selectedTable === "itemTable"){
-      console.log("true");
-      const masterData =  itemData.map(item => {
+      setSelectedColumns(masterColumn);
+      setViewColumn(!viewColumn);
+    } else if (selectedTable === "itemTable") {
+      // console.log("true");
+      const masterData = itemData.map((item) => {
         const updatedItem = {};
         for (const key of Object.keys(item)) {
           updatedItem[key] = false;
@@ -102,96 +119,145 @@ function Report() {
         return updatedItem;
       });
       const masterColumn = masterData[0];
-      setSelectedColumns(masterColumn)
+      setSelectedColumns(masterColumn);
+      setViewColumn(!viewColumn);
+    } else {
+      setError("select the table name");
     }
-    setViewColumn(!viewColumn);
-  }
-
-  useEffect(()=>{
-    
-  },[])
-
+  };
 
   return (
     <div>
-      <div className="w-full h-auto">
-        <div className="flex justify-center h-56 rounded-2xl">
-          <div className="border-black border-2">
-            <div className="relative w-56 justify-center items-center flex flex-col inline-block text-left">
-              <div>
-                <select
-                  value={selectedTable}
-                  onChange={(e) => setSelectedTable(e.target.value)}
-                  name="dropdown"
-                  className=" w-36 py-2 " 
-                >
-                  <option value="selectTable" type="button" className=" ">
-                    Select Table
-                  </option>
-                  <option value="masterTable" type="button" className=" ">
-                    Master Table
-                  </option>
-                  <option value="itemTable" type="button" className=" ">
-                    Item Table
-                  </option>
-                </select>
+      <div
+        style={{ backgroundColor: "#F4F4F4" }}
+        className="flex h-full justify-center items-center"
+      >
+        {message ? (
+          <div
+            class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded  fixed z-50 top-0 message"
+            role="alert"
+          >
+            <span class="block sm:inline">{message}</span>
+          </div>
+        ) : null}
+        {error ? (
+          <div
+            class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded fixed top-0 z-50 "
+            role="alert"
+          >
+            <span class="block sm:inline">{error}</span>
+          </div>
+        ) : null}
+      </div>
 
-                <button
-                  className="focus:ring-4 animate1 shadow-lg transform active:scale-75 transition-transform cursor-pointer border-2 rounded-lg ml-5 w-36 py-2 bg-blue-500 text-white mr-16"
+      <div className="bg-white h-screen animate overflow-x-auto overflow-y-auto rounded-lg w-full">
+        <div className="flex flex-wrap relative gap-5 items-center justify-between	pt-4">
+          <div className="text-2xl whitespace-nowrap animate1">
+            Report Generation
+          </div>
+          <div className="flex flex-wrap gap-5">
+            <div>
+              <select
+                value={selectedTable}
+                onChange={(e) => setSelectedTable(e.target.value)}
+                name="dropdown"
+                className="bg-blue-500 animate1 cursor-pointer whitespace-nowrap hover:bg-blue-700 text-white text-sm h-10 py-2 px-4 rounded w-42"
+              >
+                <option
+                  value="selectTable"
                   type="button"
-                  onClick={handleColumn}
+                  className="bg-white text-black"
                 >
-                  Show Options
-                </button>
-              </div>
-              {(selectedTable === "masterTable" || selectedTable === "itemTable") && viewColumn === true && (
-                <div
-                  style={{ marginTop: "500px" }}
-                  className="origin-top-right  absolute z-40 w-96"
+                  Select Table
+                </option>
+                <option
+                  value="masterTable"
+                  type="button"
+                  className="bg-white text-black"
                 >
-                  {/* {console.log("na vanthutanda")} */}
-                  <div className="bg-white border border-gray-300 shadow-lg">
-                    <div className="p-4">
-                      <label className="block">
+                  Master Table
+                </option>
+                <option
+                  value="itemTable"
+                  type="button"
+                  className="bg-white text-black"
+                >
+                  Item Table
+                </option>
+              </select>
+            </div>
+            <div className="relative">
+              <button
+                className="mr-4 shadow-lg cursor-pointer border-2 rounded-lg ml-5 w-80 py-2 bg-blue-500 text-white"
+                type="button"
+                onClick={() => {
+                  handleColumn();
+                }}
+              >
+                Show Options
+              </button>
+            </div>
+            {(selectedTable === "masterTable" ||
+              selectedTable === "itemTable") &&
+              viewColumn === true && (
+                <div className="bg-white absolute border w-80 shadow-lg right-4 top-16">
+                  <div className="p-4 flex flex-col justify-center items-center">
+                    <label className="w-full flex items-center">
+                      <input
+                        className="w-16 h-5"
+                        type="checkbox"
+                        name="selectAll"
+                        checked={selectAll}
+                        onChange={handleCheckboxChange}
+                      />
+                      Select All
+                    </label>
+                    {Object.keys(selectedColumns).map((key) => (
+                      <label key={key} className="w-full flex items-center">
                         <input
+                          className="w-16 h-5 "
                           type="checkbox"
-                          name="selectAll"
-                          checked={selectAll}
+                          name={key}
+                          checked={selectedColumns[key]}
                           onChange={handleCheckboxChange}
                         />
-                        Select All
+                        {/* {console.log(selectedColumns[key])} */}
+                        {key}
                       </label>
-                      {Object.keys(selectedColumns).map((key) => (
-                        <label key={key} className="block">
-                          <input
-                            type="checkbox"
-                            name={key}
-                            checked={selectedColumns[key]}
-                            onChange={handleCheckboxChange}
-                          />
-                          {/* {console.log(selectedColumns[key])} */}
-                          {key}
-                        </label>
-                      ))}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleOkClick();
-                          setViewColumn(false);
-                        }}
-                        className="mt-4 w-full border-black border-2 rounded-xl"
-                      >
-                        Preview Page
-                      </button>
-                    </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleOkClick();
+                        setViewColumn(false);
+                        setSelectAll(false);
+                      }}
+                      className="w-60 bg-blue-500 text-white border-none mt-5 py-2 border-black border-2 rounded-xl"
+                    >
+                      Preview Page
+                    </button>
                   </div>
                 </div>
               )}
-            </div>
-            <ReportGeneration data={data} requiredData={requiredData} />
+          </div>
+          <div className="w-full mt-20">
+            <ReportGeneration
+              setRequiredData={setRequiredData}
+              data={data}
+              selectedColumns={selectedColumns}
+              selectedTable={selectedTable}
+              requiredData={requiredData}
+              handleOkClick={handleOkClick}
+              setError={setError}
+              setMessage={setMessage}
+              viewColumn={viewColumn}
+            />
           </div>
         </div>
       </div>
+      <br />
+      <br />
+      <div className="flex items-center flex-col"></div>
     </div>
   );
 }
