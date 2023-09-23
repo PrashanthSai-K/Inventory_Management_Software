@@ -3,7 +3,7 @@ import MasterTablePopup from "./MasterTablePopup";
 
 function Table({ stockData }) {
   //For open popup
-  console.log(stockData);
+  // console.log(stockData);
   // console.log(itemData);
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedData, setSelectedData] = useState(null);

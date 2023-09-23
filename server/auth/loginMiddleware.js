@@ -39,6 +39,7 @@ const createToken = (result) => {
         },
         key
       );
+      console.log(token);
       return  token;
     }catch(error){
       console.log(error)

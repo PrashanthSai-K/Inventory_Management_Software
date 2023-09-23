@@ -63,8 +63,9 @@ const importItems = async function (req, res, next) {
 
         const itemTableSet = new Set();
         for (const item of itemTableData) {
-            itemTableSet.add(item.item_name);
+            itemTableSet.add(item.item_name.toUpperCase());
         }
+        // console.log(itemTableSet.has('clear varnish'));
         const itemTypeSet = new Set();
         for (const type of itemTypeData) {
             itemTypeSet.add(type.name);
@@ -84,7 +85,7 @@ const importItems = async function (req, res, next) {
 
         for (let i = 0; i < data.length; i++) {
             const item = data[i];
-            if (itemTableSet.has(item.item_name)) {
+            if (itemTableSet.has(item.item_name.toUpperCase())) {
                 res.status(401).json({ Data: `Item name is not unique in row ${i + 1}` });
                 return;
             }
