@@ -73,14 +73,15 @@ function Dashboard({ open, setOpen }) {
     fetchLabsStock();
   }, []);
 
+  console.log(categories);
   useEffect(() => {
     if (categories.length > 0 && inventory.length > 0 && labitem.length > 0 && labname.length > 0) {
       setTimeout(() => setIsLoading(), 1000)
 
     }
-  }, [categories, inventory, labitem])
+  }, [categories, inventory, labitem, labname])
 
-
+console.log(categories, labitem, labname, inventory);
   return (
     <>
       {isLoading ? (

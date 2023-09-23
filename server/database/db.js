@@ -11,6 +11,17 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT
 });
 
+pool.getConnection((err, connection)=>{
+  if(err){
+    console.log(err);
+    return;
+  }else{
+    console.log("connected");
+  }
+
+  connection.release();
+})
+
 module.exports = {
   query: (sql, values) => {
     return new Promise((resolve, reject) => {
