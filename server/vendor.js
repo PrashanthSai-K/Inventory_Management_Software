@@ -7,7 +7,6 @@ const manufacturerAdd = async function (req, res, next) {
         .then((response) => {
             res.status(201).json({ Data: "Manufacturer created sucessfully" })
         }).catch((error) => {
-            console.log(error);
             res.status(400).json({ Data: "Some internal error" });
         })
 }
@@ -42,7 +41,6 @@ const itemAdd = async function (req, res, next) {
 
     const selectResult1 = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM manufacturer").catch((error) => {
-            console.log(error);
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -51,7 +49,6 @@ const itemAdd = async function (req, res, next) {
 
     const selectResult2 = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM supplier").catch((error) => {
-            console.log(error);
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -60,7 +57,6 @@ const itemAdd = async function (req, res, next) {
 
     const selectResult3 = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM quantity_units").catch((error) => {
-            console.log(error);
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -69,7 +65,6 @@ const itemAdd = async function (req, res, next) {
 
     const selectResult4 = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM itemtable").catch((error) => {
-            console.log(error);
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -93,7 +88,6 @@ const itemAdd = async function (req, res, next) {
             ).then((response) => {
                 res.status(201).json({ Data: "Item added sucessfully" });
             }).catch((error) => {
-                console.log(error);
                 res.status(400).json({ Data: "Some internal error" });
             });
         }
@@ -105,8 +99,7 @@ const itemAdd = async function (req, res, next) {
 
 const stockAdd = async function (req, res, next) {
 
-    console.log("hiii....");
-    console.log(req.body);
+
     const item_code = req.body.itemcode;
     const manufacturerId = req.body.manufacturerId;
     const supplierId = req.body.supplierId;
@@ -115,10 +108,10 @@ const stockAdd = async function (req, res, next) {
     const userId = req.body.userId.toUpperCase();
     const labCode = req.body.labCode.toUpperCase();
     const currDate = new Date();
+    const apex_no = req.body.apex_no.toUpperCase();
 
     const selectResult = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM itemtable").catch((error) => {
-            console.log(error);
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -129,7 +122,7 @@ const stockAdd = async function (req, res, next) {
 
     const selectResult2 = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM stocktable").catch((error) => {
-            console.log(error);
+
             res.status(400).json({ Data: "Some internal Error" });
             reject(error);
             return;
@@ -145,7 +138,9 @@ const stockAdd = async function (req, res, next) {
 
         if (labCode.toLowerCase() == req.body.user_dept_id.toLowerCase()) {
             if (findResult) {
-                db.query("UPDATE stocktable SET stock_qty = ?, inventory_value = ?, user_id = ? WHERE stock_id = ?", [findResult.stock_qty + stockQty, findResult.inventory_value + inventoryValue, userId, findResult.stock_id])
+                const stockAdd = parseInt(findResult.stock_qty, 10) + parseInt(stockQty, 10);
+                const inventoryAdd = parseInt(findResult.inventory_value, 10) + parseInt(inventoryValue, 10)
+                db.query("UPDATE stocktable SET stock_qty = ?, inventory_value = ?, user_id = ? WHERE stock_id = ?", [stockAdd, inventoryAdd, userId, findResult.stock_id])
                     .then((response) => {
                         if (response.affectedRows > 0) {
                             res.status(201).json({ Data: "Stock value updated in existing data" });
@@ -157,9 +152,9 @@ const stockAdd = async function (req, res, next) {
                 return;
             } else {
                 db.query(
-                    `INSERT INTO stocktable (item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id, created_at, dept_id) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                    [item_code, manufacturerId, supplierId, stockQty, inventoryValue, userId, currDate.toISOString().split("T")[0], labCode])
+                    `INSERT INTO stocktable (apex_no, item_code, manufacturer_id, supplier_id, stock_qty, inventory_value, user_id, created_at, dept_id) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [apex_no, item_code, manufacturerId, supplierId, stockQty, inventoryValue, userId, currDate.toISOString().split("T")[0], labCode])
                     .then((response) => {
                         if (response.affectedRows > 0) {
                             res.status(201).json({ Data: "Stock Created Sucessfully" });
@@ -169,6 +164,7 @@ const stockAdd = async function (req, res, next) {
                             return;
                         }
                     }).catch((error) => {
+
                         res.status(400).json({ Data: "Some internal error" });
                         return;
                     });
@@ -179,13 +175,10 @@ const stockAdd = async function (req, res, next) {
             return;
         }
 
-
     } else {
-        console.log("no match")
         res.status(400).json({ Data: "Check for Itemname and stock quantity" });
         return;
     }
-
 }
 
 module.exports = {

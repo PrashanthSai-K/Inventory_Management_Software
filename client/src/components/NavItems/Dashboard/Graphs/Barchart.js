@@ -51,15 +51,15 @@ function Barchart({ open, setOpen, categories, labname, labsStock }) {
             const dataPoint = payload[0].payload;
             const stockValue = dataPoint.Stock;
             const yAxisName = dataPoint.name;
-    
+
             return (
-                <div style={{ display: 'flex', flexDirection: 'column' , backgroundColor:"white" , padding:"15px" }}>
+                <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: "white", padding: "15px" }}>
                     <span>{yAxisName}</span>
-                    <span style={{color:"#fc03ca"}}>Stock: {stockValue} nos</span>
+                    <span style={{ color: "#fc03ca" }}>Stock: {stockValue} nos</span>
                 </div>
             );
         }
-    
+
         return null;
     };
 
@@ -85,30 +85,34 @@ function Barchart({ open, setOpen, categories, labname, labsStock }) {
                         }}
 
                     >
-                        <h4 style={{ fontFamily: "Iceland" }} className="text-start text-3xl font-bold pb-2" >Stock Analysis</h4>
-                        <div className="flex gap-2" >
-                            <select
-                                style={{ maxWidth: "200px" }}
-                                name="cars"
-                                id="cars"
-                                value={selectedLab}
-                                onChange={(e) => setSelectedLab(e.target.value)}
-                            >
-                                <option value="all">All</option>
-                                {labname.map((name) => {
-                                    return (
-                                        <option value={name.labname}>{name.labname}</option>
-                                    )
-                                })}
-                            </select>
+                        <div className=" flex flex-wrap gap-2">
+                            <h4 style={{ fontFamily: "Iceland" }} className="text-start text-3xl font-bold pb-2" >Stock Analysis</h4>
+                            <div className="flex gap-2" >
+                                <select
+                                    className="drop"
+                                    style={{ maxWidth: "200px" }}
+                                    name="cars"
+                                    id="cars"
+                                    value={selectedLab}
+                                    onChange={(e) => setSelectedLab(e.target.value)}
+                                >
+                                    <option value="all">All</option>
+                                    {labname.map((name) => {     
+                                        return (
+                                            <option value={name.labname}>{name.labname}</option>
+                                        )
+                                    })}
+                                </select>
 
-                            <button
+                                <button
 
-                                className="bg-blue-500 filter animate1 cursor-pointer whitespace-nowrap hover:bg-blue-700 text-white text-sm h-10 py-2 px-4 rounded"
-                                onClick={handleFilter}
-                            >
-                                Ok
-                            </button>
+                                    className="bg-blue-500 sm:w-auto filter animate1 cursor-pointer whitespace-nowrap hover:bg-blue-700 text-white text-sm h-10 py-2 px-4 rounded"
+                                    onClick={handleFilter}
+                                >
+                                    Ok
+                                </button>
+
+                            </div>
                         </div>
                         <button className="icon text-start text-3xl font-bold pb-2" onClick={toggleStockFullScreen}>
                             <i

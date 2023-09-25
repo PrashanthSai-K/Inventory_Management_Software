@@ -59,7 +59,15 @@ function Report() {
       });
   }, []);
 
-  // console.log(itemData);
+  axios
+  .get("http://localhost:4000/api/getAdminStockData")
+  .then((response) => {
+    setData(response.data);
+  })
+  .catch((error) => {
+    console.error("Error fetching data:", error);
+  });
+  
 
   const handleOkClick = () => {
     if (selectedTable === "masterTable") {
@@ -243,13 +251,11 @@ function Report() {
           <div className="w-full mt-20">
             <ReportGeneration
               setRequiredData={setRequiredData}
-              data={data}
               selectedColumns={selectedColumns}
               selectedTable={selectedTable}
               requiredData={requiredData}
               handleOkClick={handleOkClick}
               setError={setError}
-              setMessage={setMessage}
               viewColumn={viewColumn}
             />
           </div>

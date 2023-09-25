@@ -11,6 +11,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoadi
     inventoryValue: "",
     userId: "",
     labCode: "",
+    apex_no:"",
   });
 
   const [autoForm, setAutoForm] = useState({});
@@ -43,6 +44,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoadi
               inventoryValue: "",
               userId: "",
               labCode: "",
+              apex_no:"",
             })
             setIsLoading(false);
             onClose();
@@ -57,6 +59,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoadi
             inventoryValue: "",
             userId: "",
             labCode: "",
+            apex_no:"",
           });
           setIsLoading(false);
           onClose();
@@ -72,6 +75,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoadi
             inventoryValue: "",
             userId: "",
             labCode: "",
+            apex_no:"",
           })
           setIsLoading(false);
           onClose();
@@ -87,6 +91,7 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoadi
         inventoryValue: "",
         userId: "",
         labCode: "",
+        apex_no:"",
       })
       onClose();
     }
@@ -149,6 +154,21 @@ const StockPopUp = ({ isVisible, onClose, user, setMessage, setError, setIsLoadi
           </div>
           <form onSubmit={HandleSubmit}>
             <div className="py-1  ">
+            <div className="flex flex-wrap mt-8">
+                <span className="text-lg pb-1 text-gray-600 ">Apex No.</span>
+                <input
+                  type="text"
+                  name="apex_no"
+                  value={data.apex_no}
+                  onChange={(e) =>
+                    setData({ ...data, [e.target.name]: e.target.value })
+                  }
+                  className="text-md block px-3 py-2 rounded-lg w-full border-b-0
+                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"
+                  required
+                  autoComplete="off"
+                />
+              </div>
               <div className="flex flex-wrap mt-8">
                 <span className="text-lg pb-1 text-gray-600 ">Item</span>
                 <input

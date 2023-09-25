@@ -21,14 +21,14 @@ const TransferCard = ({ data, user, setMessage, setError, onClose }) => {
         .then((response) => {
           setIsLoading(false);
           if (response && response.status == 201) {
+            onClose();
             setMessage(response.data.Data);
           }
-          console.log(response)
         })
     } catch (error) {
+      onClose();
       setIsLoading(false);
       setError(error.response.data.Data)
-      console.log(error.response.status, error.response.data.Data)
     }
   }
 
@@ -126,18 +126,19 @@ const TransferCard = ({ data, user, setMessage, setError, onClose }) => {
               <div className="pt-4">Transfer Qty : {data.transfer_qty}</div>
             </div>
           </div>
+          <RejectPopup
+            isVisible={showManufacturer}
+            // rejectDesc={rejectDesc}
+            rejectDesc={rejectDesc}
+            setRejectDesc={setRejectDesc}
+            onClose={() => setShowManufacturer(false)}
+            setError={setError}
+            handleReject={handleReject}
+          />
         </div>
       )}
-      
-      <RejectPopup
-        isVisible={showManufacturer}
-        // rejectDesc={rejectDesc}
-        rejectDesc={rejectDesc}
-        setRejectDesc={setRejectDesc}
-        onClose={() => setShowManufacturer(false)}
-        setError={setError}
-        handleReject={handleReject}
-      />
+
+
     </>
   );
 };

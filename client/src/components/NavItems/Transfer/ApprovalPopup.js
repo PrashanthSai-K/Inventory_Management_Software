@@ -32,7 +32,7 @@ function ApprovalPopup({ isVisible, transferData, onClose, setError, setMessage,
                             <div className="  flex flex-col items-center">
                                 <div className="py-1 flex pb-8 pt-8">
                                     <span className="px-1 text-black font-medium text-2xl whitespace-nowrap">
-                                        Inventory Values
+                                        Pending Requests
                                     </span>
                                 </div>
                                 <div

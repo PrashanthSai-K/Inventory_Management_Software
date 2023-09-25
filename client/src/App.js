@@ -30,6 +30,7 @@ import { useAuth } from "./AuthContext";
 import Report from "./components/ReportGeneration/Report";
 import Excel from "./components/CommonPages/Excel";
 import Scrap from "./components/NavItems/Scrap/Scrap";
+import DateRangeFilter from "./components/Hover";
 
 
 function App() {
@@ -171,6 +172,10 @@ function App() {
                   path="/excel"
                   element={<Excel />}
                 />
+                {/* <Route 
+                  path="/date"
+                  element={<DateRangeFilter />}
+                /> */}
               </Routes>
 
             </GoogleOAuthProvider>

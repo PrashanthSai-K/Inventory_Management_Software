@@ -1,39 +1,34 @@
 import React, { useState } from "react";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
-import * as XLSX from "xlsx";
 
 function ReportView({
   requiredData,
   handleOkClick,
   setRequiredData,
-  data,
   selectedColumns,
   selectedTable,
-  setMessage,
   setError,
   viewColumn,
-
+  exportToExcel,
+  downloadPDF,
 }) {
-  const [previewSelectedColumn, setPreviewSelectedColumn] = useState("");
 
+  const columnNames = Object.keys(requiredData[0]);
+  const [previewSelectedColumn, setPreviewSelectedColumn] = useState("");
   const [filterOptionSelected, setFilterOptionSelected] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
- 
-  
+
   const filterFunction = (requiredData) => {
     const filteredData = requiredData.filter(
       (item) => item[previewSelectedColumn] < inputValue
     );
-    if(filteredData.length > 0){
+    if (filteredData.length > 0) {
       setRequiredData(filteredData);
-    }else{
-      setError("NO DATA")
+    } else {
+      setError("NO DATA");
     }
   };
-
 
   const parseDate = (dateStr) => {
     const parts = dateStr.split("-");
@@ -63,15 +58,69 @@ function ReportView({
       return;
     }
 
-    if(fromDateObj <= toDateObj){
-    const filteredDates = requiredData.filter((dateStr) => {
-      const dateObj = parseDate(dateStr[previewSelectedColumn]);
-      return dateObj >= fromDateObj && dateObj <= toDateObj;
-    });
-    setRequiredData(filteredDates);
-    }else{
-      setError("Please Select The Valid Date")
+    if (fromDateObj <= toDateObj) {
+      const filteredDates = requiredData.filter((dateStr) => {
+        const dateObj = parseDate(dateStr[previewSelectedColumn]);
+        return dateObj >= fromDateObj && dateObj <= toDateObj;
+      });
+      if(filteredDates.length > 0){
+        setRequiredData(filteredDates);
+      }else{
+        setError("No Data");
+      }
+    } else {
+      setError("Please Select The Valid Date");
     }
+  };
+
+  //<---------------------For sort functionality------------------------->
+  const [sortOrders, setSortOrders] = useState({
+    item_code: "asc",
+    item_type: "asc",
+    item_name: "asc",
+    item_subname: "asc",
+    item_description: "asc",
+    manufacturer_id: "asc",
+    quantity_units: "asc",
+    supplier_id: "asc",
+    cost_per_item: "asc",
+    id: "asc",
+    apex_no: "asc",
+    manufacturer_name: "asc",
+    supplier_name: "asc",
+    contact: "asc",
+    stock_qty: "asc",
+    inventory_value: "asc",
+    user_id: "asc",
+    dept_id: "asc",
+    stock_date: "asc",
+  });
+
+  const [sortedColumn, setSortedColumn] = useState();
+  const handleSort = (column) => {
+    setSortOrders((prevSortOrders) => ({
+      ...prevSortOrders,
+      [column]: prevSortOrders[column] === "asc" ? "desc" : "asc",
+    }));
+
+    setSortedColumn(column);
+
+    requiredData.sort((a, b) => {
+      const valueA =
+        typeof a[column] === "string" ? a[column].toLowerCase() : a[column];
+      const valueB =
+        typeof b[column] === "string" ? b[column].toLowerCase() : b[column];
+
+      if (valueA < valueB) {
+        return sortOrders[column] === "asc" ? -1 : 1;
+      }
+      if (valueA > valueB) {
+        return sortOrders[column] === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+
+    setRequiredData(requiredData);
   };
 
   const handleEnterClick = (e) => {
@@ -80,70 +129,9 @@ function ReportView({
     }
   };
 
-  const columnNames = Object.keys(requiredData[0]);
-  function downloadPDF(requiredData) {
-    const columnNames = Object.keys(requiredData[0]);
-    const maxColumnsPerPage = 5; // Set the maximum number of columns per page
-    const totalColumns = columnNames.length;
-    const totalPages = Math.ceil(totalColumns / maxColumnsPerPage);
 
-    const doc = new jsPDF();
 
-    // Iterate through each page
-    for (let page = 0; page < totalPages; page++) {
-      // Calculate the start and end indices for the current page's columns
-      const startIndex = page * maxColumnsPerPage;
-      const endIndex = Math.min(startIndex + maxColumnsPerPage, totalColumns);
-      const pageColumnNames = columnNames.slice(startIndex, endIndex);
-      const pageTableData = requiredData.map((row) =>
-        pageColumnNames.map((col) => row[col])
-      );
 
-      // Add a new page for each page, except the first one
-      if (page > 0) {
-        doc.addPage();
-      }
-
-      // Generate the table for the current page
-      doc.autoTable({
-        head: [pageColumnNames],
-        body: pageTableData,
-        startY: 10, // Adjust the startY position as needed
-      });
-    }
-
-    doc.save("Master Table.pdf"); // Download the PDF with a specified filename
-  }
-
-  const exportToExcel = () => {
-    const dataForExcel = [];
-    const copy = requiredData;
-    const keysAndValuesArray = [];
-    if (copy.length > 0) {
-      const firstObject = copy[0];
-      const keys = Object.keys(firstObject);
-      keysAndValuesArray.push([...keys]);
-      keysAndValuesArray.push([...keys.map((key) => firstObject[key])]);
-      dataForExcel.push(...keysAndValuesArray);
-    }
-
-    dataForExcel.push(
-      ...requiredData.map((item) => {
-        const rowData = [];
-        for (const key in item) {
-          rowData.push(item[key]);
-        }
-        return rowData;
-      })
-    );
-
-    const ws = XLSX.utils.aoa_to_sheet(dataForExcel);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1"); // Change the sheet name as needed
-
-    // Save the Excel file
-    XLSX.writeFile(wb, "my_report.xlsx");
-  };
 
   return (
     <div>
@@ -248,7 +236,6 @@ function ReportView({
                   className="w-20 h-auto border-2 rounded-lg border-black"
                 ></input>
                 <button
-                  
                   onClick={() => {
                     filterFunction(requiredData);
                   }}
@@ -282,7 +269,20 @@ function ReportView({
                         className="px-6 py-3 text-center whitespace-nowrap tracking-wider cursor-pointer"
                       >
                         <div className="flex">
-                          <div>{columnName}</div>
+                          <div
+                            onClick={() => {
+                              handleSort(columnName);
+                            }}
+                          >
+                            {columnName}
+                          </div>
+                          {sortedColumn === columnName && (
+                            <i
+                              className={`bi bi-arrow-${
+                                sortOrders[columnName] === "asc" ? "up" : "down"
+                              } ml-2`}
+                            ></i>
+                          )}
                         </div>
                       </th>
                     ))}

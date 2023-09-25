@@ -1,7 +1,6 @@
 import React from 'react';
 
-function StockPopup({ isVisible, onClose, data }) {
-
+function ScarpPopup({ isVisible, onClose, data }) {
   if (!isVisible) return null;
 
   return (
@@ -17,7 +16,7 @@ function StockPopup({ isVisible, onClose, data }) {
           }}
           className="flex flex-col"
         >
-          <div className="bg-white px-10 py-5 stock animate1 overflow-x-auto overflow-y-auto border-gray-700 rounded-lg">
+          <div className="bg-white scrap px-10 py-5 animate1 overflow-x-auto overflow-y-auto border-gray-700 rounded-lg">
             <div className="w-full text-end">
               <button
                 className="text-black rounded-full border-2 border-black px-2 text-3xl"
@@ -29,7 +28,7 @@ function StockPopup({ isVisible, onClose, data }) {
             <div className="flex flex-col justify-center items-center">
               <div className="py-1 flex pb-8">
                 <span className="px-1 text-black font-medium text-2xl whitespace-nowrap">
-                 Lab Stocks
+                  Scrap Values
                 </span>
               </div>
               <div
@@ -61,7 +60,13 @@ function StockPopup({ isVisible, onClose, data }) {
                         scope="col"
                         className="px-6 py-3 text-left tracking-wider"
                       >
-                        No Of Stocks
+                        SCRAP VALUE
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left whitespace-nowrap tracking-wider cursor-pointer"
+                      >
+                        SCRAP QTY
                       </th>
                     </tr>
                   </thead>
@@ -79,7 +84,10 @@ function StockPopup({ isVisible, onClose, data }) {
                           {lab.labname}
                         </td>
                         <td className="px-6 py-4 text-center whitespace-nowrap">
-                        {lab.stock} nos
+                        Rs {lab.scrap_value}
+                        </td>
+                        <td className="px-6 py-4 text-center whitespace-nowrap">
+                        {lab.scrap_qty} nos
                         </td>
                       </tr>
                     ))}
@@ -99,4 +107,4 @@ function StockPopup({ isVisible, onClose, data }) {
   );
 }
 
-export default StockPopup;
+export default ScarpPopup;
